@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class EmpruntsFilms
     {
-        public int NoExemplaire { get; set; }
+        public int Id { get; set; }
         public int NoUtilisateur { get; set; }
 
         public DateTime DateEmprunt { get; set; }
