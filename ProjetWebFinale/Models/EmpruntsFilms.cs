@@ -1,13 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ProjetWebFinale.Models
 {
     public class EmpruntsFilms
     {
-        public int Id { get; set; }
-        public int NoUtilisateur { get; set; }
-
+        public int NoFilm { get; set; }
+        public int NoUtilisateur { get; set; }       
         public DateTime DateEmprunt { get; set; }
+       
+
+        [ForeignKey("NoUtilisateur")]
+        [InverseProperty("EmpruntsFilms")]
         public virtual Utilisateurs? Utilisateurs { get; set; }
-        public virtual Exemplaires? Exemplaires { get; set; }
+
+        [ForeignKey("NoFilm")]
+        [InverseProperty("EmpruntsFilms")]
+        public virtual Films? Films { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using ProjetWebFinale.Models;
 namespace ProjetWebFinale.Migrations
 {
     [DbContext(typeof(FilmDbContext))]
-    [Migration("20231113203848_Initial")]
-    partial class Initial
+    [Migration("20231114192526_model")]
+    partial class model
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,208 @@ namespace ProjetWebFinale.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Acteurs", b =>
                 {
@@ -64,52 +266,20 @@ namespace ProjetWebFinale.Migrations
 
             modelBuilder.Entity("ProjetWebFinale.Models.EmpruntsFilms", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("DateEmprunt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("ExemplairesId")
+                    b.Property<int>("NoFilm")
                         .HasColumnType("int");
 
                     b.Property<int>("NoUtilisateur")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UtilisateursId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DateEmprunt")
+                        .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("NoFilm", "NoUtilisateur");
 
-                    b.HasIndex("ExemplairesId");
-
-                    b.HasIndex("UtilisateursId");
+                    b.HasIndex("NoUtilisateur");
 
                     b.ToTable("EmpruntsFilms");
-                });
-
-            modelBuilder.Entity("ProjetWebFinale.Models.Exemplaires", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("NoUtilisateurProprietaire")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UtilisateursId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UtilisateursId");
-
-                    b.ToTable("Exemplaires");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Films", b =>
@@ -120,54 +290,43 @@ namespace ProjetWebFinale.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AnneeSortie")
+                    b.Property<int?>("AnneeSortie")
                         .HasColumnType("int");
 
-                    b.Property<int>("Categorie")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoriesId")
+                    b.Property<int?>("Categorie")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateMAJ")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DureeMinutes")
+                    b.Property<int?>("DureeMinutes")
                         .HasColumnType("int");
 
-                    b.Property<bool>("FilmOriginal")
+                    b.Property<bool?>("FilmOriginal")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Format")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FormatsId")
+                    b.Property<int?>("Format")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePochette")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NbDisques")
+                    b.Property<int?>("NbDisques")
                         .HasColumnType("int");
 
-                    b.Property<int>("NoProducteur")
+                    b.Property<int?>("NoProducteur")
                         .HasColumnType("int");
 
-                    b.Property<int>("NoRealisateur")
+                    b.Property<int?>("NoRealisateur")
                         .HasColumnType("int");
 
                     b.Property<int>("NoUtilisateurMAJ")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProducteursId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("RealisateursId")
+                    b.Property<int>("NoUtilisateurProprietaire")
                         .HasColumnType("int");
 
                     b.Property<string>("Resume")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TitreFrancais")
@@ -175,13 +334,9 @@ namespace ProjetWebFinale.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TitreOriginal")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UtilisateursId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("VersionEtendue")
+                    b.Property<bool?>("VersionEtendue")
                         .HasColumnType("bit");
 
                     b.Property<string>("Xtra")
@@ -190,119 +345,73 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriesId");
+                    b.HasIndex("NoProducteur");
 
-                    b.HasIndex("FormatsId");
+                    b.HasIndex("NoRealisateur");
 
-                    b.HasIndex("ProducteursId");
+                    b.HasIndex("NoUtilisateurMAJ");
 
-                    b.HasIndex("RealisateursId");
-
-                    b.HasIndex("UtilisateursId");
+                    b.HasIndex("NoUtilisateurProprietaire");
 
                     b.ToTable("Films");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsActeurs", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("ActeursId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("FilmsId")
+                    b.Property<int>("NoFilm")
                         .HasColumnType("int");
 
                     b.Property<int>("NoActeur")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("NoFilm", "NoActeur");
 
-                    b.HasIndex("ActeursId");
-
-                    b.HasIndex("FilmsId");
+                    b.HasIndex("NoActeur");
 
                     b.ToTable("FilmsActeurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsLangues", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("FilmsId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LanguesId")
+                    b.Property<int>("NoFilm")
                         .HasColumnType("int");
 
                     b.Property<int>("NoLangue")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("NoFilm", "NoLangue");
 
-                    b.HasIndex("FilmsId");
-
-                    b.HasIndex("LanguesId");
+                    b.HasIndex("NoLangue");
 
                     b.ToTable("FilmsLangues");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSousTitres", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("FilmsId")
+                    b.Property<int>("NoFilm")
                         .HasColumnType("int");
 
                     b.Property<int>("NoSousTitre")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SousTitresId")
-                        .HasColumnType("int");
+                    b.HasKey("NoFilm", "NoSousTitre");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilmsId");
-
-                    b.HasIndex("SousTitresId");
+                    b.HasIndex("NoSousTitre");
 
                     b.ToTable("FilmsSousTitres");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSupplements", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("FilmsId")
+                    b.Property<int>("NoFilm")
                         .HasColumnType("int");
 
                     b.Property<int>("NoSupplement")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SupplementsId")
-                        .HasColumnType("int");
+                    b.HasKey("NoFilm", "NoSupplement");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilmsId");
-
-                    b.HasIndex("SupplementsId");
+                    b.HasIndex("NoSupplement");
 
                     b.ToTable("FilmsSupplements");
                 });
@@ -463,112 +572,136 @@ namespace ProjetWebFinale.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<string>("TypesUtilisateurId")
-                        .HasColumnType("nvarchar(1)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TypesUtilisateurId");
+                    b.HasIndex("TypeUtilisateur");
 
                     b.ToTable("Utilisateurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.UtilisateursPreferences", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("NoUtilisateur")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("NoPreference")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PreferencesId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UtilisateursId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ValeursPreferencesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PreferencesId");
-
-                    b.HasIndex("UtilisateursId");
-
-                    b.HasIndex("ValeursPreferencesId");
-
-                    b.ToTable("UtilisateursPreferences");
-                });
-
-            modelBuilder.Entity("ProjetWebFinale.Models.ValeursPreferences", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("NoPreference")
                         .HasColumnType("int");
 
                     b.Property<string>("Valeur")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("NoUtilisateur", "NoPreference");
 
-                    b.ToTable("ValeursPreferences");
+                    b.HasIndex("NoPreference");
+
+                    b.ToTable("UtilisateursPreferences");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.EmpruntsFilms", b =>
                 {
-                    b.HasOne("ProjetWebFinale.Models.Exemplaires", "Exemplaires")
+                    b.HasOne("ProjetWebFinale.Models.Films", "Films")
                         .WithMany("EmpruntsFilms")
-                        .HasForeignKey("ExemplairesId");
+                        .HasForeignKey("NoFilm")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.Utilisateurs", "Utilisateurs")
                         .WithMany("EmpruntsFilms")
-                        .HasForeignKey("UtilisateursId");
+                        .HasForeignKey("NoUtilisateur")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Exemplaires");
-
-                    b.Navigation("Utilisateurs");
-                });
-
-            modelBuilder.Entity("ProjetWebFinale.Models.Exemplaires", b =>
-                {
-                    b.HasOne("ProjetWebFinale.Models.Utilisateurs", "Utilisateurs")
-                        .WithMany("Exemplaires")
-                        .HasForeignKey("UtilisateursId");
+                    b.Navigation("Films");
 
                     b.Navigation("Utilisateurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Films", b =>
                 {
-                    b.HasOne("ProjetWebFinale.Models.Categories", "Categories")
-                        .WithMany("Films")
-                        .HasForeignKey("CategoriesId");
-
-                    b.HasOne("ProjetWebFinale.Models.Formats", "Formats")
-                        .WithMany("Films")
-                        .HasForeignKey("FormatsId");
-
                     b.HasOne("ProjetWebFinale.Models.Producteurs", "Producteurs")
                         .WithMany("Films")
-                        .HasForeignKey("ProducteursId");
+                        .HasForeignKey("NoProducteur")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ProjetWebFinale.Models.Realisateurs", "Realisateurs")
                         .WithMany("Films")
-                        .HasForeignKey("RealisateursId");
+                        .HasForeignKey("NoRealisateur")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ProjetWebFinale.Models.Utilisateurs", "Utilisateurs")
                         .WithMany("Films")
-                        .HasForeignKey("UtilisateursId");
+                        .HasForeignKey("NoUtilisateurMAJ")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjetWebFinale.Models.Categories", "Categories")
+                        .WithMany("Films")
+                        .HasForeignKey("NoUtilisateurProprietaire")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjetWebFinale.Models.Formats", "Formats")
+                        .WithMany("Films")
+                        .HasForeignKey("NoUtilisateurProprietaire")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjetWebFinale.Models.Utilisateurs", "UtilisateurProprietaire")
+                        .WithMany("FilmProprietaire")
+                        .HasForeignKey("NoUtilisateurProprietaire")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Categories");
 
@@ -578,6 +711,8 @@ namespace ProjetWebFinale.Migrations
 
                     b.Navigation("Realisateurs");
 
+                    b.Navigation("UtilisateurProprietaire");
+
                     b.Navigation("Utilisateurs");
                 });
 
@@ -585,11 +720,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.HasOne("ProjetWebFinale.Models.Acteurs", "Acteurs")
                         .WithMany("FilmsActeurs")
-                        .HasForeignKey("ActeursId");
+                        .HasForeignKey("NoActeur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.Films", "Films")
                         .WithMany("FilmsActeurs")
-                        .HasForeignKey("FilmsId");
+                        .HasForeignKey("NoFilm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Acteurs");
 
@@ -600,11 +739,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.HasOne("ProjetWebFinale.Models.Films", "Films")
                         .WithMany("FilmsLangues")
-                        .HasForeignKey("FilmsId");
+                        .HasForeignKey("NoFilm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.Langues", "Langues")
                         .WithMany("FilmsLangues")
-                        .HasForeignKey("LanguesId");
+                        .HasForeignKey("NoLangue")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Films");
 
@@ -615,11 +758,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.HasOne("ProjetWebFinale.Models.Films", "Films")
                         .WithMany("FilmsSousTitres")
-                        .HasForeignKey("FilmsId");
+                        .HasForeignKey("NoFilm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.SousTitres", "SousTitres")
                         .WithMany("FilmsSousTitres")
-                        .HasForeignKey("SousTitresId");
+                        .HasForeignKey("NoSousTitre")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Films");
 
@@ -630,11 +777,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.HasOne("ProjetWebFinale.Models.Films", "Films")
                         .WithMany("FilmsSupplements")
-                        .HasForeignKey("FilmsId");
+                        .HasForeignKey("NoFilm")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.Supplements", "Supplements")
                         .WithMany("FilmsSupplements")
-                        .HasForeignKey("SupplementsId");
+                        .HasForeignKey("NoSupplement")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Films");
 
@@ -645,7 +796,9 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.HasOne("ProjetWebFinale.Models.TypesUtilisateur", "TypesUtilisateur")
                         .WithMany("Utilisateurs")
-                        .HasForeignKey("TypesUtilisateurId");
+                        .HasForeignKey("TypeUtilisateur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("TypesUtilisateur");
                 });
@@ -653,22 +806,20 @@ namespace ProjetWebFinale.Migrations
             modelBuilder.Entity("ProjetWebFinale.Models.UtilisateursPreferences", b =>
                 {
                     b.HasOne("ProjetWebFinale.Models.Preferences", "Preferences")
-                        .WithMany()
-                        .HasForeignKey("PreferencesId");
+                        .WithMany("UtilisateursPreferences")
+                        .HasForeignKey("NoPreference")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjetWebFinale.Models.Utilisateurs", "Utilisateurs")
                         .WithMany("UtilisateursPreferences")
-                        .HasForeignKey("UtilisateursId");
-
-                    b.HasOne("ProjetWebFinale.Models.ValeursPreferences", "ValeursPreferences")
-                        .WithMany()
-                        .HasForeignKey("ValeursPreferencesId");
+                        .HasForeignKey("NoUtilisateur")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Preferences");
 
                     b.Navigation("Utilisateurs");
-
-                    b.Navigation("ValeursPreferences");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Acteurs", b =>
@@ -681,13 +832,10 @@ namespace ProjetWebFinale.Migrations
                     b.Navigation("Films");
                 });
 
-            modelBuilder.Entity("ProjetWebFinale.Models.Exemplaires", b =>
-                {
-                    b.Navigation("EmpruntsFilms");
-                });
-
             modelBuilder.Entity("ProjetWebFinale.Models.Films", b =>
                 {
+                    b.Navigation("EmpruntsFilms");
+
                     b.Navigation("FilmsActeurs");
 
                     b.Navigation("FilmsLangues");
@@ -705,6 +853,11 @@ namespace ProjetWebFinale.Migrations
             modelBuilder.Entity("ProjetWebFinale.Models.Langues", b =>
                 {
                     b.Navigation("FilmsLangues");
+                });
+
+            modelBuilder.Entity("ProjetWebFinale.Models.Preferences", b =>
+                {
+                    b.Navigation("UtilisateursPreferences");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Producteurs", b =>
@@ -736,7 +889,7 @@ namespace ProjetWebFinale.Migrations
                 {
                     b.Navigation("EmpruntsFilms");
 
-                    b.Navigation("Exemplaires");
+                    b.Navigation("FilmProprietaire");
 
                     b.Navigation("Films");
 

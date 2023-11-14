@@ -1,12 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ProjetWebFinale.Models
 {
     public class UtilisateursPreferences
     {
-        public int Id { get; set; }
+        public int NoUtilisateur { get; set; }
         public int NoPreference { get; set; }
+        public string? Valeur { get; set; }
+        [ForeignKey("NoUtilisateur")]
+        [InverseProperty("UtilisateursPreferences")]
         public virtual Utilisateurs? Utilisateurs { get; set; }
-        public virtual ValeursPreferences? ValeursPreferences { get; set; }
+       /* [ForeignKey("NoPreference")]
+        [InverseProperty("UtilisateursPreferences")]
+        public virtual ValeursPreferences? ValeursPreferences { get; set; }*/
+        [ForeignKey("NoPreference")]
+        [InverseProperty("UtilisateursPreferences")]
         public virtual Preferences? Preferences { get; set; }
     }
 }
