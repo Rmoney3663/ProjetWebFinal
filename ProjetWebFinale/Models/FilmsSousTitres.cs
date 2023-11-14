@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class FilmsSousTitres
     {
-        public int NoFilm { get; set; }
+        public int Id { get; set; }
         public int NoSousTitre { get; set; }
         public virtual Films? Films { get; set; }
 

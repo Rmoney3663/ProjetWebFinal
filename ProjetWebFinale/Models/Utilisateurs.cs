@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class Utilisateurs
     {
-        public int NoUtilisateur { get; set; }
+        public int Id { get; set; }
         public string NomUtilisateur { get; set; }
         public string Courriel { get; set; }
         public int MotPasse { get; set; }

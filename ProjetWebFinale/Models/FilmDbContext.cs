@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 namespace ProjetWebFinale.Models
 {
-    public class FilmDbContext : DbContext
+    public class FilmDbContext : IdentityDbContext
     {
         public FilmDbContext(DbContextOptions<FilmDbContext> options) : base(options)
         {

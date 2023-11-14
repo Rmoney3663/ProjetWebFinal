@@ -1,8 +1,13 @@
 using ProjetWebFinale.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<FilmDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<FilmDbContext>();
+builder.Services.AddControllersWithViews();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -18,10 +23,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.MapRazorPages();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
