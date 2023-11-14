@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace ProjetWebFinale.Models
 {
-    public class Utilisateurs: IdentityUser
+    public class Utilisateurs
     {
         public int Id { get; set; }
         public string NomUtilisateur { get; set; }
         public string Courriel { get; set; }
-        public string MotPasse { get; set; }
+        public int MotPasse { get; set; }
         public char TypeUtilisateur { get; set; }
         public virtual TypesUtilisateur? TypesUtilisateur { get; set; }
         public virtual ICollection<Films>? Films { get; set; }

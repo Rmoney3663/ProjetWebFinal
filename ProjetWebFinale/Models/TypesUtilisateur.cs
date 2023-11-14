@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace ProjetWebFinale.Models
 {
-    public class TypesUtilisateur: IdentityRole
+    public class TypesUtilisateur
     {
         public char Id { get; set; }
         public string Description { get; set; }
