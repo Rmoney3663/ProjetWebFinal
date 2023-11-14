@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class Acteurs
     {
-        public int NoActeur { get; set; }
+        public int Id { get; set; }
         
         public string Nom { get; set; }
 

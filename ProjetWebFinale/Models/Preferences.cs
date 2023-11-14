@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class Preferences
     {
-        public int NoPreference { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
     }
 }

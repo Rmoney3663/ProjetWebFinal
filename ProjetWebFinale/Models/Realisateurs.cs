@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class Realisateurs
     {
-        public int NoRealisateur { get; set; }
+        public int Id { get; set; }
         public string Nom { get; set; }
         public virtual ICollection<Films>? Films { get; set; }
     }

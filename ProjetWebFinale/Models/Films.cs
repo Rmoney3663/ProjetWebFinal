@@ -3,7 +3,7 @@ namespace ProjetWebFinale.Models
 {
     public class Films
     {
-        public int NoFilm { get; set; }
+        public int Id { get; set; }
         public int AnneeSortie { get; set; }
         public int Categorie { get; set; }
         public int Format { get; set; }
