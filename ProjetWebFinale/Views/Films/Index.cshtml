@@ -1,25 +1,49 @@
 ﻿@model IEnumerable<ProjetWebFinale.Models.Films>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Liste des films";
 }
 
-<h1>Index</h1>
+<h1>Liste des films</h1>
 
 <p>
-    <a asp-action="Create">Liste des films</a>
+    <a asp-action="Create">Ajouter un film</a>
 </p>
-<div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
-@foreach (var item in Model) {
-	<div class="card" style="width:200px; margin: 5px;">
-            <img src="./liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" height="150" />
-		<div class="card-body">
-            <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
-            <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.NoUtilisateurProprietaire)</p>
-			<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
-            <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-		</div>
-	</div>
+
+@{
+    int nbPages = (int)Math.Ceiling((double)Model.Count() / 12);
+
+    int noPage = Context.Request.Query["noPage"].Count > 0 ? int.Parse(Context.Request.Query["noPage"][0]) : 1;
+
+    for (var i = 1; i <= nbPages; i++)
+    {
+        <input type="button" value="@i" onclick="page(@i)">
+    }
 }
- </div>
+
+<div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
+    @{
+        var index = 0;
+    }
+    @foreach (var item in Model.Skip((noPage - 1) * 12).Take(12))
+    {
+        index++;
+        <div class="card" style="width:300px; margin: 5px;">
+            <img src="./liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
+            <div class="card-body">
+                <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
+                <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</p>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
+                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script>
+    function page(page) {
+        location.href = '?noPage=' + page;
+    }
+</script>
