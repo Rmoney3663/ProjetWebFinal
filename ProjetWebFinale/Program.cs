@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FilmDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<Utilisateurs, TypesUtilisateur>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<FilmDbContext>();
 builder.Services.AddControllersWithViews();
 
