@@ -9,129 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AnneeSortie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateMAJ)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resume)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DureeMinutes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FilmOriginal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePochette)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NbDisques)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TitreFrancais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TitreOriginal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VersionEtendue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Xtra)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categories)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Formats)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Realisateurs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Producteurs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Utilisateurs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UtilisateurProprietaire)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnneeSortie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateMAJ)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Resume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DureeMinutes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FilmOriginal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImagePochette)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NbDisques)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitreFrancais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitreOriginal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VersionEtendue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Xtra)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categories.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Formats.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Realisateurs.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producteurs.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilisateurs.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+	<div class="card" style="width:200px; margin: 5px;">
+		<img src="@item.TitreFrancais" alt="@item.TitreFrancais" height="150" />
+		<div class="card-body">
+            <p class="card-text"> Titre : @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
+            <p class="card-text"> Utilisateur qui possède l'article : @Html.DisplayFor(modelItem => item.NoUtilisateurProprietaire)</p>
+			<a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
+            <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+		</div>
+	</div>
 }
-    </tbody>
-</table>
+ </div>
