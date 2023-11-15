@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
+    "C:\\Users\\14383\\OneDrive - Cegep Gerald-Godin\\session 5\\Prog web\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
   },
   "projects": {
-    "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {
+    "C:\\Users\\14383\\OneDrive - Cegep Gerald-Godin\\session 5\\Prog web\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "projectUniqueName": "C:\\Users\\14383\\OneDrive - Cegep Gerald-Godin\\session 5\\Prog web\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
         "projectName": "ProjetWebFinale",
-        "projectPath": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
-        "packagesPath": "C:\\Users\\r.pruteanu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
+        "projectPath": "C:\\Users\\14383\\OneDrive - Cegep Gerald-Godin\\session 5\\Prog web\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "packagesPath": "C:\\Users\\14383\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\14383\\OneDrive - Cegep Gerald-Godin\\session 5\\Prog web\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\r.pruteanu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\14383\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -60,6 +56,10 @@
               "target": "Package",
               "version": "[6.0.23, )"
             },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.23, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
@@ -77,7 +77,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -89,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
