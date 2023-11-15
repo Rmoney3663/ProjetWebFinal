@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 namespace ProjetWebFinale.Models
 {
-    public class FilmDbContext : IdentityDbContext
+    public class FilmDbContext : IdentityDbContext<Utilisateurs>
     {
         public FilmDbContext(DbContextOptions<FilmDbContext> options) : base(options)
         {

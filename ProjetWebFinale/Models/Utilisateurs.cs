@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetWebFinale.Models
 {
-    public class Utilisateurs
+    public class Utilisateurs: IdentityUser
     {
         public int Id { get; set; }
         public string NomUtilisateur { get; set; }
