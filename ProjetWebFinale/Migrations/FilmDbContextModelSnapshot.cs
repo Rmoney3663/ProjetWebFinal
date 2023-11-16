@@ -143,7 +143,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Acteurs");
+                    b.ToTable("Acteurs", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Categories", b =>
@@ -160,7 +160,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.EmpruntsFilms", b =>
@@ -178,7 +178,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoUtilisateur");
 
-                    b.ToTable("EmpruntsFilms");
+                    b.ToTable("EmpruntsFilms", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Films", b =>
@@ -254,7 +254,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoUtilisateurProprietaire");
 
-                    b.ToTable("Films");
+                    b.ToTable("Films", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsActeurs", b =>
@@ -269,7 +269,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoActeur");
 
-                    b.ToTable("FilmsActeurs");
+                    b.ToTable("FilmsActeurs", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsLangues", b =>
@@ -284,7 +284,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoLangue");
 
-                    b.ToTable("FilmsLangues");
+                    b.ToTable("FilmsLangues", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSousTitres", b =>
@@ -299,7 +299,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoSousTitre");
 
-                    b.ToTable("FilmsSousTitres");
+                    b.ToTable("FilmsSousTitres", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSupplements", b =>
@@ -314,7 +314,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoSupplement");
 
-                    b.ToTable("FilmsSupplements");
+                    b.ToTable("FilmsSupplements", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Formats", b =>
@@ -331,7 +331,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Formats");
+                    b.ToTable("Formats", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Langues", b =>
@@ -348,7 +348,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Langues");
+                    b.ToTable("Langues", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Preferences", b =>
@@ -365,7 +365,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preferences");
+                    b.ToTable("Preferences", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Producteurs", b =>
@@ -382,7 +382,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Producteurs");
+                    b.ToTable("Producteurs", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Realisateurs", b =>
@@ -399,7 +399,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Realisateurs");
+                    b.ToTable("Realisateurs", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.SousTitres", b =>
@@ -416,7 +416,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SousTitres");
+                    b.ToTable("SousTitres", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Supplements", b =>
@@ -433,7 +433,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Supplements");
+                    b.ToTable("Supplements", (string)null);
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.TypesUtilisateur", b =>
@@ -573,7 +573,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoPreference");
 
-                    b.ToTable("UtilisateursPreferences");
+                    b.ToTable("UtilisateursPreferences", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

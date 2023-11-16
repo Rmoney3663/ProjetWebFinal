@@ -27,9 +27,9 @@ namespace ProjetWebFinale.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            bool a = await roleManager.RoleExistsAsync("5");
-            bool s = await roleManager.RoleExistsAsync("6");
-            bool u = await roleManager.RoleExistsAsync("7");
+            bool a = await roleManager.RoleExistsAsync("1");
+            bool s = await roleManager.RoleExistsAsync("2");
+            bool u = await roleManager.RoleExistsAsync("3");
             var t = roleManager.Roles.ToList();
 
             if (!a)
@@ -37,7 +37,7 @@ namespace ProjetWebFinale.Controllers
                 var role = new TypesUtilisateur
                 {
                     Description = "Administrateur",
-                    Name = "5",
+                    Name = "1",
                     Identifiant = 'A'
                 };
                 await roleManager.CreateAsync(role);
@@ -48,7 +48,7 @@ namespace ProjetWebFinale.Controllers
                 var role = new TypesUtilisateur
                 {
                     Description = "Superutilisateur",
-                    Name = "6",
+                    Name = "2",
                     Identifiant = 'S'
                 };
                 await roleManager.CreateAsync(role);
@@ -59,13 +59,11 @@ namespace ProjetWebFinale.Controllers
                 var role = new TypesUtilisateur
                 {
                     Description = "Utilisateur",
-                    Name = "7",
+                    Name = "3",
                     Identifiant = 'U'
                 };
                 await roleManager.CreateAsync(role);
             }
-
-            Console.WriteLine("Roles created");
 
             if (ModelState.IsValid)
             {
@@ -76,7 +74,7 @@ namespace ProjetWebFinale.Controllers
                     Email = model.Email,
                     Courriel = model.Email,
                     NomUtilisateur = model.Email,
-                    TypeUtilisateur = 7,
+                    TypeUtilisateur = 6,
                     EmailConfirmed = true,
                     
                 };
@@ -85,7 +83,6 @@ namespace ProjetWebFinale.Controllers
                 // If user is successfully created, sign-in the user using. SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
-                    //Console.WriteLine("success!");
                     
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "Employees");
