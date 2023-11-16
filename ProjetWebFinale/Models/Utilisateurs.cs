@@ -1,15 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetWebFinale.Models
 {
-    public class Utilisateurs
+    public class Utilisateurs: IdentityUser<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public string NomUtilisateur { get; set; }
         public string Courriel { get; set; }
         public int MotPasse { get; set; }
-        public char TypeUtilisateur { get; set; }
+        public int TypeUtilisateur { get; set; }
         [ForeignKey("TypeUtilisateur")]
         [InverseProperty("Utilisateurs")]
         public virtual TypesUtilisateur? TypesUtilisateur { get; set; }
@@ -21,7 +22,6 @@ namespace ProjetWebFinale.Models
         public virtual ICollection<EmpruntsFilms>? EmpruntsFilms { get; set; }
         [InverseProperty("Utilisateurs")]
         public virtual ICollection<UtilisateursPreferences>? UtilisateursPreferences { get; set; }
-
         [InverseProperty("UtilisateurProprietaire")]
         public virtual ICollection<Films>? FilmProprietaire { get; set; }
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProjetWebFinale.Migrations
 {
-    public partial class model : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +27,9 @@ namespace ProjetWebFinale.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -35,31 +37,6 @@ namespace ProjetWebFinale.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,7 +71,7 @@ namespace ProjetWebFinale.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NoLangue = table.Column<int>(type: "int", nullable: false)
+                    Langue = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,24 +144,12 @@ namespace ProjetWebFinale.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TypesUtilisateur",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TypesUtilisateur", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -200,12 +165,48 @@ namespace ProjetWebFinale.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NomUtilisateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Courriel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MotPasse = table.Column<int>(type: "int", nullable: false),
+                    TypeUtilisateur = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetRoles_TypeUtilisateur",
+                        column: x => x.TypeUtilisateur,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -224,10 +225,10 @@ namespace ProjetWebFinale.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -244,8 +245,8 @@ namespace ProjetWebFinale.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -255,22 +256,22 @@ namespace ProjetWebFinale.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -280,28 +281,6 @@ namespace ProjetWebFinale.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Utilisateurs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NomUtilisateur = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Courriel = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MotPasse = table.Column<int>(type: "int", nullable: false),
-                    TypeUtilisateur = table.Column<string>(type: "nvarchar(1)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Utilisateurs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Utilisateurs_TypesUtilisateur_TypeUtilisateur",
-                        column: x => x.TypeUtilisateur,
-                        principalTable: "TypesUtilisateur",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -334,14 +313,26 @@ namespace ProjetWebFinale.Migrations
                 {
                     table.PrimaryKey("PK_Films", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Films_AspNetUsers_NoUtilisateurMAJ",
+                        column: x => x.NoUtilisateurMAJ,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Films_AspNetUsers_NoUtilisateurProprietaire",
+                        column: x => x.NoUtilisateurProprietaire,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Films_Categories_NoUtilisateurProprietaire",
                         column: x => x.NoUtilisateurProprietaire,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Films_Formats_NoUtilisateurProprietaire",
-                        column: x => x.NoUtilisateurProprietaire,
+                        name: "FK_Films_Formats_Format",
+                        column: x => x.Format,
                         principalTable: "Formats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -355,18 +346,6 @@ namespace ProjetWebFinale.Migrations
                         name: "FK_Films_Realisateurs_NoRealisateur",
                         column: x => x.NoRealisateur,
                         principalTable: "Realisateurs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Films_Utilisateurs_NoUtilisateurMAJ",
-                        column: x => x.NoUtilisateurMAJ,
-                        principalTable: "Utilisateurs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Films_Utilisateurs_NoUtilisateurProprietaire",
-                        column: x => x.NoUtilisateurProprietaire,
-                        principalTable: "Utilisateurs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -383,15 +362,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     table.PrimaryKey("PK_UtilisateursPreferences", x => new { x.NoUtilisateur, x.NoPreference });
                     table.ForeignKey(
-                        name: "FK_UtilisateursPreferences_Preferences_NoPreference",
-                        column: x => x.NoPreference,
-                        principalTable: "Preferences",
+                        name: "FK_UtilisateursPreferences_AspNetUsers_NoUtilisateur",
+                        column: x => x.NoUtilisateur,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UtilisateursPreferences_Utilisateurs_NoUtilisateur",
-                        column: x => x.NoUtilisateur,
-                        principalTable: "Utilisateurs",
+                        name: "FK_UtilisateursPreferences_Preferences_NoPreference",
+                        column: x => x.NoPreference,
+                        principalTable: "Preferences",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -408,15 +387,15 @@ namespace ProjetWebFinale.Migrations
                 {
                     table.PrimaryKey("PK_EmpruntsFilms", x => new { x.NoFilm, x.NoUtilisateur });
                     table.ForeignKey(
-                        name: "FK_EmpruntsFilms_Films_NoFilm",
-                        column: x => x.NoFilm,
-                        principalTable: "Films",
+                        name: "FK_EmpruntsFilms_AspNetUsers_NoUtilisateur",
+                        column: x => x.NoUtilisateur,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EmpruntsFilms_Utilisateurs_NoUtilisateur",
-                        column: x => x.NoUtilisateur,
-                        principalTable: "Utilisateurs",
+                        name: "FK_EmpruntsFilms_Films_NoFilm",
+                        column: x => x.NoFilm,
+                        principalTable: "Films",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -550,6 +529,11 @@ namespace ProjetWebFinale.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_TypeUtilisateur",
+                table: "AspNetUsers",
+                column: "TypeUtilisateur");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -560,6 +544,11 @@ namespace ProjetWebFinale.Migrations
                 name: "IX_EmpruntsFilms_NoUtilisateur",
                 table: "EmpruntsFilms",
                 column: "NoUtilisateur");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Films_Format",
+                table: "Films",
+                column: "Format");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Films_NoProducteur",
@@ -600,11 +589,6 @@ namespace ProjetWebFinale.Migrations
                 name: "IX_FilmsSupplements_NoSupplement",
                 table: "FilmsSupplements",
                 column: "NoSupplement");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Utilisateurs_TypeUtilisateur",
-                table: "Utilisateurs",
-                column: "TypeUtilisateur");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UtilisateursPreferences_NoPreference",
@@ -648,12 +632,6 @@ namespace ProjetWebFinale.Migrations
                 name: "UtilisateursPreferences");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Acteurs");
 
             migrationBuilder.DropTable(
@@ -672,6 +650,9 @@ namespace ProjetWebFinale.Migrations
                 name: "Preferences");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
@@ -684,10 +665,7 @@ namespace ProjetWebFinale.Migrations
                 name: "Realisateurs");
 
             migrationBuilder.DropTable(
-                name: "Utilisateurs");
-
-            migrationBuilder.DropTable(
-                name: "TypesUtilisateur");
+                name: "AspNetRoles");
         }
     }
 }

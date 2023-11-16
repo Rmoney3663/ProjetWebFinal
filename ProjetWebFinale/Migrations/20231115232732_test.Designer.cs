@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetWebFinale.Models;
 
@@ -11,9 +12,10 @@ using ProjetWebFinale.Models;
 namespace ProjetWebFinale.Migrations
 {
     [DbContext(typeof(FilmDbContext))]
-    partial class FilmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231115232732_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,7 +145,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Acteurs", (string)null);
+                    b.ToTable("Acteurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Categories", b =>
@@ -160,7 +162,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.EmpruntsFilms", b =>
@@ -178,7 +180,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoUtilisateur");
 
-                    b.ToTable("EmpruntsFilms", (string)null);
+                    b.ToTable("EmpruntsFilms");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Films", b =>
@@ -254,7 +256,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoUtilisateurProprietaire");
 
-                    b.ToTable("Films", (string)null);
+                    b.ToTable("Films");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsActeurs", b =>
@@ -269,7 +271,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoActeur");
 
-                    b.ToTable("FilmsActeurs", (string)null);
+                    b.ToTable("FilmsActeurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsLangues", b =>
@@ -284,7 +286,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoLangue");
 
-                    b.ToTable("FilmsLangues", (string)null);
+                    b.ToTable("FilmsLangues");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSousTitres", b =>
@@ -299,7 +301,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoSousTitre");
 
-                    b.ToTable("FilmsSousTitres", (string)null);
+                    b.ToTable("FilmsSousTitres");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.FilmsSupplements", b =>
@@ -314,7 +316,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoSupplement");
 
-                    b.ToTable("FilmsSupplements", (string)null);
+                    b.ToTable("FilmsSupplements");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Formats", b =>
@@ -331,7 +333,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Formats", (string)null);
+                    b.ToTable("Formats");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Langues", b =>
@@ -348,7 +350,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Langues", (string)null);
+                    b.ToTable("Langues");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Preferences", b =>
@@ -365,7 +367,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preferences", (string)null);
+                    b.ToTable("Preferences");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Producteurs", b =>
@@ -382,7 +384,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Producteurs", (string)null);
+                    b.ToTable("Producteurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Realisateurs", b =>
@@ -399,7 +401,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Realisateurs", (string)null);
+                    b.ToTable("Realisateurs");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.SousTitres", b =>
@@ -416,7 +418,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SousTitres", (string)null);
+                    b.ToTable("SousTitres");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.Supplements", b =>
@@ -433,7 +435,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Supplements", (string)null);
+                    b.ToTable("Supplements");
                 });
 
             modelBuilder.Entity("ProjetWebFinale.Models.TypesUtilisateur", b =>
@@ -451,10 +453,6 @@ namespace ProjetWebFinale.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Identifiant")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -573,7 +571,7 @@ namespace ProjetWebFinale.Migrations
 
                     b.HasIndex("NoPreference");
 
-                    b.ToTable("UtilisateursPreferences", (string)null);
+                    b.ToTable("UtilisateursPreferences");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
