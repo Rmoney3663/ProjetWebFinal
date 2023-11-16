@@ -8,16 +8,13 @@ namespace ProjetWebFinale.Controllers
     {
         private readonly UserManager<Utilisateurs> userManager;
         private readonly SignInManager<Utilisateurs> signInManager;
-        private readonly RoleManager<TypesUtilisateur> roleManager;
-
-        public AccountController(UserManager<Utilisateurs> userManager, SignInManager<Utilisateurs> signInManager, RoleManager<TypesUtilisateur> roleManager)
+        
+        public AccountController(UserManager<Utilisateurs> userManager, SignInManager<Utilisateurs> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
         }
         
-
         [HttpGet]
         public IActionResult Register()
         {
@@ -32,21 +29,18 @@ namespace ProjetWebFinale.Controllers
                 // Copy data from RegisterViewModel to IdentityUser
                 var user = new Utilisateurs
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Courriel = model.Email,
-                    NomUtilisateur = model.Email,
+                    UserName = model.Nom,
+                    Email = model.Courriel,
+                    Courriel = model.Courriel,
+                    NomUtilisateur = model.Nom,
                     TypeUtilisateur = 3,
-                    EmailConfirmed = true,
-
-                    
+                    EmailConfirmed = true
                 };
                 // Store user data in AspNetUsers database table
-                var result = await userManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.MotDePasse);
                 // If user is successfully created, sign-in the user using. SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
-                    
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Films");
                 }
@@ -70,10 +64,9 @@ namespace ProjetWebFinale.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(
-                model.Email, model.Password, model.RememberMe, false);
+                model.Courriel, model.MotDePasse, model.SeSouvenirDeMoi, false);
                 if (result.Succeeded)
                 {
-                    //TODO: Redirect to correct page
                     return RedirectToAction("Index", "Films");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
@@ -85,7 +78,7 @@ namespace ProjetWebFinale.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("Login", "Account");
         }
     }
 }
