@@ -7,11 +7,11 @@ namespace ProjetWebFinale.Models
     {
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Courriel { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
-        [Display(Name = "Remember me")]
-        public bool RememberMe { get; set; }
+        public string MotDePasse { get; set; }
+        [Display(Name = "Se souvenir de moi")]
+        public bool SeSouvenirDeMoi { get; set; }
     }
 }

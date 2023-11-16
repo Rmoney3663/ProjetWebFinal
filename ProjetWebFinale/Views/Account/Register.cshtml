@@ -8,21 +8,26 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Courriel"></label>
+                <input asp-for="Courriel" class="form-control" />
+                <span asp-validation-for="Courriel" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+                <label asp-for="Nom"></label>
+                <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MotDePasse"></label>
+                <input asp-for="MotDePasse" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="ConfirmerMotDePasse"></label>
+                <input asp-for="ConfirmerMotDePasse" class="form-control" />
+                <span asp-validation-for="ConfirmerMotDePasse" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">S'enregistrer</button>
         </form>
     </div>
 </div>
