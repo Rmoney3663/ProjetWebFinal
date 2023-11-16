@@ -27,44 +27,6 @@ namespace ProjetWebFinale.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            bool a = await roleManager.RoleExistsAsync("1");
-            bool s = await roleManager.RoleExistsAsync("2");
-            bool u = await roleManager.RoleExistsAsync("3");
-            var t = roleManager.Roles.ToList();
-
-            if (!a)
-            {
-                var role = new TypesUtilisateur
-                {
-                    Description = "Administrateur",
-                    Name = "1",
-                    Identifiant = 'A'
-                };
-                await roleManager.CreateAsync(role);
-            }
-
-            if (!s)
-            {
-                var role = new TypesUtilisateur
-                {
-                    Description = "Superutilisateur",
-                    Name = "2",
-                    Identifiant = 'S'
-                };
-                await roleManager.CreateAsync(role);
-            }
-
-            if (!u)
-            {
-                var role = new TypesUtilisateur
-                {
-                    Description = "Utilisateur",
-                    Name = "3",
-                    Identifiant = 'U'
-                };
-                await roleManager.CreateAsync(role);
-            }
-
             if (ModelState.IsValid)
             {
                 // Copy data from RegisterViewModel to IdentityUser
@@ -74,8 +36,9 @@ namespace ProjetWebFinale.Controllers
                     Email = model.Email,
                     Courriel = model.Email,
                     NomUtilisateur = model.Email,
-                    TypeUtilisateur = 6,
+                    TypeUtilisateur = 3,
                     EmailConfirmed = true,
+
                     
                 };
                 // Store user data in AspNetUsers database table
@@ -85,7 +48,7 @@ namespace ProjetWebFinale.Controllers
                 {
                     
                     await signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("index", "Employees");
+                    return RedirectToAction("Index", "Films");
                 }
                 // If there are any errors, add them to the ModelState object. which will be displayed by the validation summary tag helper
                 foreach (var error in result.Errors)
@@ -111,7 +74,7 @@ namespace ProjetWebFinale.Controllers
                 if (result.Succeeded)
                 {
                     //TODO: Redirect to correct page
-                    return RedirectToAction("index", "Employees");
+                    return RedirectToAction("Index", "Films");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
             }
