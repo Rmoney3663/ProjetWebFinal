@@ -12,8 +12,8 @@ using ProjetWebFinale.Models;
 namespace ProjetWebFinale.Migrations
 {
     [DbContext(typeof(FilmDbContext))]
-    [Migration("20231115210650_1")]
-    partial class _1
+    [Migration("20231116010454_test3")]
+    partial class test3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -453,6 +453,10 @@ namespace ProjetWebFinale.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Identifiant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)

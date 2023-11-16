@@ -6,7 +6,8 @@ namespace ProjetWebFinale.Models
 {
     public class TypesUtilisateur: IdentityRole<int>
     {
-        public char Id { get; set; }
+        public int Id { get; set; }
+        public char Identifiant { get; set; }
         public string Description { get; set; }
         [InverseProperty("TypesUtilisateur")]
         public virtual ICollection<Utilisateurs>? Utilisateurs { get; set; }

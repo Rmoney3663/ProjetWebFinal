@@ -6,7 +6,7 @@ namespace ProjetWebFinale.Models
 {
     public class Utilisateurs: IdentityUser<int>
     {
-        public int Id { get; set; }
+        public override int Id { get; set; }
         public string NomUtilisateur { get; set; }
         public string Courriel { get; set; }
         public int MotPasse { get; set; }
