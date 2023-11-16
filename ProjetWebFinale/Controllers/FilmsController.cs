@@ -52,12 +52,12 @@ namespace ProjetWebFinale.Controllers
         // GET: Films/Create
         public IActionResult Create()
         {
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Categories, "Id", "Id");
-            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Id");
-            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Id");
-            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Id");
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "Id");
-            ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "Id");
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
+            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description");
+            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom");
+            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
+            ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
+            ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description");
             return View();
         }
 

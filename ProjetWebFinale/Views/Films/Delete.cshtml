@@ -3,7 +3,21 @@
 @{
     ViewData["Title"] = "Delete";
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Utilisateurs> SignInManager
 
+@if (SignInManager.IsSignedIn(User))
+{
+    <head>
+        <meta http-equiv="refresh" content="0; url=https://localhost:7267/Films" />
+    </head>
+}
+else 
+{
+    <head>
+        <meta http-equiv="refresh" content="0; url=https://localhost:7267/Account/Login" />
+    </head>
+}
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
