@@ -16,7 +16,7 @@ namespace ProjetWebFinale.Models
         public string MotDePasse { get; set; }
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "Password and confirmation password do not match.")]
+        [Compare("MotDePasse", ErrorMessage = "Password and confirmation password do not match.")]
         public string ConfirmerMotDePasse { get; set; }
     }
 }
