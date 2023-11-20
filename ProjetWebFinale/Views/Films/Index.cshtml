@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<ProjetWebFinale.Models.Films>
+﻿@model IEnumerable<ProjetWebFinale.Models.Films>
 
 @{
     ViewData["Title"] = "Liste des films";
@@ -14,14 +13,26 @@
 
 @{
     int nbPages = (int)Math.Ceiling((double)Model.Count() / 12);
-
     int noPage = Context.Request.Query["noPage"].Count > 0 ? int.Parse(Context.Request.Query["noPage"][0]) : 1;
 
     for (var i = 1; i <= nbPages; i++)
     {
         <input type="button" value="@i" onclick="page(@i)">
     }
+
+    string searchString = Context.Request.Query["SearchString"];
 }
+
+<form asp-controller="Films" asp-action="Index" method="get">
+    <p>
+        Recherche par titre: <input type="text" name="SearchString" />
+        <input type="submit" value="Rechercher" />
+        @if (!String.IsNullOrEmpty(searchString))
+        {
+            <a href="/Films" class="btn btn-primary">Effacer la recherche</a>
+        }
+    </p>
+</form>
 
 <div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
     @{
