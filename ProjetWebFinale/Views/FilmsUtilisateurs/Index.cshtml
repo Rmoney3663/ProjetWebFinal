@@ -3,13 +3,11 @@
 @{
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //Remove the extra views if necessary
 }
 
 <h1>Liste des films</h1>
 
-<p>
-    <a asp-action="Create">Ajouter un DVD</a>
-</p>
 
 @{
     int nbPages = (int)Math.Ceiling((double)Model.Count() / 12);
@@ -17,7 +15,7 @@
 
     for (var i = 1; i <= nbPages; i++)
     {
-    <input type="button" value="@i" onclick="page(@i)">
+        <input type="button" value="@i" onclick="page(@i)">
     }
 
     string searchString = Context.Request.Query["SearchString"];
@@ -29,7 +27,7 @@
         <input type="submit" value="Rechercher" />
         @if (!String.IsNullOrEmpty(searchString))
         {
-            <a href="/Films" class="btn btn-primary">Effacer la recherche</a>
+            <a href="/FilmsUtilisateurs" class="btn btn-primary">Effacer la recherche</a>
         }
     </p>
 </form>
@@ -46,6 +44,7 @@
             <div class="card-body">
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
                 <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</p>
+                
             </div>
         </div>
     }
