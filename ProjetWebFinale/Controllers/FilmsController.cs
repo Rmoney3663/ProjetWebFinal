@@ -21,10 +21,21 @@ namespace ProjetWebFinale.Controllers
         }
 
         // GET: Films
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var filmDbContext = _context.Films.Include(f => f.Categories).Include(f => f.Formats).Include(f => f.Producteurs).Include(f => f.Realisateurs).Include(f => f.UtilisateurProprietaire).Include(f => f.Utilisateurs);
-            return View(await filmDbContext.ToListAsync());
+            if (_context.Films == null)
+            {
+                return NotFound();
+            }
+
+            var films = from f in _context.Films select f;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                films = films.Where(s => s.TitreFrancais!.Contains(searchString) || s.TitreOriginal!.Contains(searchString));
+            }
+
+            return View(await films.ToListAsync());
         }
 
         // GET: Films/Details/5
