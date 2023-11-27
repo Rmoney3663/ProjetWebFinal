@@ -21,7 +21,7 @@ namespace ProjetWebFinale.Controllers
         }
 
         // GET: FilmsUtilisateurs
-        public async Task<IActionResult> Index(int id, string searchString)
+        public async Task<IActionResult> Index(string name, string searchString)
         {
             if (_context.Films == null)
             {
@@ -29,7 +29,7 @@ namespace ProjetWebFinale.Controllers
             }
 
 
-            var films = from f in _context.Films where f.NoUtilisateurProprietaire == id select f;
+            var films = from f in _context.Films where f.UtilisateurProprietaire.NomUtilisateur == name select f;
             films.Include(f => f.UtilisateurProprietaire).ToList();
 
             if (!String.IsNullOrEmpty(searchString))

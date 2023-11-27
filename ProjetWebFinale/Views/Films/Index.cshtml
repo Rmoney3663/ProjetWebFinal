@@ -45,7 +45,7 @@
             <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
             <div class="card-body">
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
-                <p class="card-text"> <b>Utilisateur qui possède l'article :</b> <a href="/FilmsUtilisateurs/Index?id=@item.UtilisateurProprietaire.Id">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a></p>
+                <p class="card-text"> <b>Utilisateur qui possède l'article :</b> <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a></p>
             </div>
         </div>
     }
