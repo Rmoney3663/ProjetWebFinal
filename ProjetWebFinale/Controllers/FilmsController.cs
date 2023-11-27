@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetWebFinale.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjetWebFinale.Controllers
 {
@@ -14,10 +15,11 @@ namespace ProjetWebFinale.Controllers
     public class FilmsController : Controller
     {
         private readonly FilmDbContext _context;
-
-        public FilmsController(FilmDbContext context)
+        private readonly UserManager<Utilisateurs> _userManager;
+        public FilmsController(FilmDbContext context, UserManager<Utilisateurs> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Films
@@ -79,20 +81,27 @@ namespace ProjetWebFinale.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,DateMAJ,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,ImagePochette,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films)
+        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,DateMAJ,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,ImagePochette,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile file)
         {
+            var user = await _userManager.GetUserAsync(User);
+            films.NoUtilisateurMAJ = user.Id;
+            films.DateMAJ = DateTime.Today;
+            if (file == null || file.Length == 0)
+            {
+                ModelState.AddModelError("ImagePochette", "Veuillez sélectionner une image pour l'affiche du film.");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(films);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Categories, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Id", films.Format);
-            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Id", films.NoProducteur);
-            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Id", films.NoRealisateur);
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurMAJ);
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
+            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
+            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
+            ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
             return View(films);
         }
 

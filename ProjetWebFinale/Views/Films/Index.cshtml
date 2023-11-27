@@ -4,21 +4,7 @@
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<Utilisateurs> SignInManager
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <head>
-        <meta http-equiv="refresh" content="0; url=https://localhost:7267/Films" />
-    </head>
-}
-else 
-{
-    <head>
-        <meta http-equiv="refresh" content="0; url=https://localhost:7267/Account/Login" />
-    </head>
-}
 <h1>Liste des films</h1>
 
 <p>
