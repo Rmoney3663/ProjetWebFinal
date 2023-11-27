@@ -29,11 +29,14 @@ namespace ProjetWebFinale.Controllers
             }
 
             var films = from f in _context.Films select f;
+            films.Include(f => f.UtilisateurProprietaire).ToList();
+
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 films = films.Where(s => s.TitreFrancais!.Contains(searchString) || s.TitreOriginal!.Contains(searchString));
             }
+
 
             return View(await films.ToListAsync());
         }

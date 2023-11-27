@@ -4,11 +4,10 @@
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
     //Remove the extra views if necessary
+    //TODO: Retour à l'accueil (Films de tout les utilisateurs)
 }
 
 <h1>Liste des films</h1>
-
-
 @{
     int nbPages = (int)Math.Ceiling((double)Model.Count() / 12);
     int noPage = Context.Request.Query["noPage"].Count > 0 ? int.Parse(Context.Request.Query["noPage"][0]) : 1;
@@ -19,15 +18,17 @@
     }
 
     string searchString = Context.Request.Query["SearchString"];
+    string id = Context.Request.Query["id"];
 }
 
-<form asp-controller="Films" asp-action="Index" method="get">
+<form asp-controller="FilmsUtilisateurs" asp-action="Index" method="get">
     <p>
+        <input type="hidden" name="id" value="@id" />
         Recherche par titre: <input type="text" name="SearchString" />
         <input type="submit" value="Rechercher" />
         @if (!String.IsNullOrEmpty(searchString))
         {
-            <a href="/FilmsUtilisateurs" class="btn btn-primary">Effacer la recherche</a>
+            <a href="/FilmsUtilisateurs?id=@id" class="btn btn-primary">Effacer la recherche</a>
         }
     </p>
 </form>
@@ -40,7 +41,7 @@
     {
         index++;
         <div class="card" style="width:300px; margin: 5px;">
-            <img src="./liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
+            <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
             <div class="card-body">
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
                 <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</p>
@@ -53,6 +54,6 @@
 
 <script>
     function page(page) {
-        location.href = '?noPage=' + page;
+        location.href = '?id=' + @id + '&noPage=' + page;
     }
 </script>
