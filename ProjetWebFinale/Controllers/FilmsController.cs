@@ -247,19 +247,31 @@ namespace ProjetWebFinale.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Films == null)
+            try
             {
-                return Problem("Entity set 'FilmDbContext.Films'  is null.");
+                var films = await _context.Films.FindAsync(id);
+
+                if (films != null)
+                {
+                    _context.Films.Remove(films);
+                    await _context.SaveChangesAsync();
+
+                    var filePath = Path.Combine("wwwroot/liste-vignettes", id + ".jpg");
+
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+
+                return RedirectToAction(nameof(Index));
             }
-            var films = await _context.Films.FindAsync(id);
-            if (films != null)
+            catch
             {
-                _context.Films.Remove(films);
+                return RedirectToAction("Error", "Films");
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
+
 
         private bool FilmsExists(int id)
         {

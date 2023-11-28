@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Modifier</h1>
+<h1>Modification d'un DVD</h1>
 
 <h4>Films</h4>
 <hr />
@@ -29,7 +29,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="AnneeSortie" class="control-label"></label>
+                <label asp-for="AnneeSortie" class="control-label">Année de sortie du film:</label>
                 <input asp-for="AnneeSortie" class="form-control" class="form-control" type="number" min="1900" max="" data-val="true"/>
                 <span asp-validation-for="AnneeSortie" class="text-danger"></span>
                 <script>
@@ -40,7 +40,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Categorie" class="control-label"></label>
+                <label asp-for="Categorie" class="control-label">Categorie:</label>
                 <select asp-for="Categorie" class ="form-control" asp-items="ViewBag.Categorie">
                      <option value=""></option>
                  </select>
@@ -49,7 +49,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Format" class="control-label"></label>
+                <label asp-for="Format" class="control-label">Format:</label>
                 <select asp-for="Format" class="form-control" asp-items="ViewBag.Format">
                      <option value=""></option>
                 </select>
@@ -58,21 +58,21 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Resume" class="control-label"></label>
+                <label asp-for="Resume" class="control-label">Resumé du film:</label>
                 <textarea asp-for="Resume" class="form-control"></textarea>
                 <span asp-validation-for="Resume" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="DureeMinutes" class="control-label"></label>
+                <label asp-for="DureeMinutes" class="control-label">Durée en minute du film:</label>
                 <input asp-for="DureeMinutes" class="form-control" type="number" min="1" data-val="true" />
                 <span asp-validation-for="DureeMinutes" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="FilmOriginal" class="control-label"></label>
+                <label asp-for="FilmOriginal" class="control-label">Film Original ?</label>
                  <select asp-for="FilmOriginal" class="form-control">
                     <option value=""></option>
                     <option value="true">True</option>
@@ -83,56 +83,56 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="NbDisques" class="control-label"></label>
+                <label asp-for="NbDisques" class="control-label">Nombre de disques:</label>
                <input asp-for="NbDisques" class="form-control" class="form-control" type="number" min="1" data-val="true"/>
                 <span asp-validation-for="NbDisques" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="TitreFrancais" class="control-label"></label>
+                <label asp-for="TitreFrancais" class="control-label">Titre en Francais du film:</label>
                 <input asp-for="TitreFrancais" class="form-control" />
                 <span asp-validation-for="TitreFrancais" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="TitreOriginal" class="control-label"></label>
+                <label asp-for="TitreOriginal" class="control-label">Titre Original du film:</label>
                 <input asp-for="TitreOriginal" class="form-control" />
                 <span asp-validation-for="TitreOriginal" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="VersionEtendue" class="control-label"></label>
+                <label asp-for="VersionEtendue" class="control-label">Version Etendue ?</label>
                 <input asp-for="VersionEtendue" class="form-control" />
                 <span asp-validation-for="VersionEtendue" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="NoRealisateur" class="control-label"></label>
+                <label asp-for="NoRealisateur" class="control-label">Nom du realisateur:</label>
                 <select asp-for="NoRealisateur" class="form-control" asp-items="ViewBag.NoRealisateur"></select>
                 <span asp-validation-for="NoRealisateur" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="NoProducteur" class="control-label"></label>
+                <label asp-for="NoProducteur" class="control-label">Nom du producteur:</label>
                 <select asp-for="NoProducteur" class="form-control" asp-items="ViewBag.NoProducteur"></select>
                 <span asp-validation-for="NoProducteur" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="Xtra" class="control-label"></label>
+                <label asp-for="Xtra" class="control-label">Extra info:</label>
                 <input asp-for="Xtra" class="form-control" />
                 <span asp-validation-for="Xtra" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="NoUtilisateurProprietaire" class="control-label"></label>
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
                 <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire"></select>
                 <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
             </div>
@@ -146,7 +146,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Retour au liste</a>
 </div>
 
 @section Scripts {
