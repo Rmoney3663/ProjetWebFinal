@@ -81,22 +81,52 @@ namespace ProjetWebFinale.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,DateMAJ,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,ImagePochette,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile file)
+        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile file)
         {
             var user = await _userManager.GetUserAsync(User);
             films.NoUtilisateurMAJ = user.Id;
-            films.DateMAJ = DateTime.Today;
+            films.DateMAJ = DateTime.Now;
+            Console.WriteLine(file.FileName);
+            Console.WriteLine($"User Id: {user?.Id}, User Name: {user?.UserName}");
             if (file == null || file.Length == 0)
             {
                 ModelState.AddModelError("ImagePochette", "Veuillez sélectionner une image pour l'affiche du film.");
             }
 
-            if (ModelState.IsValid)
+            foreach (var m in ModelState)
             {
+                foreach(var er in m.Value.Errors)
+                {
+                    Console.WriteLine(m.Key);
+                    Console.WriteLine(er.ErrorMessage);
+                }
+            }
+            if (ModelState.IsValid)
+            {                
+                var tempFilename = "temp_filename";
+                string extension = Path.GetExtension(file.FileName);
+                string tempFilePath = Path.Combine("wwwroot/liste-vignettes", tempFilename + extension);
+                using (Stream fileStream = new FileStream(tempFilePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
                 _context.Add(films);
                 await _context.SaveChangesAsync();
+
+                var generatedId = films.Id;
+
+                var finalFilename = $"{generatedId}{extension}";
+                var finalFilePath = Path.Combine("wwwroot/liste-vignettes", finalFilename);
+                System.IO.File.Move(tempFilePath, finalFilePath);
+                var finalnameimage = generatedId - 50000;
+                films.ImagePochette = finalnameimage + extension;
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
