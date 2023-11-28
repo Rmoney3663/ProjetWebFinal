@@ -148,12 +148,11 @@ namespace ProjetWebFinale.Controllers
             {
                 return NotFound();
             }
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Categories, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Id", films.Format);
-            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Id", films.NoProducteur);
-            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Id", films.NoRealisateur);
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurMAJ);
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
+            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
+            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
+            ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
             return View(films);
         }
 
@@ -162,17 +161,39 @@ namespace ProjetWebFinale.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AnneeSortie,Categorie,Format,DateMAJ,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,ImagePochette,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AnneeSortie,Categorie,Format,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile? file)
         {
             if (id != films.Id)
             {
                 return NotFound();
             }
-
+            foreach (var m in ModelState)
+            {
+                foreach (var er in m.Value.Errors)
+                {
+                    Console.WriteLine(m.Key);
+                    Console.WriteLine(er.ErrorMessage);
+                }
+            }
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                films.NoUtilisateurMAJ = user.Id;
+                films.DateMAJ = DateTime.Now;
                 try
                 {
+                    if (file != null && file.Length > 0)
+                    {
+                        System.IO.File.Delete("wwwroot/liste-vignettes" + films.Id + ".jpg");
+
+                        string extension = Path.GetExtension(file.FileName);
+                        string tempFilePath = Path.Combine("wwwroot/liste-vignettes", films.Id + extension);
+                        using (Stream fileStream = new FileStream(tempFilePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                    }
+
                     _context.Update(films);
                     await _context.SaveChangesAsync();
                 }
@@ -189,12 +210,11 @@ namespace ProjetWebFinale.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Categories, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Id", films.Format);
-            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Id", films.NoProducteur);
-            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Id", films.NoRealisateur);
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurProprietaire);
-            ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "Id", films.NoUtilisateurMAJ);
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
+            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
+            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
+            ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
             return View(films);
         }
 
