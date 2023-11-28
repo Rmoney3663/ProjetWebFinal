@@ -9,7 +9,13 @@
 <div>
     <h4>Films</h4>
     <hr />
-    <dl class="row">
+        <dl class="row">
+            <dt class="col-sm-2">
+            Image
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/liste-vignettes/@(Model.Id).jpg" alt="Film Image" />
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AnneeSortie)
         </dt>
@@ -45,13 +51,7 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FilmOriginal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePochette)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePochette)
-        </dd>
+        </dd>       
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.NbDisques)
         </dt>
@@ -121,6 +121,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
+    <a asp-action="Index">Retour au liste</a>
 </div>
