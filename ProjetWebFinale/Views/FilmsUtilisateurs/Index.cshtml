@@ -49,7 +49,7 @@
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
                 <p class="card-text">
                     <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)<br>
-                    <a href="/FilmsUtilisateurs/Details?id=@item.Id">Voir les détails</a><br>
+                    <a href="/Details?id=@item.Id">Voir les détails</a><br>
                     <a href="!#" class="btn btn-primary">Envoyez un courriel à cet utilisateur</a><br>
                     <a href="!#" class="btn btn-primary">S'approprier ce DVD</a>
                 </p>
