@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit;
 using ProjetWebFinale.Models;
 
 namespace ProjetWebFinale.Controllers
@@ -18,6 +21,40 @@ namespace ProjetWebFinale.Controllers
         public FilmsUtilisateursController(FilmDbContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult Email()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Email(string courrielRecipient)
+        {
+            var email = new MimeMessage();
+            email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
+            email.To.Add(new MailboxAddress("Receiver test", courrielRecipient)); 
+
+            var prefs = (from p in _context.UtilisateursPreferences where p.NoPreference == 4 select p).ToList();
+
+            email.Subject = "Testing out email sending";
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = "<b>Hello all the way from the land of C#</b>"
+            };
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.Connect("smtp.gmail.com", 465, true);
+
+                // Note: only needed if the SMTP server requires authentication
+                smtp.Authenticate("w56projet3equipe4@gmail.com", "gxlb tpuz batz zuun ");
+
+                smtp.Send(email);
+                smtp.Disconnect(true);
+            }
+            return View();
         }
 
         // GET: FilmsUtilisateurs

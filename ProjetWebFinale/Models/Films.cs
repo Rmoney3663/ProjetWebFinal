@@ -10,7 +10,6 @@ namespace ProjetWebFinale.Models
         public int? Categorie { get; set; }
         public int? Format { get; set; }
         public DateTime DateMAJ { get; set; }
-
         public int NoUtilisateurMAJ { get; set; }
         public string? Resume { get; set; }
         public int? DureeMinutes { get; set; }
