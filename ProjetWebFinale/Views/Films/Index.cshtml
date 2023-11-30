@@ -8,7 +8,7 @@
 <h1>Liste des films</h1>
 
 <p>
-    <a asp-action="Create">Ajouter un film</a>
+    <a asp-action="Create">Ajouter un DVD</a>
 </p>
 
 @{
@@ -17,7 +17,7 @@
 
     for (var i = 1; i <= nbPages; i++)
     {
-        <input type="button" value="@i" onclick="page(@i)">
+    <input type="button" value="@i" onclick="page(@i)">
     }
 
     string searchString = Context.Request.Query["SearchString"];
@@ -42,9 +42,10 @@
     {
         index++;
         <div class="card" style="width:300px; margin: 5px;">
-            <img src="./liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
+            <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
             <div class="card-body">
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
+                <p class="card-text"> <b>Utilisateur qui possède l'article :</b> <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a></p>
                 <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</p>
                 <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
                 <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
