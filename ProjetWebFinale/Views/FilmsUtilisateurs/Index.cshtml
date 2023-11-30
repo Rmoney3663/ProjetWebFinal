@@ -51,11 +51,16 @@
                     <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)<br>
                     <a href="/FilmsUtilisateurs/Details?id=@item.Id">Voir les détails</a><br>
                     <form asp-controller="FilmsUtilisateurs" asp-action="Email" method="post">
-                        <input type="hidden" name="courriel" value="@item.UtilisateurProprietaire.Courriel"/>
-                        <!--TODO: ADD a textbox to send custom message-->
-                    </form>
-                    <a href="/FilmsUtilisateurs/Email" class="btn btn-primary">Envoyez un courriel à cet utilisateur</a><br>
-                    <a href="!#" class="btn btn-primary">S'approprier ce DVD</a>
+                        <input type="hidden" name="courrielRecipient" value="@item.UtilisateurProprietaire.Courriel"/>
+                        <input type="hidden" name="utilisateur" value="@name">
+                        <textarea name="message" rows="4" cols="25" placeholder="Message destiné à cet utilisateur..." style="resize:none"></textarea>
+                        <input type="submit" class="btn btn-primary" value="Contacter" />
+                    </form><br>
+                    <form asp-controller="FilmsUtilisateurs" asp-action="Email" method="post">
+                        <input type="hidden" name="courrielRecipient" value=""/>
+                        <input type="hidden" name="utilisateur" value="@name">
+                        <input type="submit" class="btn btn-primary" value="S'approprier ce DVD" />
+                    </form><br>
                 </p>
 
             </div>

@@ -30,31 +30,64 @@ namespace ProjetWebFinale.Controllers
         }
 
         [HttpPost]
-        public IActionResult Email(string courrielRecipient)
+        public IActionResult Email(string courrielRecipient, string message, string utilisateur)
         {
-            var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
-            email.To.Add(new MailboxAddress("Receiver test", courrielRecipient)); 
+            var listeCourriels = new List<MimeMessage>();
 
-            var prefs = (from p in _context.UtilisateursPreferences where p.NoPreference == 4 select p).ToList();
-
-            email.Subject = "Testing out email sending";
-            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            if (courrielRecipient == null)
             {
-                Text = "<b>Hello all the way from the land of C#</b>"
-            };
+                //Appropriation du DVD
+                var courrielsUtilisateurs = (from p in _context.UtilisateursPreferences where p.NoPreference == 4 select p.Utilisateurs.Courriel).ToList();
+
+                foreach (var courriel in courrielsUtilisateurs)
+                {
+                    var email = new MimeMessage();
+                    email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
+                    email.To.Add(new MailboxAddress("Receiver test", courriel));
+
+                    email.Subject = "Avis d'appropriation";
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    {
+                        //Potential HTML injection
+                        Text = "Un utilisateur désire s'approprier ce DVD."
+                    };
+
+                    listeCourriels.Add(email);
+                }
+            }
+            else
+            {
+                //Envoyez un courriel à l'utilisateur
+                var email = new MimeMessage();
+                email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
+                email.To.Add(new MailboxAddress("Receiver test", "jiyoh32722@mainoj.com"));
+
+
+                email.Subject = "Testing out email sending";
+                email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                {
+                    Text = "<b>"+ message +"</b>"
+                };
+
+                listeCourriels.Add(email);
+            }
+            
+            
 
             using (var smtp = new SmtpClient())
             {
                 smtp.Connect("smtp.gmail.com", 465, true);
-
-                // Note: only needed if the SMTP server requires authentication
                 smtp.Authenticate("w56projet3equipe4@gmail.com", "gxlb tpuz batz zuun ");
 
-                smtp.Send(email);
+                //Envoie un email à chaque utilisateur
+                foreach (MimeMessage email in listeCourriels)
+                {
+                    smtp.Send(email);
+                }
+                
                 smtp.Disconnect(true);
             }
-            return View();
+            return RedirectToAction("Index", new { name = utilisateur });
         }
 
         // GET: FilmsUtilisateurs
@@ -64,7 +97,6 @@ namespace ProjetWebFinale.Controllers
             {
                 return NotFound();
             }
-
 
             var films = from f in _context.Films where f.UtilisateurProprietaire.NomUtilisateur == name select f;
             films.Include(f => f.UtilisateurProprietaire).ToList();
