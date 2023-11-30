@@ -1,16 +1,22 @@
 ﻿@model ProjetWebFinale.Models.Films
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Détails de «@Model.TitreFrancais»</h1>
 
 <div>
     <h4>Films</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            Affiche du film :
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/liste-vignettes/@(Model.Id).jpg" alt="Film Image" />
+        </dd>
         <dt class="col-sm-2">
             Année de sortie:
         </dt>
@@ -21,41 +27,26 @@
             Catégorie:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Categorie)
+            @Html.DisplayFor(model => model.Categories.Description)
         </dd>
         <dt class="col-sm-2">
-            Date de mise à jour:
+            Date de la dernière mise à jour:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateMAJ)
         </dd>
         <dt class="col-sm-2">
-            Mise à jour effectué par:
+            Dernière mise à jour par:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Utilisateurs.NomUtilisateur)
         </dd>
         <dt class="col-sm-2">
-            Résumé:
+            Résumé du film:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Resume)
         </dd>
-        <dt class="col-sm-2">
-            Sous-titre(s):
-        </dt>
-        @if (Model.FilmsSousTitres != null && Model.FilmsSousTitres.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsSousTitres.Select(fa => fa.SousTitres?.LangueSousTitre))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucun sous-titres pour ce film
-            </dd>
-        }
         <dt class="col-sm-2">
             Durée (minutes):
         </dt>
@@ -63,9 +54,9 @@
             @Html.DisplayFor(model => model.DureeMinutes)
         </dd>
         <dt class="col-sm-2">
-            Film original:
+            Film Original?
         </dt>
-        @if (Model.FilmOriginal == true)
+        @if (@Model.FilmOriginal == true)
         {
             <dd class="col-sm-10">
                 Oui
@@ -78,34 +69,13 @@
             </dd>
         }
         <dt class="col-sm-2">
-            Image de la pochette:
-        </dt>
-        <dd class="col-sm-10">
-            <img src="~/liste-vignettes/@(Model.Id).jpg" alt="Film Image" />
-        </dd>
-        <dt class="col-sm-2">
-            Langue(s):
-        </dt>
-        @if (Model.FilmsLangues != null && Model.FilmsLangues.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsLangues.Select(fa => fa.Langues?.Langue))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucune langues pour ce films
-            </dd>
-        }
-        <dt class="col-sm-2">
             Nombre de disques:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NbDisques)
         </dd>
         <dt class="col-sm-2">
-            Titre en français:
+            Titre en francais:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TitreFrancais)
@@ -117,9 +87,9 @@
             @Html.DisplayFor(model => model.TitreOriginal)
         </dd>
         <dt class="col-sm-2">
-            Version étendue:
+            Version étendue?
         </dt>
-        @if (Model.VersionEtendue == true)
+        @if (@Model.VersionEtendue == true)
         {
             <dd class="col-sm-10">
                 Oui
@@ -132,46 +102,45 @@
             </dd>
         }
         <dt class="col-sm-2">
-            Extras:
+            Informations supplémentaires:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Xtra)
+            @if (!string.IsNullOrEmpty(Model.Xtra) && Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
+            {
+                <a href="@Model.Xtra" target="_blank">@Model.Xtra</a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Xtra)
+            }
         </dd>
+
         <dt class="col-sm-2">
-            Format:
+            Formats du film:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Formats.Description)
         </dd>
         <dt class="col-sm-2">
-            Réalisateur:
+            Réalisateur(s) du film:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Realisateurs.Nom)
         </dd>
         <dt class="col-sm-2">
-            Acteur(s):
-        </dt>
-        @if (Model.FilmsActeurs != null && Model.FilmsActeurs.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsActeurs.Select(fa => fa.Acteurs?.Nom))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucun acteurs pour ce film
-            </dd>
-        }
-        <dt class="col-sm-2">
-            Producteur:
+            Producteur(s) du film:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Producteurs.Nom)
         </dd>
         <dt class="col-sm-2">
-            Emprunteur:
+            Utilisateur propriétaire:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurProprietaire.NomUtilisateur)
+        </dd>
+        <dt class="col-sm-2">
+            Utilisateur emprunteur:
         </dt>
         @if (Model.EmpruntsFilms != null && Model.EmpruntsFilms.Any())
         {
@@ -182,18 +151,76 @@
         else
         {
             <dd class="col-sm-10">
-                N/A
+                Personne n'emprunte actuellement le Films
             </dd>
         }
         <dt class="col-sm-2">
-            Propriétaire:
+            Acteurs:
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UtilisateurProprietaire.NomUtilisateur)
-        </dd>
+        @if (Model.FilmsActeurs != null && Model.FilmsActeurs.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsActeurs.Select(fa => fa.Acteurs?.Nom))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucun acteurs pour ce film.
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            Langues:
+        </dt>
+        @if (Model.FilmsLangues != null && Model.FilmsLangues.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsLangues.Select(fa => fa.Langues?.Langue))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucune langues pour ce film.
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            Sous-titres:
+        </dt>
+        @if (Model.FilmsSousTitres != null && Model.FilmsSousTitres.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsSousTitres.Select(fa => fa.SousTitres?.LangueSousTitre))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucun sous titres pour ce film.
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            Supplements:
+        </dt>
+        @if (Model.FilmsSupplements != null && Model.FilmsSupplements.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsSupplements.Select(fa => fa.Supplements?.Description))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucun supplements mentionné pour ce film.
+            </dd>
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
+    <a asp-action="Index">Retour à la liste</a>
 </div>
+
