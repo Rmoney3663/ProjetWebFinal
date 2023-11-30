@@ -1,108 +1,83 @@
 ﻿@model ProjetWebFinale.Models.Films
 
 @{
-    ViewData["Title"] = "Détails";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Détails de «@Model.TitreFrancais»</h1>
+<h1>Détails d'un DVD</h1>
 
 <div>
     <h4>Films</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Affiche du film :
+            L'affiche de film :
         </dt>
         <dd class="col-sm-10">
             <img src="~/liste-vignettes/@(Model.Id).jpg" alt="Film Image" />
         </dd>
-        <dt class="col-sm-2">
-            Année de sortie:
+        <dt class = "col-sm-2">
+           Année de sortie du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AnneeSortie)
         </dd>
-        <dt class="col-sm-2">
-            Catégorie:
+        <dt class = "col-sm-2">
+           Categorie du films:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Categories.Description)
         </dd>
-        <dt class="col-sm-2">
-            Date de la dernière mise à jour:
+        <dt class = "col-sm-2">
+            Date du dernière mises à jour:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateMAJ)
         </dd>
-        <dt class="col-sm-2">
-            Dernière mise à jour par:
+        <dt class = "col-sm-2">
+            Resumé du film:
         </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Utilisateurs.NomUtilisateur)
-        </dd>
-        <dt class="col-sm-2">
-            Résumé du film:
-        </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Resume)
         </dd>
-        <dt class="col-sm-2">
-            Durée (minutes):
+        <dt class = "col-sm-2">
+           Durée en minute du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DureeMinutes)
         </dd>
-        <dt class="col-sm-2">
-            Film Original?
+        <dt class = "col-sm-2">
+            Film Original ?
         </dt>
-        @if (@Model.FilmOriginal == true)
-        {
-            <dd class="col-sm-10">
-                Oui
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Non
-            </dd>
-        }
-        <dt class="col-sm-2">
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FilmOriginal)
+        </dd>       
+        <dt class = "col-sm-2">
             Nombre de disques:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.NbDisques)
         </dd>
-        <dt class="col-sm-2">
-            Titre en francais:
+        <dt class = "col-sm-2">
+            Titre en Francais du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TitreFrancais)
         </dd>
-        <dt class="col-sm-2">
-            Titre original:
+        <dt class = "col-sm-2">
+           Titre en Original du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TitreOriginal)
         </dd>
-        <dt class="col-sm-2">
-            Version étendue?
+        <dt class = "col-sm-2">
+            Version Etendue ?
         </dt>
-        @if (@Model.VersionEtendue == true)
-        {
-            <dd class="col-sm-10">
-                Oui
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Non
-            </dd>
-        }
-        <dt class="col-sm-2">
-            Informations supplémentaires:
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.VersionEtendue)
+        </dd>
+       <dt class="col-sm-2">
+            Extra info:
         </dt>
         <dd class="col-sm-10">
             @if (!string.IsNullOrEmpty(Model.Xtra) && Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
@@ -115,32 +90,32 @@
             }
         </dd>
 
-        <dt class="col-sm-2">
+        <dt class = "col-sm-2">
             Formats du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Formats.Description)
         </dd>
-        <dt class="col-sm-2">
-            Réalisateur(s) du film:
+        <dt class = "col-sm-2">
+            Realisateurs du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Realisateurs.Nom)
         </dd>
-        <dt class="col-sm-2">
-            Producteur(s) du film:
+        <dt class = "col-sm-2">
+            Producteurs du film:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Producteurs.Nom)
-        </dd>
-        <dt class="col-sm-2">
-            Utilisateur propriétaire:
+        </dd>        
+        <dt class = "col-sm-2">
+            Utilisateur proprietaire du DVD:
         </dt>
-        <dd class="col-sm-10">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UtilisateurProprietaire.NomUtilisateur)
         </dd>
-        <dt class="col-sm-2">
-            Utilisateur emprunteur:
+         <dt class="col-sm-2">
+            Utilisateur emprenture du DVD:
         </dt>
         @if (Model.EmpruntsFilms != null && Model.EmpruntsFilms.Any())
         {
@@ -166,7 +141,7 @@
         else
         {
             <dd class="col-sm-10">
-                Aucun acteurs pour ce film.
+                Aucun Acteurs mentionné pour ce film.
             </dd>
         }
 
@@ -182,12 +157,12 @@
         else
         {
             <dd class="col-sm-10">
-                Aucune langues pour ce film.
+                Aucun langue mentionné pour ce film
             </dd>
         }
 
         <dt class="col-sm-2">
-            Sous-titres:
+            SousTitres:
         </dt>
         @if (Model.FilmsSousTitres != null && Model.FilmsSousTitres.Any())
         {
@@ -198,7 +173,7 @@
         else
         {
             <dd class="col-sm-10">
-                Aucun sous titres pour ce film.
+                Aucun sous titres mentionné pour ce film
             </dd>
         }
 
@@ -214,13 +189,12 @@
         else
         {
             <dd class="col-sm-10">
-                Aucun supplements mentionné pour ce film.
+                Aucun supplements mentionné pour ce film
             </dd>
         }
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Modifier</a> |
-    <a asp-action="Index">Retour à la liste</a>
+    <a asp-action="Index">Retour au liste</a>
 </div>
-
