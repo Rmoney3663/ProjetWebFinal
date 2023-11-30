@@ -22,7 +22,7 @@ namespace ProjetWebFinale.Models
         public bool? VersionEtendue { get; set; }
         public int? NoRealisateur { get; set; }
         public int? NoProducteur { get; set; }
-        public string Xtra { get; set; }
+        public string? Xtra { get; set; }
         public int NoUtilisateurProprietaire { get; set; }
 
         [InverseProperty("Films")]
