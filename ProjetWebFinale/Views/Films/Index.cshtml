@@ -1,9 +1,12 @@
-﻿@model IEnumerable<ProjetWebFinale.Models.Films>
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ProjetWebFinale.Models.Films>
+@inject UserManager<Utilisateurs> _userManager
 
 @{
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 
 <h1>Liste des films</h1>
 
@@ -40,7 +43,9 @@
     }
     @foreach (var item in Model.Skip((noPage - 1) * 12).Take(12))
     {
-        index++;
+        index++; 
+        var user = await _userManager.GetUserAsync(User);
+
         <div class="card" style="width:300px; margin: 5px;">
             <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" width="300" height="442"/>
             <div class="card-body">
@@ -52,10 +57,19 @@
                     <b>Utilisateur qui possède l'article :</b> <br>
                     <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
                 </p>
-                <div >
-                    <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
-                    <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                <div>    
+                    @if (user != null && user.Id == item.NoUtilisateurProprietaire)
+                    {
+                        <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a> 
+                        <a> | </a>
+                        <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details </a> 
+                        <a> | </a>
+                        <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    }                   
                 </div>
             </div>
         </div>

@@ -35,6 +35,7 @@ namespace ProjetWebFinale.Controllers
                 films = films.Where(s => s.TitreFrancais!.Contains(searchString) || s.TitreOriginal!.Contains(searchString));
             }
 
+            var user = await _userManager.GetUserAsync(User);
 
             return View(await films.ToListAsync());
         }
