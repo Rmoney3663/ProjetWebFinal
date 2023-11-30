@@ -76,12 +76,19 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.VersionEtendue)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Extra info:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Xtra)
-        </dd>       
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.Xtra) && Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
+            {
+                @Html.ActionLink("Click here", Model.Xtra, new { target = "_blank" })
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Xtra)
+            }
+        </dd>
         <dt class = "col-sm-2">
             Formats du film:
         </dt>
