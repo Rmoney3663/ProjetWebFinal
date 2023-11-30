@@ -82,6 +82,11 @@ namespace ProjetWebFinale.Controllers
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
             ViewData["NoUtilisateurMAJ"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
             ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description");
+
+            ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
+
+
+
             return View();
         }
 
@@ -90,7 +95,7 @@ namespace ProjetWebFinale.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile file)
+        public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile file, List<int> selectedLangues)
         {
             var user = await _userManager.GetUserAsync(User);
             films.NoUtilisateurMAJ = user.Id;
@@ -133,6 +138,19 @@ namespace ProjetWebFinale.Controllers
 
                 await _context.SaveChangesAsync();
 
+                if (selectedLangues != null)
+                {
+                    if (films.FilmsLangues == null)
+                    {
+                        films.FilmsLangues = new List<FilmsLangues>();
+                    }
+                    foreach (var langId in selectedLangues)
+                    {
+                        films.FilmsLangues.Add(new FilmsLangues { NoFilm = films.Id, NoLangue = langId });
+                    }
+                }
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -141,6 +159,9 @@ namespace ProjetWebFinale.Controllers
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
             ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
+            ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
+
+
             return View(films);
         }
 
@@ -162,6 +183,18 @@ namespace ProjetWebFinale.Controllers
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
             ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
+
+            var availableLangues = _context.Langues.ToList();
+
+            var selectedLangueIds = _context.FilmsLangues
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoLangue)
+                .ToList();
+
+            ViewBag.Langues = new SelectList(availableLangues, "Id", "Langue");
+            ViewBag.SelectedLangues = selectedLangueIds;
+
+
             return View(films);
         }
 
@@ -170,7 +203,7 @@ namespace ProjetWebFinale.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AnneeSortie,Categorie,Format,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile? file)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AnneeSortie,Categorie,Format,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films, IFormFile? file, List<int> selectedLangueIds)
         {
             if (id != films.Id)
             {
@@ -186,6 +219,34 @@ namespace ProjetWebFinale.Controllers
             }
             if (ModelState.IsValid)
             {
+                var existingLangues = _context.FilmsLangues
+                    .Where(fl => fl.NoFilm == id)
+                    .ToList();
+                Console.WriteLine("SelectedLangueIds: " + string.Join(", ", selectedLangueIds));
+                Console.WriteLine("ExistingLangues: " + string.Join(", ", existingLangues.Select(fl => fl.NoLangue)));
+
+                // Remove existing associations that are not selected
+                var removedLangues = existingLangues
+                    .Where(fl => !selectedLangueIds.Contains(fl.NoLangue))
+                    .ToList();
+
+                if (removedLangues.Any())
+                {
+                    _context.FilmsLangues.RemoveRange(removedLangues);
+                }
+
+                // Add new associations
+                var newLangues = selectedLangueIds
+                    .Where(langueId => !existingLangues.Any(fl => fl.NoLangue == langueId))
+                    .Select(langueId => new FilmsLangues { NoFilm = id, NoLangue = langueId })
+                    .ToList();
+
+                _context.FilmsLangues.AddRange(newLangues);
+
+                // Save changes to the database
+                await _context.SaveChangesAsync();
+
+
                 var user = await _userManager.GetUserAsync(User);
                 films.NoUtilisateurMAJ = user.Id;
                 films.DateMAJ = DateTime.Now;
@@ -219,11 +280,23 @@ namespace ProjetWebFinale.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
             ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
+
+            var availableLangues = _context.Langues.ToList();
+
+            var selectedLangueIds2 = _context.FilmsLangues
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoLangue)
+                .ToList();
+
+            ViewBag.Langues = new SelectList(availableLangues, "Id", "Langue");
+            ViewBag.SelectedLangues = selectedLangueIds2;
+
             return View(films);
         }
 
