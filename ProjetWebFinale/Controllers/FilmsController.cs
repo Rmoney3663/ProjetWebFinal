@@ -44,7 +44,8 @@ namespace ProjetWebFinale.Controllers
         {
             if (id == null || _context.Films == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
             }
 
             var films = await _context.Films
@@ -67,7 +68,8 @@ namespace ProjetWebFinale.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (films == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
             }
 
             return View(films);
@@ -202,13 +204,15 @@ namespace ProjetWebFinale.Controllers
         {
             if (id == null || _context.Films == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
             }
 
             var films = await _context.Films.FindAsync(id);
             if (films == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
             }
             ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
@@ -400,7 +404,8 @@ namespace ProjetWebFinale.Controllers
         {
             if (id == null || _context.Films == null)
             {
-                return NotFound();
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
             }
 
             var films = await _context.Films
@@ -467,7 +472,14 @@ namespace ProjetWebFinale.Controllers
                 return RedirectToAction("Error", "Films");
             }
         }
-
+        public IActionResult Error()
+        {
+            return View();
+        }
+        public IActionResult ErrorNoFound()
+        {
+            return View();
+        }
 
         private bool FilmsExists(int id)
         {
