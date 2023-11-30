@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjetWebFinale.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace ProjetWebFinale.Controllers
 {
@@ -55,6 +51,16 @@ namespace ProjetWebFinale.Controllers
                 .Include(f => f.Realisateurs)
                 .Include(f => f.UtilisateurProprietaire)
                 .Include(f => f.Utilisateurs)
+                .Include(f => f.FilmsActeurs)
+                    .ThenInclude(fa => fa.Acteurs)
+                .Include(f => f.FilmsLangues)
+                    .ThenInclude(fa => fa.Langues)
+                .Include(f => f.FilmsSousTitres)
+                    .ThenInclude(fa => fa.SousTitres)
+                .Include(f => f.FilmsSupplements)
+                    .ThenInclude(fa => fa.Supplements)
+                .Include(f => f.EmpruntsFilms)
+                    .ThenInclude(fa => fa.Utilisateurs)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (films == null)
             {
