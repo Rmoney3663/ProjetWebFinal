@@ -138,18 +138,27 @@
             </div>
             <br>
 
-            @foreach (var langue in ViewBag.Langues)
-            {
-                <div class="form-check">
+            <div class="form-group">
+                <label class="control-label">Langues : </label>
+                @foreach (var langue in ViewBag.Langues)
+                {
                     <input type="checkbox" name="selectedLangueIds" value="@langue.Value" class="form-check-input"
                             @(ViewBag.SelectedLangues.Contains(Convert.ToInt32(langue.Value)) ? "checked" : "") />
                     <label class="form-check-label">@langue.Text</label>
-                </div>
-            }
+                }
+             </div>
+             <br>
 
-
-
-
+             <div class="form-group">
+                <label class="control-label">Sous Titres : </label>
+                @foreach (var soustitre in ViewBag.SousTitres)
+                {
+                    <input type="checkbox" name="selectedSousTitresIds" value="@soustitre.Value" class="form-check-input"
+                            @(ViewBag.selectedSousTitres.Contains(Convert.ToInt32(soustitre.Value)) ? "checked" : "") />
+                    <label class="form-check-label">@soustitre.Text</label>
+                }
+             </div>
+             <br>
 
 
             <div class="form-group">

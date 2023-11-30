@@ -143,21 +143,40 @@
             </div>
             <br>
 
-            @if (ViewBag.Langues != null)
-            {
-                foreach (var language in ViewBag.Langues)
+             <div class="form-group">
+                <label class="control-label">Language : </label>
+                @if (ViewBag.Langues != null)
                 {
-                    <div class="form-check">
+                    foreach (var language in ViewBag.Langues)
+                    {                        
                         <input type="checkbox" name="selectedLangues" value="@language.Value" class="form-check-input" />
-                        <label class="form-check-label">@language.Text</label>
-                    </div>
+                        <label class="form-check-label">@language.Text</label>                       
+                    }
                 }
-            }
-            else
-            {
-                <p>No languages available</p>
-            }
+                else
+                {
+                    <p>No languages available</p>
+                }
+             </div>
+             <br>
 
+              <div class="form-group">
+                <label class="control-label">Sous Titres : </label>
+                 @if (ViewBag.SousTitres != null)
+                {
+                    foreach (var sousTitre in ViewBag.SousTitres)
+                    {
+                        <input type="checkbox" name="selectedSousTitres" value="@sousTitre.Value" class="form-check-input" />
+                        <label class="form-check-label">@sousTitre.Text</label>
+                        
+                    }
+                }
+                else
+                {
+                    <p>No SousTitres available</p>
+                }
+             </div>
+             <br>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
