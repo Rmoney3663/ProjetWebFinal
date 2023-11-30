@@ -46,7 +46,6 @@
             <div class="card-body">
                 <p class="card-text"> <b>Titre :</b> @Html.DisplayFor(modelItem => item.TitreFrancais)</p>
                 <p class="card-text"> <b>Utilisateur qui possède l'article :</b> <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a></p>
-                <p class="card-text"> <b>Utilisateur qui possède l'article :</b> @Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</p>
                 <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
                 <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
