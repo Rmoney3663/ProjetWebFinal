@@ -43,12 +43,13 @@ namespace ProjetWebFinale.Controllers
                 {
                     var email = new MimeMessage();
                     email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
-                    email.To.Add(new MailboxAddress("Receiver test", courriel));
+
+                    //Email adress in DB might be used -> Temporary email
+                    email.To.Add(new MailboxAddress("Receiver test", "jiyoh32722@mainoj.com"));
 
                     email.Subject = "Avis d'appropriation";
                     email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                     {
-                        //Potential HTML injection
                         Text = "Un utilisateur désire s'approprier ce DVD."
                     };
 
@@ -60,8 +61,9 @@ namespace ProjetWebFinale.Controllers
                 //Envoyez un courriel à l'utilisateur
                 var email = new MimeMessage();
                 email.From.Add(new MailboxAddress("Sender test", "w56projet3equipe4@gmail.com"));
-                email.To.Add(new MailboxAddress("Receiver test", "jiyoh32722@mainoj.com"));
 
+                //Email adress in DB might be used -> Temporary email
+                email.To.Add(new MailboxAddress("Receiver test", "jiyoh32722@mainoj.com")); 
 
                 email.Subject = "Testing out email sending";
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -72,8 +74,6 @@ namespace ProjetWebFinale.Controllers
                 listeCourriels.Add(email);
             }
             
-            
-
             using (var smtp = new SmtpClient())
             {
                 smtp.Connect("smtp.gmail.com", 465, true);
@@ -124,6 +124,11 @@ namespace ProjetWebFinale.Controllers
                 .Include(f => f.Realisateurs)
                 .Include(f => f.UtilisateurProprietaire)
                 .Include(f => f.Utilisateurs)
+                .Include(f => f.FilmsSousTitres).ThenInclude(f => f.SousTitres)
+                .Include(f => f.FilmsLangues).ThenInclude(f => f.Langues)
+                .Include(f => f.FilmsSupplements).ThenInclude(f => f.Supplements)
+                .Include(f => f.EmpruntsFilms).ThenInclude(f => f.Utilisateurs)
+                .Include(f => f.FilmsActeurs).ThenInclude(f => f.Acteurs)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (films == null)
             {

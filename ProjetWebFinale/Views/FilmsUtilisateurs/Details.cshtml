@@ -11,113 +11,185 @@
     <h4>Films</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AnneeSortie)
+        <dt class="col-sm-2">
+            Année de sortie:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.AnneeSortie)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categorie)
+        <dt class="col-sm-2">
+            Catégorie:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Categorie)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateMAJ)
+        <dt class="col-sm-2">
+            Date de mise à jour:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DateMAJ)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Resume)
+        <dt class="col-sm-2">
+            Mise à jour effectué par:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilisateurs.NomUtilisateur)
+        </dd>
+        <dt class="col-sm-2">
+            Résumé:
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Resume)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DureeMinutes)
+        <dt class="col-sm-2">
+            Sous-titre(s):
         </dt>
-        <dd class = "col-sm-10">
+        @if (Model.FilmsSousTitres != null && Model.FilmsSousTitres.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsSousTitres.Select(fa => fa.SousTitres?.LangueSousTitre))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucun sous-titres pour ce film
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Durée (minutes):
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DureeMinutes)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FilmOriginal)
+        <dt class="col-sm-2">
+            Film original:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FilmOriginal)
+        @if (Model.FilmOriginal == true)
+        {
+            <dd class="col-sm-10">
+                Oui
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Non
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Image de la pochette:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/liste-vignettes/@(Model.Id).jpg" alt="Film Image" />
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePochette)
+        <dt class="col-sm-2">
+            Langue(s):
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagePochette)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NbDisques)
+        @if (Model.FilmsLangues != null && Model.FilmsLangues.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsLangues.Select(fa => fa.Langues?.Langue))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucune langues pour ce films
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Nombre de disques:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.NbDisques)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TitreFrancais)
+        <dt class="col-sm-2">
+            Titre en français:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TitreFrancais)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TitreOriginal)
+        <dt class="col-sm-2">
+            Titre original:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TitreOriginal)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VersionEtendue)
+        <dt class="col-sm-2">
+            Version étendue:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VersionEtendue)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Xtra)
+        @if (Model.VersionEtendue == true)
+        {
+            <dd class="col-sm-10">
+                Oui
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Non
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Extras:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Xtra)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Categories)
+        <dt class="col-sm-2">
+            Format:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Categories.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Formats.Description)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Formats)
+        <dt class="col-sm-2">
+            Réalisateur:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Formats.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Realisateurs.Nom)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Realisateurs)
+        <dt class="col-sm-2">
+            Acteur(s):
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Realisateurs.Id)
+        @if (Model.FilmsActeurs != null && Model.FilmsActeurs.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.FilmsActeurs.Select(fa => fa.Acteurs?.Nom))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                Aucun acteurs pour ce film
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Producteur:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Producteurs.Nom)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Producteurs)
+        <dt class="col-sm-2">
+            Emprunteur:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Producteurs.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Utilisateurs)
+        @if (Model.EmpruntsFilms != null && Model.EmpruntsFilms.Any())
+        {
+            <dd class="col-sm-10">
+                @string.Join(", ", Model.EmpruntsFilms.Select(fa => fa.Utilisateurs?.NomUtilisateur))
+            </dd>
+        }
+        else
+        {
+            <dd class="col-sm-10">
+                N/A
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Propriétaire:
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Utilisateurs.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UtilisateurProprietaire)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UtilisateurProprietaire.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UtilisateurProprietaire.NomUtilisateur)
         </dd>
     </dl>
 </div>
