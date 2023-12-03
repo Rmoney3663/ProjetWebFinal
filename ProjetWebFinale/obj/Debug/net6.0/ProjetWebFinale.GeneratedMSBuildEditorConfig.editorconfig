@@ -24,6 +24,34 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/ErrorNoFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXEVycm9yTm9Gb3VuZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [S:/ProjetWebFinal/ProjetWebFinale/Views/FilmsUtilisateurs/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNVdGlsaXNhdGV1cnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
