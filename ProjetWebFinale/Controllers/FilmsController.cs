@@ -486,5 +486,40 @@ namespace ProjetWebFinale.Controllers
         {
           return (_context.Films?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        public async Task<IActionResult> Appropriation(int? id)
+        {
+            if (id == null || _context.Films == null)
+            {
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
+            }
+
+            var films = await _context.Films
+                .Include(f => f.Categories)
+                .Include(f => f.Formats)
+                .Include(f => f.Producteurs)
+                .Include(f => f.Realisateurs)
+                .Include(f => f.UtilisateurProprietaire)
+                .Include(f => f.Utilisateurs)
+                .Include(f => f.FilmsActeurs)
+                    .ThenInclude(fa => fa.Acteurs)
+                .Include(f => f.FilmsLangues)
+                    .ThenInclude(fa => fa.Langues)
+                .Include(f => f.FilmsSousTitres)
+                    .ThenInclude(fa => fa.SousTitres)
+                .Include(f => f.FilmsSupplements)
+                    .ThenInclude(fa => fa.Supplements)
+                .Include(f => f.EmpruntsFilms)
+                    .ThenInclude(fa => fa.Utilisateurs)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (films == null)
+            {
+                return RedirectToAction("ErrorNoFound", "Films");
+                //return NotFound();
+            }
+
+            return View(films);
+        }
     }
 }

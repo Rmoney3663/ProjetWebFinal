@@ -57,8 +57,8 @@
                     <b>Utilisateur qui possède l'article :</b> <br>
                     <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
                 </p>
-                <div>    
-                    @if (user != null && user.Id == item.NoUtilisateurProprietaire)
+                <div>
+                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1)
                     {
                         <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a> 
                         <a> | </a>
@@ -69,6 +69,8 @@
                     else
                     {
                         <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a> | </a>
+                        <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Appropriation</a>
                     }                   
                 </div>
             </div>
