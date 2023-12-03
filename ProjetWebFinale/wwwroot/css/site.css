@@ -25,14 +25,31 @@ body {
 }
 
 .sSelected{
-    width: 30px;
-    background-color: black;
+    width: 35px;
+    background-color: royalblue;
     color: white;
     font-weight:bold;
 }
 
 .sNonSelected {
-    width: 30px;
+    width: 35px;
     background-color: white;
     color: black;
+}
+
+.sNonSelected:hover {
+    background-color: lightgray;
+}
+
+.sSection {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sTriEtAffichage{
+    background-color: lightgray;
+    padding: 10px;
+    border-width: 3px;
+    border-color: royalblue;
+    border-style: solid;
 }
