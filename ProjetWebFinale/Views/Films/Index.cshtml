@@ -14,17 +14,50 @@
     <a asp-action="Create">Ajouter un DVD</a>
 </p>
 
-@{
-    int nbPages = (int)Math.Ceiling((double)Model.Count() / 12);
-    int noPage = Context.Request.Query["noPage"].Count > 0 ? int.Parse(Context.Request.Query["noPage"][0]) : 1;
+<div>
+    <span>Page: </span>
+    @{
+        int nbFilms = Context.Request.Query["nbFilms"].Count > 0 ? int.Parse(Context.Request.Query["nbFilms"][0]) : 12;
+        int nbPages = (int)Math.Ceiling((double)Model.Count() / nbFilms);
+        int noPage = Context.Request.Query["noPage"].Count > 0 ? int.Parse(Context.Request.Query["noPage"][0]) : 1;
 
-    for (var i = 1; i <= nbPages; i++)
-    {
-    <input type="button" value="@i" onclick="page(@i)">
+        for (var i = 1; i <= nbPages; i++)
+        {
+            if (i == noPage)
+            {
+                <input type="button" value="@i" onclick="page(@i)" class="sSelected">
+            }
+            else
+            {
+                <input type="button" value="@i" onclick="page(@i)" class="sNonSelected">
+            }
     }
 
     string searchString = Context.Request.Query["SearchString"];
 }
+</div>
+<div>
+    <span>Nombre de films par page: </span>
+    @{
+
+        for (var i = 4; i <= 32; i+=4)
+        {
+            if (nbFilms == i)
+            {
+                <input type="button" value="@i" onclick="nbFilms(@i)" class="sSelected">
+            }
+            else
+            {
+                <input type="button" value="@i" onclick="nbFilms(@i)" class="sNonSelected">
+            }
+        }
+    }
+</div>
+<div>
+    <span>Tri: </span>
+    @{
+    }
+</div>
 
 <form asp-controller="Films" asp-action="Index" method="get">
     <p>
@@ -41,7 +74,7 @@
     @{
         var index = 0;
     }
-    @foreach (var item in Model.Skip((noPage - 1) * 12).Take(12))
+    @foreach (var item in Model.Skip((noPage - 1) * nbFilms).Take(nbFilms))
     {
         index++; 
         var user = await _userManager.GetUserAsync(User);
@@ -79,6 +112,10 @@
 
 <script>
     function page(page) {
-        location.href = '?noPage=' + page;
+        location.href = '?noPage=' + page + '&nbFilms=' + @nbFilms;
+    }
+
+    function nbFilms(nb) {
+        location.href = '?noPage=' + @noPage + '&nbFilms=' + nb;
     }
 </script>
