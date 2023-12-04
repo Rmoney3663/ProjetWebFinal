@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ProjetWebFinale.Models.Utilisateurs>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Liste de tout les utilisateurs</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nom
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomUtilisateur)
+                </td>
+                <td>
+                    <a href="/FilmsUtilisateurs/Index?name=@item.NomUtilisateur" class="btn btn-success">Voir tout les DVDs appartenant à cet utilisateur</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
