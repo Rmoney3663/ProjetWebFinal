@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,11 +12,12 @@ using ProjetWebFinale.Models;
 namespace ProjetWebFinale.Controllers
 {
     [Authorize]
-    public class FilmsController : Controller
+    public class FilmsMainController : Controller
     {
         private readonly FilmDbContext _context;
         private readonly UserManager<Utilisateurs> _userManager;
-        public FilmsController(FilmDbContext context, UserManager<Utilisateurs> userManager)
+
+        public FilmsMainController(FilmDbContext context, UserManager<Utilisateurs> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -77,9 +82,19 @@ namespace ProjetWebFinale.Controllers
         }
 
         // GET: Films/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account"); 
+            }
+
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = user.Id.ToString(), Text = user.NomUtilisateur }
+            }, "Value", "Text");
+
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description");
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom");
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
@@ -89,7 +104,7 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            
+
             return View();
         }
 
@@ -113,14 +128,14 @@ namespace ProjetWebFinale.Controllers
 
             foreach (var m in ModelState)
             {
-                foreach(var er in m.Value.Errors)
+                foreach (var er in m.Value.Errors)
                 {
                     Console.WriteLine(m.Key);
                     Console.WriteLine(er.ErrorMessage);
                 }
             }
             if (ModelState.IsValid)
-            {                
+            {
                 var tempFilename = "temp_filename";
                 string extension = Path.GetExtension(file.FileName);
                 string tempFilePath = Path.Combine("wwwroot/liste-vignettes", tempFilename + extension);
@@ -215,7 +230,18 @@ namespace ProjetWebFinale.Controllers
                 return RedirectToAction("ErrorNoFound", "Films");
                 //return NotFound();
             }
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            ViewData["NoUtilisateurProprietaire"] = new SelectList(new List<SelectListItem>
+            {
+                new SelectListItem { Value = user.Id.ToString(), Text = user.NomUtilisateur }
+            }, "Value", "Text");
+
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
@@ -273,7 +299,7 @@ namespace ProjetWebFinale.Controllers
             {
                 var existingLangues = _context.FilmsLangues
                     .Where(fl => fl.NoFilm == id)
-                    .ToList();    
+                    .ToList();
                 var removedLangues = existingLangues
                     .Where(fl => !selectedLangueIds.Contains(fl.NoLangue))
                     .ToList();
@@ -484,42 +510,8 @@ namespace ProjetWebFinale.Controllers
 
         private bool FilmsExists(int id)
         {
-          return (_context.Films?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Films?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public async Task<IActionResult> Appropriation(int? id)
-        {
-            if (id == null || _context.Films == null)
-            {
-                return RedirectToAction("ErrorNoFound", "Films");
-                //return NotFound();
-            }
-
-            var films = await _context.Films
-                .Include(f => f.Categories)
-                .Include(f => f.Formats)
-                .Include(f => f.Producteurs)
-                .Include(f => f.Realisateurs)
-                .Include(f => f.UtilisateurProprietaire)
-                .Include(f => f.Utilisateurs)
-                .Include(f => f.FilmsActeurs)
-                    .ThenInclude(fa => fa.Acteurs)
-                .Include(f => f.FilmsLangues)
-                    .ThenInclude(fa => fa.Langues)
-                .Include(f => f.FilmsSousTitres)
-                    .ThenInclude(fa => fa.SousTitres)
-                .Include(f => f.FilmsSupplements)
-                    .ThenInclude(fa => fa.Supplements)
-                .Include(f => f.EmpruntsFilms)
-                    .ThenInclude(fa => fa.Utilisateurs)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (films == null)
-            {
-                return RedirectToAction("ErrorNoFound", "Films");
-                //return NotFound();
-            }
-
-            return View(films);
-        }
     }
 }

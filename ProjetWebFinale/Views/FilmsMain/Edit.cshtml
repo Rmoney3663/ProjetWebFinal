@@ -44,9 +44,6 @@
                 <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie">
                     <option value=""></option>
                 </select>
-                <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie">
-                    <option value=""></option>
-                </select>
                 <span asp-validation-for="Categorie" class="text-danger"></span>
             </div>
             <br>
@@ -191,4 +188,4 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+    }

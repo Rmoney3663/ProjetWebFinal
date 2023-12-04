@@ -12,40 +12,41 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group" style="display:none;">
                 <label asp-for="DateMAJ" class="control-label"></label>
                 <input asp-for="DateMAJ" class="form-control" />
-                <span asp-validation-for="DateMAJ" class="text-danger"></span>            </div>
+                <span asp-validation-for="DateMAJ" class="text-danger"></span>
+            </div>
             <div class="form-group" style="display:none;">
                 <label asp-for="NoUtilisateurMAJ" class="control-label"></label>
                 <select asp-for="NoUtilisateurMAJ" class="form-control" asp-items="ViewBag.NoUtilisateurMAJ" hidden></select>
             </div>
 
-            <div class="form-group">              
+            <div class="form-group">
                 <label asp-for="AnneeSortie" class="control-label">Année de sortie du film:</label>
-                <input asp-for="AnneeSortie" class="form-control" class="form-control" type="number" min="1900" max="" data-val="true"/>
+                <input asp-for="AnneeSortie" class="form-control" class="form-control" type="number" min="1900" max="" data-val="true" />
                 <span asp-validation-for="AnneeSortie" class="text-danger"></span>
                 <script>
                     var currentYear = new Date().getFullYear();
                     document.getElementById("AnneeSortie").max = currentYear;
-                  
+
                 </script>
-                
-            </div> 
+
+            </div>
             <br>
 
             <div class="form-group">
                 <label asp-for="Categorie" class="control-label">Categorie:</label>
-                 <select asp-for="Categorie" class ="form-control" asp-items="ViewBag.Categorie">
-                     <option value=""></option>
-                 </select>
+                <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie">
+                    <option value=""></option>
+                </select>
             </div>
             <br>
 
             <div class="form-group">
                 <label asp-for="Format" class="control-label">Format:</label>
-                <select asp-for="Format" class ="form-control" asp-items="ViewBag.Format">
+                <select asp-for="Format" class="form-control" asp-items="ViewBag.Format">
                     <option value=""></option>
                 </select>
             </div>
@@ -64,7 +65,7 @@
             </div>
             <br>
 
-           <div class="form-group">
+            <div class="form-group">
                 <label asp-for="FilmOriginal" class="control-label">Film Original ?</label>
                 <select asp-for="FilmOriginal" class="form-control">
                     <option value=""></option>
@@ -77,14 +78,14 @@
 
             <div class="form-group">
                 <label asp-for="ImagePochette" class="control-label">Image de l'affiche de film :</label>
-                <input type="file" id="file" name="file" accept="image/jpeg" class="form-control" required/>
+                <input type="file" id="file" name="file" accept="image/jpeg" class="form-control" required />
                 <span asp-validation-for="ImagePochette" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
                 <label asp-for="NbDisques" class="control-label">Nombre de disques:</label>
-                <input asp-for="NbDisques" class="form-control" class="form-control" type="number" min="1" data-val="true"/>
+                <input asp-for="NbDisques" class="form-control" class="form-control" type="number" min="1" data-val="true" />
                 <span asp-validation-for="NbDisques" class="text-danger"></span>
             </div>
             <br>
@@ -116,7 +117,7 @@
 
             <div class="form-group">
                 <label asp-for="NoRealisateur" class="control-label">Nom du realisateur:</label>
-                <select asp-for="NoRealisateur" class ="form-control" asp-items="ViewBag.NoRealisateur">
+                <select asp-for="NoRealisateur" class="form-control" asp-items="ViewBag.NoRealisateur">
                     <option value=""></option>
                 </select>
             </div>
@@ -124,15 +125,15 @@
 
             <div class="form-group">
                 <label asp-for="NoProducteur" class="control-label">Nom du producteur:</label>
-                <select asp-for="NoProducteur" class ="form-control" asp-items="ViewBag.NoProducteur">
+                <select asp-for="NoProducteur" class="form-control" asp-items="ViewBag.NoProducteur">
                     <option value=""></option>
                 </select>
-            </div> 
+            </div>
             <br>
 
             <div class="form-group">
                 <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
-                <select asp-for="NoUtilisateurProprietaire" class ="form-control" asp-items="ViewBag.NoUtilisateurProprietaire"></select>
+                <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire"></select>
             </div>
             <br>
 
@@ -143,58 +144,58 @@
             </div>
             <br>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label class="control-label">Language : </label>
                 @if (ViewBag.Langues != null)
                 {
                     foreach (var language in ViewBag.Langues)
-                    {                        
+                    {
                         <input type="checkbox" name="selectedLangues" value="@language.Value" class="form-check-input" />
-                        <label class="form-check-label">@language.Text</label>                       
+                        <label class="form-check-label">@language.Text</label>
                     }
                 }
                 else
                 {
                     <p>Aucune languages disponible</p>
                 }
-             </div>
-             <br>
+            </div>
+            <br>
 
-              <div class="form-group">
+            <div class="form-group">
                 <label class="control-label">Sous Titres : </label>
-                 @if (ViewBag.SousTitres != null)
+                @if (ViewBag.SousTitres != null)
                 {
                     foreach (var sousTitre in ViewBag.SousTitres)
-                    {                        
+                    {
                         <input type="checkbox" name="selectedSousTitres" value="@sousTitre.Value" class="form-check-input" />
-                        <label class="form-check-label">@sousTitre.Text</label>                       
+                        <label class="form-check-label">@sousTitre.Text</label>
                     }
                 }
                 else
                 {
                     <p>Aucune Sous Titres disponible</p>
                 }
-             </div>
-             <br>
+            </div>
+            <br>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label class="control-label">Supplements : </label>
-                 @if (ViewBag.Supplements != null)
+                @if (ViewBag.Supplements != null)
                 {
                     foreach (var supplements in ViewBag.Supplements)
                     {
                         <div class="form-check">
                             <input type="checkbox" name="selectedSupplements" value="@supplements.Value" class="form-check-input" />
                             <label class="form-check-label">@supplements.Text</label>
-                        </div> 
+                        </div>
                     }
                 }
                 else
                 {
                     <p>Aucune supplements disponible</p>
                 }
-             </div>
-             <br>
+            </div>
+            <br>
 
 
 
@@ -211,5 +212,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

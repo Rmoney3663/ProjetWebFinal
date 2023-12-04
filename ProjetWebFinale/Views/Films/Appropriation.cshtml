@@ -1,11 +1,11 @@
 ﻿@model ProjetWebFinale.Models.Films
 
 @{
-    ViewData["Title"] = "Détails";
+    ViewData["Title"] = "Appropriation";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Détails de «@Model.TitreFrancais»</h1>
+<h1>Appropriation de «@Model.TitreFrancais»</h1>
 
 <div>
     <h4>Films</h4>
@@ -14,7 +14,7 @@
         <dt class="col-sm-2">
             Affiche du film :
         </dt>
-       <dd class="col-sm-10">
+        <dd class="col-sm-10">
             <img src="~/liste-vignettes/@(Model.Id).jpg" alt="@(Model.Id).jpg" width="140" height="201" />
         </dd>
         <dt class="col-sm-2">
@@ -23,7 +23,7 @@
         @if (Model.AnneeSortie != null)
         {
             <dd class="col-sm-10">
-               @Html.DisplayFor(model => model.AnneeSortie)
+                @Html.DisplayFor(model => model.AnneeSortie)
             </dd>
         }
         else
@@ -31,7 +31,7 @@
             <dd class="col-sm-10">
                 L'année n'est pas précisée
             </dd>
-        }           
+        }
         <dt class="col-sm-2">
             Catégorie:
         </dt>
@@ -46,8 +46,8 @@
             <dd class="col-sm-10">
                 La categories n'est pas précisée
             </dd>
-        } 
-        
+        }
+
         <dt class="col-sm-2">
             Date de la dernière mise à jour:
         </dt>
@@ -74,8 +74,8 @@
             <dd class="col-sm-10">
                 Le resumé n'est pas précisée
             </dd>
-        } 
-       
+        }
+
         <dt class="col-sm-2">
             Durée (minutes):
         </dt>
@@ -90,8 +90,8 @@
             <dd class="col-sm-10">
                 Le temps en minute n'est pas précisée
             </dd>
-        } 
-      
+        }
+
         <dt class="col-sm-2">
             Film Original?
         </dt>
@@ -115,14 +115,14 @@
             <dd class="col-sm-10">
                 L'originality du film n'est pas précisée
             </dd>
-        } 
-       
+        }
+
         <dt class="col-sm-2">
             Nombre de disques:
         </dt>
         @if (Model.NbDisques != null)
         {
-             <dd class="col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.NbDisques)
             </dd>
         }
@@ -131,8 +131,8 @@
             <dd class="col-sm-10">
                 Le nombre de disque n'est pas précisée
             </dd>
-        } 
-       
+        }
+
         <dt class="col-sm-2">
             Titre en francais:
         </dt>
@@ -153,8 +153,8 @@
             <dd class="col-sm-10">
                 Le titre original n'est pas précisée
             </dd>
-        } 
-       
+        }
+
         <dt class="col-sm-2">
             Version étendue?
         </dt>
@@ -178,8 +178,8 @@
             <dd class="col-sm-10">
                 Il n'est pas précisé s'il s'agit de la version étendue ou non.
             </dd>
-        } 
-        
+        }
+
         <dt class="col-sm-2">
             Informations supplémentaires:
         </dt>
@@ -190,14 +190,14 @@
                 <dd class="col-sm-10">
                     <a href="@Model.Xtra" target="_blank">@Model.Xtra</a>
                 </dd>
-                
+
             }
             else
             {
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Xtra)
                 </dd>
-               
+
             }
         }
         else
@@ -212,7 +212,7 @@
         </dt>
         @if (Model.Formats != null)
         {
-             <dd class="col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Formats.Description)
             </dd>
         }
@@ -221,14 +221,14 @@
             <dd class="col-sm-10">
                 Le formats n'est pas précisée
             </dd>
-        } 
-       
+        }
+
         <dt class="col-sm-2">
             Réalisateur(s) du film:
         </dt>
         @if (Model.Realisateurs != null)
         {
-             <dd class="col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Realisateurs.Nom)
             </dd>
         }
@@ -237,14 +237,14 @@
             <dd class="col-sm-10">
                 Le realisateurs n'est pas précisée
             </dd>
-        } 
-        
+        }
+
         <dt class="col-sm-2">
             Producteur(s) du film:
         </dt>
         @if (Model.Producteurs != null)
         {
-             <dd class="col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Producteurs.Nom)
             </dd>
         }
@@ -253,8 +253,8 @@
             <dd class="col-sm-10">
                 Le producteurs n'est pas précisée
             </dd>
-        } 
-        
+        }
+
         <dt class="col-sm-2">
             Utilisateur propriétaire:
         </dt>
@@ -341,7 +341,7 @@
         }
     </dl>
 </div>
-<div>    
+<div>
     <a asp-action="Index">Retour à la liste</a>
 </div>
 

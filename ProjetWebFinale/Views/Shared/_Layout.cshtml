@@ -44,13 +44,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">                       
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Films" asp-action="Index">Liste des films</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Films" asp-action="Index">Films</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Utilisateurs" asp-action="Index">Liste des utilisateurs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="MesFilms" asp-action="Index">Mes films</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
                         </li>
                     </ul>
                 </div>
@@ -61,14 +58,27 @@
     }
     else
     {
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-controller="account" asp-action="register"> S'identifer </a>
-            </li>
-            <li>
-                <a asp-controller="account" asp-action="login"> Se connecter </a>
-            </li>
-        </ul>
+         <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Projet Web Finale</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>               
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                     <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <a class="nav-link text-light"  asp-controller="account" asp-action="register"> Register </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light"  asp-controller="account" asp-action="login"> Login </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>  
     }
 
     <div class="container">
