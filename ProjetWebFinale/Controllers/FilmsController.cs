@@ -77,9 +77,26 @@ namespace ProjetWebFinale.Controllers
         }
 
         // GET: Films/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (user.TypeUtilisateur == 3)
+            {
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem { Value = user.Id.ToString(), Text = user.NomUtilisateur }
+                }, "Value", "Text");
+            }
+            else
+            { 
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
+            }  
+           
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description");
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom");
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
@@ -202,7 +219,8 @@ namespace ProjetWebFinale.Controllers
 
         // GET: Films/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
+        {        
+
             if (id == null || _context.Films == null)
             {
                 return RedirectToAction("ErrorNoFound", "Films");
@@ -215,7 +233,25 @@ namespace ProjetWebFinale.Controllers
                 return RedirectToAction("ErrorNoFound", "Films");
                 //return NotFound();
             }
-            ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (user.TypeUtilisateur == 3)
+            {
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem { Value = user.Id.ToString(), Text = user.NomUtilisateur }
+                }, "Value", "Text");
+            }
+            else
+            {
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+            }
+
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);

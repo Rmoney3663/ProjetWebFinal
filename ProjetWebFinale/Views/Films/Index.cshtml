@@ -40,11 +40,12 @@
 <div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
     @{
         var index = 0;
+        var user = await _userManager.GetUserAsync(User);
     }
     @foreach (var item in Model.Skip((noPage - 1) * 12).Take(12))
     {
         index++; 
-        var user = await _userManager.GetUserAsync(User);
+       
 
         <div class="card" style="width:300px; margin: 5px;">
             <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" width="300" height="442"/>
