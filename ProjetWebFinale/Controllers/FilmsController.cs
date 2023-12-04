@@ -531,31 +531,96 @@ namespace ProjetWebFinale.Controllers
                 //return NotFound();
             }
 
-            var films = await _context.Films
-                .Include(f => f.Categories)
-                .Include(f => f.Formats)
-                .Include(f => f.Producteurs)
-                .Include(f => f.Realisateurs)
-                .Include(f => f.UtilisateurProprietaire)
-                .Include(f => f.Utilisateurs)
-                .Include(f => f.FilmsActeurs)
-                    .ThenInclude(fa => fa.Acteurs)
-                .Include(f => f.FilmsLangues)
-                    .ThenInclude(fa => fa.Langues)
-                .Include(f => f.FilmsSousTitres)
-                    .ThenInclude(fa => fa.SousTitres)
-                .Include(f => f.FilmsSupplements)
-                    .ThenInclude(fa => fa.Supplements)
-                .Include(f => f.EmpruntsFilms)
-                    .ThenInclude(fa => fa.Utilisateurs)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var films = await _context.Films.FindAsync(id);
             if (films == null)
             {
                 return RedirectToAction("ErrorNoFound", "Films");
                 //return NotFound();
             }
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (user.TypeUtilisateur == 3)
+            {
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(new List<SelectListItem>
+                {
+                    new SelectListItem { Value = user.Id.ToString(), Text = user.NomUtilisateur }
+                }, "Value", "Text");
+            }
+            else
+            {
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+            }
+
+            ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
+            ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom", films.NoProducteur);
+            ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom", films.NoRealisateur);
+            ViewData["Categorie"] = new SelectList(_context.Categories, "Id", "Description", films.Categorie);
+
+            var availableLangues = _context.Langues.ToList();
+            var selectedLangueIds = _context.FilmsLangues
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoLangue)
+                .ToList();
+            ViewBag.Langues = new SelectList(availableLangues, "Id", "Langue");
+            ViewBag.SelectedLangues = selectedLangueIds;
+
+
+            var SavailableLangues = _context.SousTitres.ToList();
+            var selectedSousTitresIds = _context.FilmsSousTitres
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoSousTitre)
+                .ToList();
+            ViewBag.SousTitres = new SelectList(SavailableLangues, "Id", "LangueSousTitre");
+            ViewBag.selectedSousTitres = selectedSousTitresIds;
+
+            var availableSupplements = _context.Supplements.ToList();
+            var selectedSupplementsIds = _context.FilmsSupplements
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoSupplement)
+                .ToList();
+            ViewBag.Supplements = new SelectList(availableSupplements, "Id", "Description");
+            ViewBag.selectedSupplements = selectedSupplementsIds;
+
             return View(films);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Appropriation(Films model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = await _userManager.GetUserAsync(User);
+
+                    var filmToUpdate = await _context.Films.FindAsync(model.Id);
+                    if (filmToUpdate != null)
+                    {
+                        filmToUpdate.NoUtilisateurMAJ = user.Id;
+                        filmToUpdate.NoUtilisateurProprietaire = user.Id;
+                        filmToUpdate.DateMAJ = DateTime.Now;
+                        filmToUpdate.AnneeSortie = model.AnneeSortie;
+                        _context.Update(filmToUpdate);
+                        await _context.SaveChangesAsync();
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return RedirectToAction("Error", "Films");
+                }
+            }
+            return View(model);
+        }
+
+
+
     }
 }

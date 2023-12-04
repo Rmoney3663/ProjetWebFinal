@@ -7,341 +7,168 @@
 
 <h1>Appropriation de «@Model.TitreFrancais»</h1>
 
-<div>
-    <h4>Films</h4>
-    <hr />
-    <dl class="row">
+
+<h4>Films</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+    <form asp-action="Appropriation" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
         <dt class="col-sm-2">
-            Affiche du film :
+            Image
         </dt>
         <dd class="col-sm-10">
             <img src="~/liste-vignettes/@(Model.Id).jpg" alt="@(Model.Id).jpg" width="140" height="201" />
         </dd>
-        <dt class="col-sm-2">
-            Année de sortie:
-        </dt>
-        @if (Model.AnneeSortie != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.AnneeSortie)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                L'année n'est pas précisée
-            </dd>
-        }
-        <dt class="col-sm-2">
-            Catégorie:
-        </dt>
-        @if (Model.Categories != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Categories.Description)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                La categories n'est pas précisée
-            </dd>
-        }
+        <br>
 
-        <dt class="col-sm-2">
-            Date de la dernière mise à jour:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DateMAJ)
-        </dd>
-        <dt class="col-sm-2">
-            Dernière mise à jour par:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Utilisateurs.NomUtilisateur)
-        </dd>
-        <dt class="col-sm-2">
-            Résumé du film:
-        </dt>
-        @if (Model.Resume != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Resume)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le resumé n'est pas précisée
-            </dd>
-        }
+       <div class="form-group">
+            <label asp-for="ImagePochette" class="control-label">Image de l'affiche de film :</label>
+            <input asp-for="ImagePochette" class="form-control" type="file" id="file" name="file" accept="image/jpeg" readonly disabled />
+            <span asp-validation-for="ImagePochette" class="text-danger"></span>
+        </div>
 
-        <dt class="col-sm-2">
-            Durée (minutes):
-        </dt>
-        @if (Model.DureeMinutes != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.DureeMinutes)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le temps en minute n'est pas précisée
-            </dd>
-        }
+        <div class="form-group">
+            <label asp-for="AnneeSortie" class="control-label">Année de sortie du film:</label>
+            <input asp-for="AnneeSortie" class="form-control" type="number" min="1900" readonly />
+            <span asp-validation-for="AnneeSortie" class="text-danger"></span>
+        </div>
 
-        <dt class="col-sm-2">
-            Film Original?
-        </dt>
-        @if (Model.FilmOriginal != null)
-        {
-            if (@Model.FilmOriginal == true)
+        <div class="form-group">
+            <label asp-for="Categorie" class="control-label">Categorie:</label>
+            <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie" disabled>
+                <option value=""></option>
+            </select>
+            <span asp-validation-for="Categorie" class="text-danger"></span>
+        </div>
+        <br>
+                
+        <div class="form-group">
+            <label asp-for="Format" class="control-label">Format:</label>
+            <select asp-for="Format" class="form-control" asp-items="ViewBag.Format" disabled>
+                <option value=""></option>
+            </select>
+            <span asp-validation-for="Format" class="text-danger"></span>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label asp-for="Resume" class="control-label">Resumé du film:</label>
+            <textarea asp-for="Resume" class="form-control" readonly></textarea>
+            <span asp-validation-for="Resume" class="text-danger"></span>
+        </div>
+        <br>
+
+
+        <div class="form-group">
+            <label asp-for="DureeMinutes" class="control-label">Durée en minute du film:</label>
+            <input asp-for="DureeMinutes" class="form-control" type="number" min="1" readonly />
+            <span asp-validation-for="DureeMinutes" class="text-danger"></span>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label asp-for="FilmOriginal" class="control-label">Film Original ?</label>
+            <select asp-for="FilmOriginal" class="form-control" disabled>
+                <option value=""></option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+            </select>
+            <span asp-validation-for="FilmOriginal" class="text-danger"></span>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <label asp-for="NbDisques" class="control-label">Nombre de disques:</label>
+            <input asp-for="NbDisques" class="form-control" class="form-control" type="number" min="1" readonly />
+            <span asp-validation-for="NbDisques" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TitreFrancais" class="control-label">Titre en Francais du film:</label>
+            <input asp-for="TitreFrancais" class="form-control" readonly />
+            <span asp-validation-for="TitreFrancais" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TitreOriginal" class="control-label">Titre Original du film:</label>
+            <input asp-for="TitreOriginal" class="form-control" readonly />
+            <span asp-validation-for="TitreOriginal" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="VersionEtendue" class="control-label">Version Etendue ?</label>
+            <input asp-for="VersionEtendue" class="form-control" readonly />
+            <span asp-validation-for="VersionEtendue" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NoRealisateur" class="control-label">Nom du realisateur:</label>
+            <select asp-for="NoRealisateur" class="form-control" asp-items="ViewBag.NoRealisateur" disabled></select>
+            <span asp-validation-for="NoRealisateur" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NoProducteur" class="control-label">Nom du producteur:</label>
+            <select asp-for="NoProducteur" class="form-control" asp-items="ViewBag.NoProducteur" disabled></select>
+            <span asp-validation-for="NoProducteur" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Xtra" class="control-label">Extra info:</label>
+            <input asp-for="Xtra" class="form-control" readonly />
+            <span asp-validation-for="Xtra" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
+            <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" disabled></select>
+            <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label">Langues : </label>
+            @foreach (var langue in ViewBag.Langues)
             {
-                <dd class="col-sm-10">
-                    Oui
-                </dd>
+                <input type="checkbox" name="selectedLangueIds" value="@langue.Value" class="form-check-input" @(ViewBag.SelectedLangues.Contains(Convert.ToInt32(langue.Value)) ? "checked" : "") readonly  disabled />
+                <label class="form-check-label">@langue.Text</label>
             }
-            else
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Sous Titres : </label>
+            @foreach (var soustitre in ViewBag.SousTitres)
             {
-                <dd class="col-sm-10">
-                    Non
-                </dd>
+                <input type="checkbox" name="selectedSousTitresIds" value="@soustitre.Value" class="form-check-input" @(ViewBag.selectedSousTitres.Contains(Convert.ToInt32(soustitre.Value)) ? "checked" : "") readonly disabled />
+                <label class="form-check-label">@soustitre.Text</label>
             }
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                L'originality du film n'est pas précisée
-            </dd>
-        }
+        </div>
 
-        <dt class="col-sm-2">
-            Nombre de disques:
-        </dt>
-        @if (Model.NbDisques != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.NbDisques)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le nombre de disque n'est pas précisée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Titre en francais:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TitreFrancais)
-        </dd>
-        <dt class="col-sm-2">
-            Titre original:
-        </dt>
-        @if (Model.TitreOriginal != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TitreOriginal)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le titre original n'est pas précisée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Version étendue?
-        </dt>
-        @if (Model.VersionEtendue != null)
-        {
-            if (@Model.VersionEtendue == true)
+        <div class="form-group">
+            <label class="control-label">Supplements : </label>
+            @foreach (var supplements in ViewBag.Supplements)
             {
-                <dd class="col-sm-10">
-                    Oui
-                </dd>
+                <div class="form-check">
+                    <input type="checkbox" name="selectedSupplementsIds" value="@supplements.Value" class="form-check-input" @(ViewBag.selectedSupplements.Contains(Convert.ToInt32(supplements.Value)) ? "checked" : "") readonly disabled/>
+                    <label class="form-check-label">@supplements.Text</label> 
+                </div>
             }
-            else
-            {
-                <dd class="col-sm-10">
-                    Non
-                </dd>
-            }
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Il n'est pas précisé s'il s'agit de la version étendue ou non.
-            </dd>
-        }
+        </div>
+            <br>
 
-        <dt class="col-sm-2">
-            Informations supplémentaires:
-        </dt>
-        @if (!string.IsNullOrEmpty(Model.Xtra))
-        {
-            if (Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
-            {
-                <dd class="col-sm-10">
-                    <a href="@Model.Xtra" target="_blank">@Model.Xtra</a>
-                </dd>
-
-            }
-            else
-            {
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Xtra)
-                </dd>
-
-            }
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucune information supplémentaire n'est mentionnée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Formats du film:
-        </dt>
-        @if (Model.Formats != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Formats.Description)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le formats n'est pas précisée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Réalisateur(s) du film:
-        </dt>
-        @if (Model.Realisateurs != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Realisateurs.Nom)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le realisateurs n'est pas précisée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Producteur(s) du film:
-        </dt>
-        @if (Model.Producteurs != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Producteurs.Nom)
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Le producteurs n'est pas précisée
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Utilisateur propriétaire:
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UtilisateurProprietaire.NomUtilisateur)
-        </dd>
-        <dt class="col-sm-2">
-            Utilisateur emprunteur:
-        </dt>
-        @if (Model.EmpruntsFilms != null && Model.EmpruntsFilms.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.EmpruntsFilms.Select(fa => fa.Utilisateurs?.NomUtilisateur))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Personne n'emprunte actuellement le Films
-            </dd>
-        }
-        <dt class="col-sm-2">
-            Acteurs:
-        </dt>
-        @if (Model.FilmsActeurs != null && Model.FilmsActeurs.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsActeurs.Select(fa => fa.Acteurs?.Nom))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucun acteurs pour ce film.
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Langues:
-        </dt>
-        @if (Model.FilmsLangues != null && Model.FilmsLangues.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsLangues.Select(fa => fa.Langues?.Langue))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucune langues pour ce film.
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Sous-titres:
-        </dt>
-        @if (Model.FilmsSousTitres != null && Model.FilmsSousTitres.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsSousTitres.Select(fa => fa.SousTitres?.LangueSousTitre))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucun sous titres pour ce film.
-            </dd>
-        }
-
-        <dt class="col-sm-2">
-            Supplements:
-        </dt>
-        @if (Model.FilmsSupplements != null && Model.FilmsSupplements.Any())
-        {
-            <dd class="col-sm-10">
-                @string.Join(", ", Model.FilmsSupplements.Select(fa => fa.Supplements?.Description))
-            </dd>
-        }
-        else
-        {
-            <dd class="col-sm-10">
-                Aucun supplements mentionné pour ce film.
-            </dd>
-        }
-    </dl>
+            <div class="form-group">
+                <input type="submit" value="Appropriation" class="btn btn-primary" />
+            </div>
+           </form>
+    </div>
 </div>
+
 <div>
-    <a asp-action="Index">Retour à la liste</a>
+    <a asp-action="Index">Retour au liste</a>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
