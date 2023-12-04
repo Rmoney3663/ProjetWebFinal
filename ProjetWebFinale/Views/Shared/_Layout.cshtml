@@ -35,7 +35,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <button type="submit" class="btn btn-link navbar-btn nav-link ">
-                                Déconnexion
+                                Se déconnecter
                             </button>                   
                         </li>                
                     </ul>
@@ -44,10 +44,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">                       
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Films" asp-action="Index">Films</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en main</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
+                        <li>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Utilisateurs" asp-action="Index">Liste des utilisateurs</a>
                         </li>
                     </ul>
                 </div>
@@ -69,10 +69,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                      <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <a class="nav-link text-light"  asp-controller="account" asp-action="register"> Register </a>
+                            <a class="nav-link text-light"  asp-controller="account" asp-action="register"> S'enregistrer </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light"  asp-controller="account" asp-action="login"> Login </a>
+                            <a class="nav-link text-light"  asp-controller="account" asp-action="login"> Se connecter </a>
                         </li>
                     </ul>
                 </div>

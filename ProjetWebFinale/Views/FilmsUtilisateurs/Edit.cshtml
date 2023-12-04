@@ -107,7 +107,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a href="@Url.Action("Index", "FilmsUtilisateurs", new { name = Model.UtilisateurProprietaire.NomUtilisateur})" class="btn btn-primary">Retour à la liste</a>
 </div>
 
 @section Scripts {
