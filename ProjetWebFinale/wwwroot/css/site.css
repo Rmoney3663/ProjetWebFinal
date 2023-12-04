@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 
@@ -22,4 +22,34 @@ body {
     padding: 0.2rem 0.6rem;
     font-size: 0.95rem;
     line-height: 1.5;
+}
+
+.sSelected {
+    width: 35px;
+    background-color: royalblue;
+    color: white;
+    font-weight: bold;
+}
+
+.sNonSelected {
+    width: 35px;
+    background-color: white;
+    color: black;
+}
+
+    .sNonSelected:hover {
+        background-color: lightgray;
+    }
+
+.sSection {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sTriEtAffichage {
+    background-color: lightgray;
+    padding: 10px;
+    border-width: 3px;
+    border-color: royalblue;
+    border-style: solid;
 }
