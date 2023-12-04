@@ -6,7 +6,8 @@ namespace ProjetWebFinale.Models
     public class LoginViewModel
     {
         [Required]
-        public string NomUtilisateur { get; set; }
+        [EmailAddress]
+        public string Courriel { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string MotDePasse { get; set; }

@@ -34,8 +34,7 @@ namespace ProjetWebFinale.Controllers
                     Courriel = model.Courriel,
                     NomUtilisateur = model.Nom,
                     TypeUtilisateur = 3,
-                    EmailConfirmed = true,
-                    NormalizedUserName = model.Courriel.ToUpper()
+                    EmailConfirmed = true
                 };
                 // Store user data in AspNetUsers database table
                 var result = await userManager.CreateAsync(user, model.MotDePasse);
@@ -65,9 +64,9 @@ namespace ProjetWebFinale.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(
-                model.NomUtilisateur, model.MotDePasse, model.SeSouvenirDeMoi, false);
+                model.Courriel, model.MotDePasse, model.SeSouvenirDeMoi, false);
                 if (result.Succeeded)
-                {        
+                {
                     return RedirectToAction("Index", "Films");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");
