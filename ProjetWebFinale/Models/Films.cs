@@ -36,7 +36,7 @@ namespace ProjetWebFinale.Models
        
         [InverseProperty("Films")]
         public virtual ICollection<FilmsSousTitres>? FilmsSousTitres { get; set; }
-        [ForeignKey("Categorie")]
+        [ForeignKey("NoUtilisateurProprietaire")]
         [InverseProperty("Films")]
         public virtual Categories? Categories { get; set; }
         [ForeignKey("Format")]
