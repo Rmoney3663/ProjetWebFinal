@@ -123,7 +123,7 @@
                     <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
                 </p>
                 <div>
-                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1)
+                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1 || user.TypeUtilisateur == 2)
                     {
                         <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a> 
                         <a> | </a>
