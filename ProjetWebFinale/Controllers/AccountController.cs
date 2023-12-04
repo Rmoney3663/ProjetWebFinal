@@ -64,7 +64,7 @@ namespace ProjetWebFinale.Controllers
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(
-                model.Courriel, model.MotDePasse, model.SeSouvenirDeMoi, false);
+                model.NomUtilisateur, model.MotDePasse, model.SeSouvenirDeMoi, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Films");
