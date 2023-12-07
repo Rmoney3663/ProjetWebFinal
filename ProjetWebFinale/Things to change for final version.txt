@@ -1,5 +1,5 @@
-contacter: mettre sur autre page
-si aucun film: afficher message
+contacter: mettre sur autre page (OK)
+si aucun film: afficher message (OK)
 liste des utilisateurs:
 	exclure admin
 	liste déroulante
@@ -13,3 +13,6 @@ pagination en bas de la page
 personnalisation de l'environnement
 acteurs
 finir serveur mail
+
+Delete extra views if needed
+Put on server

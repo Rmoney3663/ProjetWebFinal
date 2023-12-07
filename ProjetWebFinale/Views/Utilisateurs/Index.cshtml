@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<ProjetWebFinale.Models.Utilisateurs>
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h1>Liste des utilisateurs</h1>
@@ -24,6 +26,9 @@
                 </td>
                 <td>
                     <a href="/FilmsUtilisateurs/Index?name=@item.NomUtilisateur" class="btn btn-success">Voir tout les DVDs appartenant à cet utilisateur</a>
+                </td>
+                <td>
+                    <a href="/Email/Email?receiver=@item.Courriel" class="btn btn-success">Contacter cet utilisateur</a>
                 </td>
             </tr>
         }

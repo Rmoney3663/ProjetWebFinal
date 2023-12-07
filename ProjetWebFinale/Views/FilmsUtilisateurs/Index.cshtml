@@ -9,6 +9,7 @@
     //TODO: Retour à l'accueil (Films de tout les utilisateurs)
     string name = Context.Request.Query["name"];
     string strNomUtilisateur = Char.ToUpper(name[0]) + name.Substring(1);
+    var nbResultats = Model.Count();
 }
 
 <h1>Liste des films appartenant à @strNomUtilisateur</h1>
@@ -91,77 +92,81 @@
     </p>
 </form>
 
-<div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
-    @{
-        IEnumerable<ProjetWebFinale.Models.Films> sortedModel = Model;
+@if (nbResultats > 0)
+{
+    <div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
+        @{
+            IEnumerable<ProjetWebFinale.Models.Films> sortedModel = Model;
 
-        if (tri == "nom")
-        {
-            sortedModel = Model.OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
+            if (tri == "nom")
+            {
+                sortedModel = Model.OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
+            }
+            else if (tri == "titre")
+            {
+                sortedModel = Model.OrderBy(film => film.TitreFrancais);
+            }
+            else if (tri == "ensemble")
+            {
+                sortedModel = Model.OrderBy(film => film.TitreFrancais).OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
+            }
+            var index = 0;
+            var user = await _userManager.GetUserAsync(User);
+
+            foreach (var item in sortedModel.Skip((noPage - 1) * nbFilms).Take(nbFilms))
+            {
+                index++;
+                <div class="card" style="width:300px; margin: 5px;">
+                    <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b>Titre :</b>
+                            @Html.DisplayFor(modelItem => item.TitreFrancais)
+                        </p>
+                        <p class="card-text">
+                            <b>Utilisateur qui possède l'article :</b> @strNomUtilisateur<br>
+                            <a href="/FilmsUtilisateurs/Details?id=@item.Id" class="btn btn-success">Voir les détails</a><br>
+                            <a href="/Email/Email?receiver=@item.UtilisateurProprietaire.Courriel" class="btn btn-success">Contacter @strNomUtilisateur</a>
+                         
+
+                            @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur < 3)
+                            {
+                                if (user.TypeUtilisateur == 1)
+                                {
+                                    <form asp-controller="FilmsUtilisateurs" asp-action="Email" method="post">
+                                        <input type="hidden" name="courrielRecipient" value="" />
+                                        <input type="hidden" name="utilisateur" value="@name">
+                                        <input type="submit" class="btn btn-primary" value="S'approprier ce DVD" />
+                                    </form>
+                                }
+                                else if (user.TypeUtilisateur == 2)
+                                {
+                                    <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Assigner le DVD à un utilisateur</a>
+                                    <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier le DVD</a>
+                                    <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer le DVD</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier le DVD</a>
+                                    <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer le DVD</a>
+                                }
+                            }
+                        </p>
+
+                    </div>
+                </div>
+            }
         }
-        else if (tri == "titre")
-        {
-            sortedModel = Model.OrderBy(film => film.TitreFrancais);
-        }
-        else if (tri == "ensemble")
-        {
-            sortedModel = Model.OrderBy(film => film.TitreFrancais).OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
-        }
-        var index = 0;
-        var user = await _userManager.GetUserAsync(User);
-    }
-    @foreach (var item in sortedModel.Skip((noPage - 1) * nbFilms).Take(nbFilms))
-    {
-        index++;
-        <div class="card" style="width:300px; margin: 5px;">
-            <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" />
-            <div class="card-body">
-                <p class="card-text">
-                    <b>Titre :</b>
-                    @Html.DisplayFor(modelItem => item.TitreFrancais)
-                </p>
-                <p class="card-text">
-                    <b>Utilisateur qui possède l'article :</b> @strNomUtilisateur<br>
-                    <a href="/FilmsUtilisateurs/Details?id=@item.Id" class="btn btn-success">Voir les détails</a><br>
-
-                    <form asp-controller="FilmsUtilisateurs" asp-action="Email" method="post">
-                        <input type="hidden" name="courrielRecipient" value="@item.UtilisateurProprietaire.Courriel" />
-                        <input type="hidden" name="utilisateur" value="@name">
-                        <textarea name="message" rows="4" cols="25" placeholder="Message destiné à cet utilisateur..." style="resize:none"></textarea>
-                        <input type="submit" class="btn btn-primary" value="Contacter" />
-                    </form>
-                    <br />
-
-                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur < 3)
-                    {
-                        if (user.TypeUtilisateur == 1)
-                        {
-                            <form asp-controller="FilmsUtilisateurs" asp-action="Email" method="post">
-                            <input type="hidden" name="courrielRecipient" value="" />
-                            <input type="hidden" name="utilisateur" value="@name">
-                            <input type="submit" class="btn btn-primary" value="S'approprier ce DVD" />
-                            </form>
-                        }
-                        else if (user.TypeUtilisateur == 2)
-                        {
-                            <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Assigner le DVD à un utilisateur</a>
-                            <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier le DVD</a>
-                            <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer le DVD</a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier le DVD</a>
-                            <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer le DVD</a>
-                        }   
-                    }
-                </p>
-
-            </div>
-        </div>
-    }
-
-</div>
-
+    </div>
+}
+else
+{
+    <div>
+        <p>
+            Aucun résultats
+        </p>
+    </div>
+}
 <script>
     var noPage = @noPage;
     var valeurNbFilms = @nbFilms;

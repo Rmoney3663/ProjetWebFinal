@@ -1,0 +1,54 @@
+﻿@model ProjetWebFinale.Models.Utilisateurs
+@inject UserManager<Utilisateurs> _userManager
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Contacter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string sender = Context.Request.Query["sender"];
+    string receiver = Context.Request.Query["receiver"];
+    var user = await _userManager.GetUserAsync(User);
+
+    /*
+    * TODO
+    * Send to multiple users or all users
+    */
+}
+
+<h1>Contacter un autre utilisateur</h1>
+
+<form asp-controller="Email" asp-action="Email" method="post">
+    <div>
+        <hr />
+        <dl class="row">
+            <dt>
+                Expéditeur:
+            </dt>
+            <dd>
+                <input type="text" name="sender" readonly value="@user.Courriel" />
+            </dd>
+            <dt>
+                Récipient:
+            </dt>
+            @if (!String.IsNullOrEmpty(receiver))
+            {
+                <dd>
+                    <input type="text" name="receiver" readonly value="@receiver" />
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    <select asp-for="NomUtilisateur" name="receiver" class="form-control" asp-items="ViewBag.Courriel"></select>
+                </dd>
+            }
+            <dt>
+                Message:
+            </dt>
+            <textarea name="message" rows="7" cols="50" placeholder="Message pour cet utilisateur..." style="resize:none"></textarea>
+            <input type="submit" class="btn btn-primary" value="Contacter" />
+
+        </dl>
+    </div>
+
+</form>
