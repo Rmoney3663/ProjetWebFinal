@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Create";
 }
+<!-- Add this to the head of your HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-gnFJF5NuxGvXz1zMF0nyHX4vaVDxc3zhe2luVT5bhk+FjZdFVf1iED2YkLN2JPlIK4CVZAGUBfi5+HDPqzqkmA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-oL6Bb4NzQdR8eF0b0PqA8wGkYMkqn4HlCdnn+j8nI4U=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-iZqFC0Lw5f/TjpSGQqmi7N2iHvptuQqC2C6OMxUuA8EjDSuPjTD1BrDo9q9X2Do2zLbEK8UH+qHC0b8tBBjrDpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <h1>Ajouter Nouveau DVD</h1>
@@ -196,6 +202,130 @@
                 }
             </div>
             <br>
+
+            
+            @{
+                var maxActeurs = 3;
+            }
+
+            <script>
+                var selectedActeurs = [];
+
+                function validateActeursSelection() {
+                    var errorMessage = document.getElementById('acteursValidationError');
+                    if (selectedActeurs.length > @maxActeurs) {
+                        errorMessage.textContent = 'Un maximum de @maxActeurs acteurs peut être sélectionné.';
+                        return false;
+                    } else {
+                        errorMessage.textContent = '';
+                        return true;
+                    }
+                }
+
+                function toggleActeurSelection(value) {
+                    var index = selectedActeurs.indexOf(value);
+
+                    if (index === -1) {
+                        // Add the value to the array
+                        selectedActeurs.push(value);
+                    } else {
+                        // Remove the value from the array
+                        selectedActeurs.splice(index, 1);
+                    }
+
+                    // Validate the selection
+                    validateActeursSelection();
+                }
+
+                function addNewActeur() {
+                    var newActeurInput = document.getElementById('newActeur');
+                    var newActeurGenderInput = document.getElementById('newActeurGender');
+                    var newActeur = newActeurInput.value.trim();
+                    var newActeurGender = newActeurGenderInput.value;
+
+                    // Validate inputs
+                    if (!newActeur || !newActeurGender) {
+                        alert('Veuillez fournir un nom et sélectionner un genre.');
+                        return;
+                    }
+
+                    if (newActeur && newActeurGender && selectedActeurs.indexOf(newActeur) === -1) {
+                        // Add the new actor as a checkbox
+                        var newActeurCheckbox = document.createElement('div');
+                        newActeurCheckbox.className = 'col-md-3';
+                        newActeurCheckbox.innerHTML = `
+                            <div class="form-check">
+                                <input type="checkbox" name="selectedActeurs" value="${newActeur}" class="form-check-input"
+                                       onclick="toggleActeurSelection('${newActeur}'); return validateActeursSelection();" />
+                                <label class="form-check-label">${newActeur}</label>
+                            </div>
+                        `;
+                        document.getElementById('acteursContainer').appendChild(newActeurCheckbox);
+
+                        // Manually trigger the toggle function to handle the selection
+                        toggleActeurSelection(newActeur);
+
+                        // Clear the input
+                        newActeurInput.value = '';
+                        newActeurGenderInput.value = '';
+
+                        // Validate the selection
+                        validateActeursSelection();
+                    }
+                }
+            </script>
+
+
+            <div class="form-group">
+                <label class="control-label">Acteurs : </label>
+                <div id="acteursContainer" class="row">
+                    @if (ViewBag.Acteurs != null)
+                    {
+                        var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
+                        if (acteursList.Any())
+                        {
+                            @foreach (var acteurs in acteursList)
+                            {
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="selectedActeurs" value="@acteurs.Value" class="form-check-input"
+                                               onclick="toggleActeurSelection('@acteurs.Value'); return validateActeursSelection();" />
+                                        <label class="form-check-label">@acteurs.Text</label>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Aucune acteurs disponible</p>
+                        }
+                    }
+                    else
+                    {
+                        <p>Aucune acteurs disponible</p>
+                    }
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" id="newActeur" class="form-control" placeholder="Ajouter un nouvel acteur" />
+                    </div>
+                     <div class="col-md-3">
+                        <select id="newActeurGender" class="form-control">
+                            <option value="">Sélectionnez le genre</option>
+                            <option value="H">Homme</option>
+                            <option value="F">Femme</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" onclick="addNewActeur()" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </div>
+                <span id="acteursValidationError" class="text-danger"></span>
+            </div>
+            <br>
+
+
 
 
 
