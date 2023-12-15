@@ -22,6 +22,9 @@
    
 </head>
 <body>
+    @{
+    var user = await UserManager.GetUserAsync(User);
+    }
     @if (SignInManager.IsSignedIn(User))
     {        
         <header>
@@ -42,11 +45,15 @@
                 </form>
                 <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Liste des Films</a>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">    
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
-                        </li>
-                    </ul>
+                    @if (user != null && user.TypeUtilisateur != 1)
+                    {
+                        <ul class="navbar-nav flex-grow-1">    
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
+                            </li>
+                        </ul>  
+                    }
+                        
                 </div>
             </div>
         </nav>

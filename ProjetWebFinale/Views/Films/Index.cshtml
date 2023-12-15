@@ -6,13 +6,17 @@
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@{
+    var user = await _userManager.GetUserAsync(User);
+}
 
 <h1>Liste des films</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
-</p>
+@if (user != null && user.TypeUtilisateur != 1)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
+    </p>
+}
 
 <div class="sTriEtAffichage">
 <div class="sSection">
@@ -103,7 +107,6 @@
             sortedModel = Model.OrderBy(film => film.TitreFrancais).OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
         }
         var index = 0;
-        var user = await _userManager.GetUserAsync(User);
     }
 
     @foreach (var item in sortedModel.Skip((noPage - 1) * nbFilms).Take(nbFilms))
