@@ -11,24 +11,27 @@
 
     /*
     * TODO
-    * Send to multiple users or all users
+    * Send to multiple users
     */
 }
 
-<h1>Contacter un autre utilisateur</h1>
+<h1>Contacter un ou plusieurs utilisateurs</h1>
 
 <form asp-controller="Email" asp-action="Email" method="post">
     <div>
+        <label for="radioUtilisateur"> Message pour tout les utilisateurs </label>
+        <input type="checkbox" id="tout" name="tout" onclick="disableReceiver()" />
         <hr />
         <dl class="row">
+
             <dt>
                 Expéditeur:
             </dt>
             <dd>
                 <input type="text" name="sender" readonly value="@user.Courriel" />
             </dd>
-            <dt>
-                Récipient:
+            <dt id="lblRecipient">
+                Récipient(s):
             </dt>
             @if (!String.IsNullOrEmpty(receiver))
             {
@@ -39,6 +42,7 @@
             else
             {
                 <dd>
+
                     <select asp-for="NomUtilisateur" name="receiver" class="form-control" asp-items="ViewBag.Courriel"></select>
                 </dd>
             }
@@ -52,3 +56,19 @@
     </div>
 
 </form>
+
+
+<script>
+    function disableReceiver() {
+        var tout = document.getElementById("tout").checked
+        if (tout == true) {
+            document.getElementById("NomUtilisateur").style.display = 'none';
+            document.getElementById("lblRecipient").style.display = 'none';
+        }
+        else {
+            document.getElementById("NomUtilisateur").style.display = 'block'
+            document.getElementById("lblRecipient").style.display = 'block';
+
+        }
+    }
+</script>

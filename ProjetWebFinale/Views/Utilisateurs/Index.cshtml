@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    /*
+     * TODO: Add search for a user
+     */
 
 }
 
@@ -13,16 +16,18 @@
     <thead>
         <tr>
             <th>
-                Nom
+                Nom de l'utilisateur
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
+            //Char.ToUpper(name[0]) + name.Substring(1);
+            var nomUtilisateur = Char.ToUpper(item.NomUtilisateur[0]) + item.NomUtilisateur.Substring(1);
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NomUtilisateur)
+                    @nomUtilisateur
                 </td>
                 <td>
                     <a href="/FilmsUtilisateurs/Index?name=@item.NomUtilisateur" class="btn btn-success">Voir tout les DVDs appartenant à cet utilisateur</a>
