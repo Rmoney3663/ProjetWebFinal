@@ -196,6 +196,56 @@
              </div>
              <br>
 
+           @{
+                var maxActeurs = 3;
+            }
+
+            <script>
+                function validateActeursSelection() {
+                    var selectedActeurs = document.querySelectorAll('input[name="selectedActeurs"]:checked');
+                    var errorMessage = document.getElementById('acteursValidationError');
+
+                    if (selectedActeurs.length > @maxActeurs) {
+                        errorMessage.textContent = 'Un maximum de @maxActeurs acteurs peut être sélectionné.';
+                        return false;
+                    } else {
+                        errorMessage.textContent = '';
+                        return true;
+                    }
+                }
+            </script>
+
+            <div class="form-group">
+                <label class="control-label">Acteurs : </label>
+                @if (ViewBag.Acteurs != null)
+                {
+                    var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
+                    if (acteursList.Any())
+                    {
+                        <div class="row">
+                            @foreach (var acteurs in acteursList)
+                            {
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="selectedActeurs" value="@acteurs.Value" class="form-check-input" onclick="return validateActeursSelection();"/>
+                                        <label class="form-check-label">@acteurs.Text</label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Aucune acteurs disponible</p>
+                    }
+                }
+                else
+                {
+                    <p>Aucune acteurs disponible</p>
+                }
+                <span id="acteursValidationError" class="text-danger"></span>
+            </div>          
+            <br>
 
 
             <div class="form-group">
