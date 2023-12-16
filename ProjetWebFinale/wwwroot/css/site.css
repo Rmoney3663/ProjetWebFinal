@@ -46,6 +46,12 @@ body {
     margin-bottom: 5px;
 }
 
+.sSectionPages {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align:center;
+}
+
 .sTriEtAffichage {
     background-color: lightgray;
     padding: 10px;
