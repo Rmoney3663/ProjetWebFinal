@@ -122,13 +122,13 @@ namespace ProjetWebFinale.Controllers
             var user = await _userManager.GetUserAsync(User);
             films.NoUtilisateurMAJ = user.Id;
             films.DateMAJ = DateTime.Now;
-            Console.WriteLine(file.FileName);
+            //Console.WriteLine(file.FileName);
             Console.WriteLine($"User Id: {user?.Id}, User Name: {user?.UserName}");
-            if (file == null || file.Length == 0)
-            {
-                ModelState.AddModelError("ImagePochette", "Veuillez sélectionner une image pour l'affiche du film.");
-            }
-
+            /* if (file == null || file.Length == 0)
+             {
+                 ModelState.AddModelError("ImagePochette", "Veuillez sélectionner une image pour l'affiche du film.");
+             }*/
+            ModelState.Remove("file");
             foreach (var m in ModelState)
             {
                 foreach(var er in m.Value.Errors)
@@ -138,28 +138,50 @@ namespace ProjetWebFinale.Controllers
                 }
             }
             if (ModelState.IsValid)
-            {                
+            {
                 var tempFilename = "temp_filename";
-                string extension = Path.GetExtension(file.FileName);
-                string tempFilePath = Path.Combine("wwwroot/liste-vignettes", tempFilename + extension);
-                using (Stream fileStream = new FileStream(tempFilePath, FileMode.Create))
+
+                if (file != null && file.Length > 0)
                 {
-                    await file.CopyToAsync(fileStream);
+                    // Handle the case when an image is selected
+                    string extension = Path.GetExtension(file.FileName);
+
+                    string tempFilePath = Path.Combine("wwwroot/liste-vignettes", tempFilename + extension);
+
+                    using (Stream fileStream = new FileStream(tempFilePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+
+                    _context.Add(films);
+                    await _context.SaveChangesAsync();
+
+                    var generatedId = films.Id;
+
+                    var finalFilename = $"{generatedId}{extension}";
+                    var finalFilePath = Path.Combine("wwwroot/liste-vignettes", finalFilename);
+                    System.IO.File.Move(tempFilePath, finalFilePath);
+
+                    films.ImagePochette = finalFilename;
+                }
+                else
+                {
+                    _context.Add(films);
+                    await _context.SaveChangesAsync();
+                    var generatedId = films.Id;
+                    var extension = Path.GetExtension("non.jpg");
+
+                    var newFileName = $"{generatedId}{extension}";
+                    var newFilePath = Path.Combine("wwwroot/liste-vignettes", newFileName);
+
+                    System.IO.File.Copy("wwwroot/liste-vignettes/non.jpg", newFilePath);
+
+                    films.ImagePochette = newFileName;
                 }
 
-                _context.Add(films);
                 await _context.SaveChangesAsync();
 
-                var generatedId = films.Id;
-
-                var finalFilename = $"{generatedId}{extension}";
-                var finalFilePath = Path.Combine("wwwroot/liste-vignettes", finalFilename);
-                System.IO.File.Move(tempFilePath, finalFilePath);
-                var finalnameimage = generatedId - 50000;
-                films.ImagePochette = finalnameimage + extension;
-
-                await _context.SaveChangesAsync();
-
+                /* ----------------------------------------------------------------------------- */
                 if (selectedLangues != null)
                 {
                     if (films.FilmsLangues == null)
