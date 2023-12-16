@@ -225,12 +225,6 @@
                     }
                 }
 
-                function toggleActeurSelection(value) {
-
-                    // Validate the selection
-                    validateActeursSelection();
-                }
-
                 function addNewActeur() {
                     var newActeurInput = document.getElementById('newActeur');
                     var newActeurGenderInput = document.getElementById('newActeurGender');
@@ -250,7 +244,7 @@
                         newActeurCheckbox.innerHTML = `
                             <div class="form-check">
                                 <input type="checkbox" name="selectedActeurs" value="${newActeur}" class="form-check-input"
-                                       onclick="toggleActeurSelection('${newActeur}'); return validateActeursSelection();" />
+                                                       onclick="validateActeursSelection(); return validateActeursSelection();" />
                                 <label class="form-check-label">${newActeur}</label>
                             </div>
                         `;
@@ -283,7 +277,7 @@
                                 <div class="col-md-3">
                                     <div class="form-check">
                                         <input type="checkbox" name="selectedActeurs" value="@acteurs.Value" class="form-check-input"
-                                               onclick="toggleActeurSelection('@acteurs.Value'); return validateActeursSelection();" />
+                                               onclick="validateActeursSelection(); return validateActeursSelection();" />
                                         <label class="form-check-label">@acteurs.Text</label>
                                     </div>
                                 </div>
@@ -332,7 +326,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Retour au liste</a>
+    <a asp-action="Index">Retour à la liste</a>
 </div>
 
 @section Scripts {
