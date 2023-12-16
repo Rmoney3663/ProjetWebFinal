@@ -209,11 +209,14 @@
             }
 
             <script>
-                var selectedActeurs = [];
 
                 function validateActeursSelection() {
+                    var checkboxes = document.querySelectorAll('input[name="selectedActeurs"]:checked');
+                    var checkedValues = Array.from(checkboxes).map(function (checkbox) {
+                        return checkbox.value;
+                    });
                     var errorMessage = document.getElementById('acteursValidationError');
-                    if (selectedActeurs.length > @maxActeurs) {
+                    if (checkedValues.length > @maxActeurs) {
                         errorMessage.textContent = 'Un maximum de @maxActeurs acteurs peut être sélectionné.';
                         return false;
                     } else {
@@ -223,15 +226,6 @@
                 }
 
                 function toggleActeurSelection(value) {
-                    var index = selectedActeurs.indexOf(value);
-
-                    if (index === -1) {
-                        // Add the value to the array
-                        selectedActeurs.push(value);
-                    } else {
-                        // Remove the value from the array
-                        selectedActeurs.splice(index, 1);
-                    }
 
                     // Validate the selection
                     validateActeursSelection();
@@ -304,7 +298,7 @@
                     {
                         <p>Aucune acteurs disponible</p>
                     }
-                </div>ah 
+                </div> 
                 <br>
                 <div class="row">
                     <div class="col-md-10">
