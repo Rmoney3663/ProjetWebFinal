@@ -1,0 +1,34 @@
+﻿@inject UserManager<Utilisateurs> _userManager
+﻿@using Microsoft.AspNetCore.Identity
+@model ModifierMotDePasse
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await _userManager.GetUserAsync(User);
+}
+
+<h1>Modifier votre profil</h1>
+
+<div>
+    <form asp-controller="Profile" asp-action="Profile" method="post">
+        <h4>Changer votre mot de passe</h4>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ancienMotDePasse"></label>
+            <input asp-for="ancienMotDePasse" class="form-control" />
+            <span asp-validation-for="ancienMotDePasse" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="nouveauMotDePasse"></label>
+            <input asp-for="nouveauMotDePasse" class="form-control" />
+            <span asp-validation-for="nouveauMotDePasse" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="confirmerMotDePasse"></label>
+            <input asp-for="confirmerMotDePasse" class="form-control" />
+            <span asp-validation-for="confirmerMotDePasse" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Modifier votre mot de passe</button>
+    </form>
+</div>

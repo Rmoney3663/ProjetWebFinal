@@ -10,13 +10,12 @@
     var user = await _userManager.GetUserAsync(User);
 
     /*
-    * TODO
-    * Send to multiple users
+    * Navigation bar layout is weird because the plugin to multiselect within a 
+    * dropdown list only supports bootstrap 3 and under while the project uses bootstrap 5.
     */
 }
 
 <head>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -28,17 +27,15 @@
 
 <form asp-controller="Email" asp-action="Email" method="post">
     <div>
-
-        <hr />
+        <hr/>
         <dl class="row">
-
             <dt>
                 Expéditeur:
             </dt>
             <dd>
                 <input type="text" name="sender" readonly value="@user.Courriel" />
             </dd>
-            <dt id="lblRecipient">
+            <dt>
                 Récipient(s):
             </dt>
             @if (!String.IsNullOrEmpty(receiver))
@@ -49,7 +46,6 @@
             }
             else
             {
-                
                 <dd>
                     @Html.ListBoxFor(m => m.Receivers, new MultiSelectList(Model.Emails, "Value", "Text"), new {size = 10, multiple = "multiple", id = "Emails_dropdown", name = "receiver" })
                 </dd>
@@ -58,14 +54,11 @@
                 Message:
             </dt>
             <dd>
-                <textarea name="message" rows="7" cols="50" placeholder="Message pour le ou les utilisateurs..." style="resize:none"></textarea>
-
+                <textarea name="message" rows="7" cols="50" placeholder="Message pour le ou les utilisateurs sélectionnés..." style="resize:none"></textarea>
             </dd>
             <dd>
                 <input type="submit" class="btn btn-primary" value="Contacter" />
-
             </dd>
-
         </dl>
     </div>
 
@@ -79,17 +72,4 @@
             includeSelectAllOption: true,
         });
     });
-
-    function disableReceiver() {
-        var tout = document.getElementById("tout").checked
-        if (tout == true) {
-            document.getElementById("Emails_dropdown").style.display = 'none';
-            document.getElementById("lblRecipient").style.display = 'none';
-        }
-        else {
-            document.getElementById("Emails_dropdown").style.display = 'block'
-            document.getElementById("lblRecipient").style.display = 'block';
-
-        }
-    }
 </script>
