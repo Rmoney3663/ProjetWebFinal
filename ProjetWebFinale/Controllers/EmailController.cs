@@ -23,59 +23,46 @@ namespace ProjetWebFinale.Controllers
             _userManager = userManager;
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> Email()
         {
             var user = await _userManager.GetUserAsync(User);
             var currentUserId = user.Id;
+            List<SelectListItem> emailsSelectListItems = new List<SelectListItem>();
 
             //Get all non-admin users and exclude the currently logged in user.
-            var utilisateur = from u in _context.Utilisateurs where u.TypeUtilisateur != 1 && u.Id != currentUserId select u;
-            ViewData["Courriel"] = new SelectList(utilisateur, "Courriel", "Courriel");
+            var courriels = (from u in _context.Utilisateurs where u.TypeUtilisateur != 1 && u.Id != currentUserId select u.Courriel).ToList();
+            //ViewData["Courriel"] = new SelectList(utilisateur, "Courriel", "Courriel");
+            foreach (string c in courriels)
+            {
+                SelectListItem selectList = new()
+                {
+                    Text = c,
+                    Value = c,
+                };
+                emailsSelectListItems.Add(selectList);
+            }
 
-            return View();
+            Courriel courriel = new()
+            {
+                Emails = emailsSelectListItems
+            };
+
+            return View(courriel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Email(string sender, string receiver, string message, string tout)
+        public async Task<IActionResult> Email(string sender, string[] receivers, string message)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var currentUserId = user.Id;
             var listeCourriels = new List<MimeMessage>();
 
-            if (tout == "on")
+            foreach (string adresse in receivers)
             {
-                //Send to all users
-                var courriels = (from u in _context.Utilisateurs where u.TypeUtilisateur != 1 && u.Id != currentUserId select u.Courriel).ToList();
-                foreach (string courriel in courriels)
-                {
-                    var email = new MimeMessage();
-                    email.From.Add(new MailboxAddress(sender, sender));
-
-                    //Email address in DB might be used -> Temporary email
-                    email.To.Add(new MailboxAddress(courriel, courriel));
-
-                    email.Subject = "Testing out email sending";
-                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                    {
-                        Text = "<b>" + message + "</b>"
-                    };
-
-                    listeCourriels.Add(email);
-                }
-            }
-            else
-            {
-                //Send to one user
                 var email = new MimeMessage();
                 email.From.Add(new MailboxAddress(sender, sender));
+                email.To.Add(new MailboxAddress(adresse, adresse));
 
-                //Email address in DB might be used -> Temporary email
-                email.To.Add(new MailboxAddress(receiver, receiver));
-
-                email.Subject = "Testing out email sending";
+                email.Subject = "Nouveau message de la part de " + sender;
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                 {
                     Text = "<b>" + message + "</b>"
@@ -83,8 +70,6 @@ namespace ProjetWebFinale.Controllers
 
                 listeCourriels.Add(email);
             }
-
-           
 
             using (var smtp = new SmtpClient())
             {
@@ -98,6 +83,7 @@ namespace ProjetWebFinale.Controllers
                 }
                 smtp.Disconnect(true);
             }
+
 
             return RedirectToAction("Index", "Films");
         }

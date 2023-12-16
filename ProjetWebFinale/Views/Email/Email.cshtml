@@ -1,4 +1,4 @@
-﻿@model ProjetWebFinale.Models.Utilisateurs
+﻿@model ProjetWebFinale.Models.Courriel
 @inject UserManager<Utilisateurs> _userManager
 ﻿@using Microsoft.AspNetCore.Identity
 
@@ -15,12 +15,20 @@
     */
 }
 
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.js"></script>
+</head>
+
 <h1>Contacter un ou plusieurs utilisateurs</h1>
 
 <form asp-controller="Email" asp-action="Email" method="post">
     <div>
-        <label for="radioUtilisateur"> Message pour tout les utilisateurs </label>
-        <input type="checkbox" id="tout" name="tout" onclick="disableReceiver()" />
+
         <hr />
         <dl class="row">
 
@@ -41,16 +49,22 @@
             }
             else
             {
+                
                 <dd>
-
-                    <select asp-for="NomUtilisateur" name="receiver" class="form-control" asp-items="ViewBag.Courriel"></select>
+                    @Html.ListBoxFor(m => m.Receivers, new MultiSelectList(Model.Emails, "Value", "Text"), new {size = 10, multiple = "multiple", id = "Emails_dropdown", name = "receiver" })
                 </dd>
             }
             <dt>
                 Message:
             </dt>
-            <textarea name="message" rows="7" cols="50" placeholder="Message pour cet utilisateur..." style="resize:none"></textarea>
-            <input type="submit" class="btn btn-primary" value="Contacter" />
+            <dd>
+                <textarea name="message" rows="7" cols="50" placeholder="Message pour le ou les utilisateurs..." style="resize:none"></textarea>
+
+            </dd>
+            <dd>
+                <input type="submit" class="btn btn-primary" value="Contacter" />
+
+            </dd>
 
         </dl>
     </div>
@@ -59,14 +73,21 @@
 
 
 <script>
+    $(document).ready(function () {
+        $('#Emails_dropdown').multiselect({
+            nonSelectedText: 'Choisir une ou plusieurs adresses',
+            includeSelectAllOption: true,
+        });
+    });
+
     function disableReceiver() {
         var tout = document.getElementById("tout").checked
         if (tout == true) {
-            document.getElementById("NomUtilisateur").style.display = 'none';
+            document.getElementById("Emails_dropdown").style.display = 'none';
             document.getElementById("lblRecipient").style.display = 'none';
         }
         else {
-            document.getElementById("NomUtilisateur").style.display = 'block'
+            document.getElementById("Emails_dropdown").style.display = 'block'
             document.getElementById("lblRecipient").style.display = 'block';
 
         }

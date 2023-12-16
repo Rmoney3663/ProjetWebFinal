@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
+    "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
   },
   "projects": {
-    "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {
+    "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "projectUniqueName": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
         "projectName": "ProjetWebFinale",
-        "projectPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
-        "packagesPath": "C:\\Users\\j.labrosse\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
+        "projectPath": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "packagesPath": "C:\\Users\\jerla\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\j.labrosse\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\jerla\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +81,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -97,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
