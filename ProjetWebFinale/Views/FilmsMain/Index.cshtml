@@ -92,16 +92,8 @@
         }
     <span class="fw-bold">Tri: </span>
     <div>
-    <label for="radioUtilisateur"> Par nom d'utilisateur </label>
-    <input type="radio" id="radioUtilisateur" name="tri" onclick="tri('nom')" @if (tri == "nom") { <text>checked</text> }/>
-    </div>
-    <div>
     <label for="radioUtilisateur"> Par titre de film </label>
             <input type="radio" id="radioTitre" name="tri" onclick="tri('titre')" @if (tri == "titre") { <text>checked</text> }/>
-    </div>
-    <div>
-    <label for="radioUtilisateur"> Par nom d'utilisateur et titre de film </label>
-            <input type="radio" id="radioEnsemble" name="tri" onclick="tri('ensemble')" @if (tri == "ensemble") { <text>checked</text> }/>
     </div>
 </div>
 </div>
