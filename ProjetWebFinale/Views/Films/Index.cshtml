@@ -6,21 +6,11 @@
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{
-    var user = await _userManager.GetUserAsync(User);
-}
 
-<h1>Liste des films</h1>
-@if (user != null && user.TypeUtilisateur != 1)
-{
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
-    </p>
-}
+<h1 class="text-center">Liste des films</h1>
 
-<div class="sTriEtAffichage">
-<div class="sSection">
-        <span class="fw-bold">Page: </span>
+<div class="sSectionPages">
+    <span class="fw-bold">Page: </span>
     @{
         int nbFilms = Context.Request.Query["nbFilms"].Count > 0 ? int.Parse(Context.Request.Query["nbFilms"][0]) : 12;
         int nbPages = (int)Math.Ceiling((double)Model.Count() / nbFilms);
@@ -36,27 +26,62 @@
             {
                 <input type="button" value="@i" onclick="page(@i)" class="sNonSelected">
             }
-    }
-
-    string searchString = Context.Request.Query["SearchString"];
-}
-</div>
-<div class ="sSection">
-        <span class="fw-bold">Nombre de films par page: </span>
-    @{
-
-        for (var i = 4; i <= 32; i+=4)
-        {
-            if (nbFilms == i)
-            {
-                <input type="button" value="@i" onclick="nbFilms(@i)" class="sSelected">
-            }
-            else
-            {
-                <input type="button" value="@i" onclick="nbFilms(@i)" class="sNonSelected">
-            }
         }
+
+        string searchString = Context.Request.Query["SearchString"];
     }
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
+</p>
+<div class="sTriEtAffichage">
+<div class ="sSection">
+
+        <span class="fw-bold">Nombre de films par page: </span>
+           <select id="nbFilmsDropdown" onchange="nbFilms()">
+            @if (nbFilms == 4)
+            {
+                <option value="4" selected>4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+            }
+            else if (nbFilms == 8)
+            {
+                <option value="4">4</option>
+                <option value="8" selected>8</option>
+                <option value="12">12</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+            }
+            else if (nbFilms == 12)
+            {
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="12" selected>12</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+            }
+            else if (nbFilms == 20)
+            {
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+                <option value="20" selected>20</option>
+                <option value="40">40</option>
+            }
+            else if (nbFilms == 40)
+            {
+                <option value="4">4</option>
+                <option value="8">8</option>
+                <option value="12">12</option>
+                <option value="20">20</option>
+                <option value="40" selected>40</option>
+            }
+           </select>
+
 </div>
 <div class="sSection">
         @{
@@ -79,7 +104,7 @@
 </div>
 <br />
 <form asp-controller="Films" asp-action="Index" method="get">
-    <p>
+    <p class="text-center">
         <b class="text-primary">Recherche par titre:</b> <input type="text" placeholder="Titre du film" name="SearchString" />
         <input type="submit" class="btn btn-primary" value="Rechercher" />
         @if (!String.IsNullOrEmpty(searchString))
@@ -90,7 +115,7 @@
 </form>
 
 
-<div class="d-flex flex-wrap align-content-start bg-light" style="height:1000px">
+<div class="d-flex flex-wrap align-content-start bg-light" style="margin-bottom:50px">
     @{
          IEnumerable<ProjetWebFinale.Models.Films> sortedModel = Model;
 
@@ -107,6 +132,7 @@
             sortedModel = Model.OrderBy(film => film.TitreFrancais).OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
         }
         var index = 0;
+        var user = await _userManager.GetUserAsync(User);
     }
 
     @foreach (var item in sortedModel.Skip((noPage - 1) * nbFilms).Take(nbFilms))
@@ -147,6 +173,23 @@
 
 </div>
 
+<div class="sSectionPages">
+    <span class="fw-bold">Page: </span>
+    @{
+        for (var i = 1; i <= nbPages; i++)
+        {
+            if (i == noPage)
+            {
+                <input type="button" value="@i" onclick="page(@i)" class="sSelected">
+            }
+            else
+            {
+                <input type="button" value="@i" onclick="page(@i)" class="sNonSelected">
+            }
+        }
+    }
+</div>
+
 <script>
     var noPage = @noPage;
     var valeurNbFilms = @nbFilms;
@@ -156,8 +199,10 @@
         location.href = '?noPage=' + page + '&nbFilms=' + valeurNbFilms + '&tri=' + valeurTri;
     }
 
-    function nbFilms(nb) {
-        location.href = '?noPage=' + noPage + '&nbFilms=' + nb + '&tri=' + valeurTri;
+    function nbFilms() {
+        let dropdown = document.getElementById("nbFilmsDropdown");
+        let nbFilmsParPage = dropdown.options[dropdown.selectedIndex].value;
+        location.href = '?noPage=' + noPage + '&nbFilms=' + nbFilmsParPage + '&tri=' + valeurTri;
     }
 
     function tri(tri) {
