@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -534,6 +535,32 @@ namespace ProjetWebFinale.Controllers
         private bool FilmsExists(int id)
         {
             return (_context.Films?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [HttpPost]
+        public IActionResult AddActor(string nom, char sexe)
+        {
+            // Perform validation and add actor to the database
+            if (ModelState.IsValid)
+            {
+                // Add actor to the database
+                var newActor = new Acteurs
+                {
+                    Nom = nom,
+                    Sexe = sexe
+                };
+
+                _context.Acteurs.Add(newActor);
+                _context.SaveChanges();
+
+                // You can return a JSON response or any other suitable response
+                return Json(new { success = true, message = "Acteurs added successfully" });
+            }
+            else
+            {
+                // Validation failed, return an error response
+                return Json(new { success = false, message = "Validation failed" });
+            }
         }
 
     }
