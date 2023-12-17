@@ -156,12 +156,40 @@
                 </div>
             }
         </div>
-            <br>
 
-            <div class="form-group">
-                <input type="submit" value="Appropriation" class="btn btn-primary" />
-            </div>
-           </form>
+        <div class="form-group">
+            <label class="control-label">Acteurs : </label>
+                @if (ViewBag.Acteurs != null)
+                {
+                    var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
+                    if (acteursList.Any())
+                    {
+                    <div class="row">
+                            @foreach (var acteurs in acteursList)
+                            {
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <input type="checkbox" name="selectedActeursIds" value="@acteurs.Value" class="form-check-input"
+                                        @(ViewBag.selectedActeurs.Contains(Convert.ToInt32(acteurs.Value)) ? "checked" : "") readonly disabled />
+                                    <label class="form-check-label">@acteurs.Text</label>
+                                </div>
+                            </div>
+                            }
+                    </div>
+                    }
+                    else
+                    {
+                    <p>Aucune acteurs disponible</p>
+                    }
+                }
+            <span id="acteursValidationError" class="text-danger"></span>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <input type="submit" value="Appropriation" class="btn btn-primary" />
+        </div>
+        </form>
     </div>
 </div>
 
