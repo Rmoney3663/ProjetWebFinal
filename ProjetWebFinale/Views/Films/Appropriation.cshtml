@@ -1,8 +1,10 @@
 ﻿@model ProjetWebFinale.Models.Films
-
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Utilisateurs> _userManager
 @{
     ViewData["Title"] = "Appropriation";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await _userManager.GetUserAsync(User);
 }
 
 <h1>Appropriation de «@Model.TitreFrancais»</h1>
@@ -116,17 +118,40 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="Xtra" class="control-label">Extra info:</label>
-            <input asp-for="Xtra" class="form-control" readonly />
+            <label asp-for="Xtra" class="control-label">Extra info:</label>     
+                @if (!string.IsNullOrEmpty(Model.Xtra))
+                {
+                    if (Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
+                    {
+                    <a href="@Model.Xtra" target="_blank">@Model.Xtra</a>
+
+                    }
+                    else
+                    {
+                    <input asp-for="Xtra" class="form-control" readonly />
+
+                    }
+                }
             <span asp-validation-for="Xtra" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
-            <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" disabled></select>
-            <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
-        </div>
 
+        @if (user != null && user.TypeUtilisateur == 2)
+        {
+            <div class="form-group">
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
+                <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" ></select>
+                <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
+                <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" disabled></select>
+                <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
+            </div>
+        }
 
         <div class="form-group">
             <label class="control-label">Langues : </label>
