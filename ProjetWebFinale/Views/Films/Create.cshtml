@@ -239,20 +239,23 @@
                                 // Handle success, update UI, etc.
                                 alert(result.message);
 
-                                // Add the new actor as a checkbox
+                                // Access the actor ID from the response
+                                var newActorId = result.actorId;
+
+                                // Add the new actor as a checkbox with the correct value (ID)
                                 var newActeurCheckbox = document.createElement('div');
                                 newActeurCheckbox.className = 'col-md-3';
                                 newActeurCheckbox.innerHTML = `
-                                                        <div class="form-check">
-                                                            <input type="checkbox" name="selectedActeurs" value="${newActeur}" class="form-check-input"
-                                                                   onclick="toggleActeurSelection('${newActeur}'); return validateActeursSelection();" />
-                                                            <label class="form-check-label">${newActeur}</label>
-                                                        </div>
-                                                    `;
+                                <div class="form-check">
+                                    <input type="checkbox" name="selectedActeurs" value="${newActorId}" class="form-check-input"
+                                     onclick="validateActeursSelection(); return validateActeursSelection();" />
+                                    <label class="form-check-label">${newActeur}</label>
+                                </div>
+                            `;
                                 document.getElementById('acteursContainer').appendChild(newActeurCheckbox);
 
                                 // Manually trigger the toggle function to handle the selection
-                                toggleActeurSelection(newActeur);
+                                toggleActeurSelection(newActorId);
 
                                 // Clear the input
                                 newActeurInput.value = '';
@@ -269,9 +272,6 @@
                             // Handle AJAX error
                             alert('An error occurred while adding the actor.');
                         }
-                        /* error: function (xhr, status, error) {
-                            console.error('AJAX Request Error:', status, error);
-                        }*/
                     });
                 }
             </script>

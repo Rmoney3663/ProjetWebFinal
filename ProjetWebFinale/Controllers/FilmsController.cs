@@ -120,6 +120,10 @@ namespace ProjetWebFinale.Controllers
         public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films,
             IFormFile file, List<int> selectedLangues, List<int> selectedSousTitres, List<int> selectedSupplements, List<int> selectedActeurs)
         {
+            var filmsEntry = _context.Entry(films);
+            await filmsEntry.ReloadAsync();
+
+
             var user = await _userManager.GetUserAsync(User);
             films.NoUtilisateurMAJ = user.Id;
             films.DateMAJ = DateTime.Now;
@@ -726,7 +730,9 @@ namespace ProjetWebFinale.Controllers
                 _context.Acteurs.Add(newActor);
                 await _context.SaveChangesAsync();
 
-                return Json(new { success = true, message = "Acteurs ajouté avec succès" });
+                var newActorId = newActor.Id;
+
+                return Json(new { success = true, message = "Acteurs ajouté avec succès", actorId = newActorId });
             }
             else
             {

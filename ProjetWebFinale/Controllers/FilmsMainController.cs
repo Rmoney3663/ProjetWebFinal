@@ -609,7 +609,9 @@ namespace ProjetWebFinale.Controllers
                 _context.Acteurs.Add(newActor);
                 await _context.SaveChangesAsync();
 
-                return Json(new { success = true, message = "Acteurs ajouté avec succès" });
+                var newActorId = newActor.Id;
+
+                return Json(new { success = true, message = "Acteurs ajouté avec succès", actorId = newActorId });
             }
             else
             {
