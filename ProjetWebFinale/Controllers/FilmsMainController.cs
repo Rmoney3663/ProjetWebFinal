@@ -609,11 +609,11 @@ namespace ProjetWebFinale.Controllers
                 _context.Acteurs.Add(newActor);
                 await _context.SaveChangesAsync();
 
-                return Json(new { success = true, message = "Acteurs added successfully" });
+                return Json(new { success = true, message = "Acteurs ajouté avec succès" });
             }
             else
             {
-                return Json(new { success = false, message = "Validation failed" });
+                return Json(new { success = false, message = "Validation échouée" });
             }
         }
 
