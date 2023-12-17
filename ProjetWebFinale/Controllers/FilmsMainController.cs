@@ -253,7 +253,8 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
+            var availableActeurs = _context.Acteurs.ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
             return View(films);
         }
 
@@ -557,6 +558,9 @@ namespace ProjetWebFinale.Controllers
                     var associatedSupplement = _context.FilmsSupplements.Where(fl => fl.NoFilm == id).ToList();
                     _context.FilmsSupplements.RemoveRange(associatedSupplement);
 
+                    var associatedActeur = _context.FilmsActeurs.Where(fl => fl.NoFilm == id).ToList();
+                    _context.FilmsActeurs.RemoveRange(associatedActeur);
+
                     _context.Films.Remove(films);
                     await _context.SaveChangesAsync();
 
@@ -590,7 +594,7 @@ namespace ProjetWebFinale.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddActorAsync(string nom, char sexe)
+        public async Task<IActionResult> AddActor(string nom, char sexe)
         {
             // Perform validation and add actor to the database
             if (ModelState.IsValid)

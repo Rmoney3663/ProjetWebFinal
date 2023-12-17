@@ -106,8 +106,9 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
-
+            //ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
+            var availableActeurs = _context.Acteurs.ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
             return View();
         }
 
@@ -252,7 +253,9 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
+            var availableActeurs = _context.Acteurs.ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
+            // ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
             return View(films);
         }
 
@@ -707,7 +710,29 @@ namespace ProjetWebFinale.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddActor(string nom, char sexe)
+        {
+            // Perform validation and add actor to the database
+            if (ModelState.IsValid)
+            {
+                // Add actor to the database
+                var newActor = new Acteurs
+                {
+                    Nom = nom,
+                    Sexe = sexe
+                };
 
+                _context.Acteurs.Add(newActor);
+                await _context.SaveChangesAsync();
+
+                return Json(new { success = true, message = "Acteurs added successfully" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Validation failed" });
+            }
+        }
 
     }
 }
