@@ -251,7 +251,7 @@
 
                     // Call the controller action using AJAX
                     $.ajax({
-                        url: '/FilmsMainController/AddActor',  
+                        url: '/FilmsMain/AddActor',
                         type: 'POST',
                         data: { nom: newActeur, sexe: newActeurGender },
                         success: function (result) {
@@ -289,6 +289,9 @@
                             // Handle AJAX error
                             alert('An error occurred while adding the actor.');
                         }
+                        /* error: function (xhr, status, error) {
+                            console.error('AJAX Request Error:', status, error);
+                        }*/
                     });
                 }
             </script>

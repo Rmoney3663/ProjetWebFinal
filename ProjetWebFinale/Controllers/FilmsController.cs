@@ -567,6 +567,9 @@ namespace ProjetWebFinale.Controllers
                     var associatedSupplement = _context.FilmsSupplements.Where(fl => fl.NoFilm == id).ToList();
                     _context.FilmsSupplements.RemoveRange(associatedSupplement);
 
+                    var associatedActeur = _context.FilmsActeurs.Where(fl => fl.NoFilm == id).ToList();
+                    _context.FilmsActeurs.RemoveRange(associatedActeur);
+
                     _context.Films.Remove(films);
                     await _context.SaveChangesAsync();
 
@@ -661,6 +664,14 @@ namespace ProjetWebFinale.Controllers
                 .ToList();
             ViewBag.Supplements = new SelectList(availableSupplements, "Id", "Description");
             ViewBag.selectedSupplements = selectedSupplementsIds;
+
+            var availableActeurs = _context.Acteurs.ToList();
+            var selectedActeursIds = _context.FilmsActeurs
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoActeur)
+                .ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
+            ViewBag.selectedActeurs = selectedActeursIds;
 
             return View(films);
         }
