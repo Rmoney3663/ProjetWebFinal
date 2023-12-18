@@ -93,10 +93,13 @@ namespace ProjetWebFinale.Controllers
                 }, "Value", "Text");
             }
             else
-            { 
-                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
-            }  
-           
+            {
+                List<Utilisateurs> utilisateurList = _context.Utilisateurs.ToList();
+                List<Utilisateurs> filteredUtilisateurs = utilisateurList.Where(u => u.TypeUtilisateur != 1).ToList();
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(filteredUtilisateurs, "Id", "NomUtilisateur");
+
+            }
+
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description");
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom");
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
@@ -118,7 +121,7 @@ namespace ProjetWebFinale.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films,
-            IFormFile file, List<int> selectedLangues, List<int> selectedSousTitres, List<int> selectedSupplements, List<int> selectedActeurs)
+            IFormFile? file, List<int> selectedLangues, List<int> selectedSousTitres, List<int> selectedSupplements, List<int> selectedActeurs)
         {
             var filmsEntry = _context.Entry(films);
             await filmsEntry.ReloadAsync();
@@ -295,7 +298,9 @@ namespace ProjetWebFinale.Controllers
             }
             else
             {
-                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+                List<Utilisateurs> utilisateurList = _context.Utilisateurs.ToList();
+                List<Utilisateurs> filteredUtilisateurs = utilisateurList.Where(u => u.TypeUtilisateur != 1).ToList();
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(filteredUtilisateurs, "Id", "NomUtilisateur");
             }
 
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
@@ -565,6 +570,7 @@ namespace ProjetWebFinale.Controllers
 
                 if (films != null)
                 {
+                    //Do Email for Delete
                     var associatedLanguages = _context.FilmsLangues.Where(fl => fl.NoFilm == id).ToList();
                     _context.FilmsLangues.RemoveRange(associatedLanguages);
 
@@ -701,6 +707,8 @@ namespace ProjetWebFinale.Controllers
                         filmToUpdate.DateMAJ = DateTime.Now;
                         filmToUpdate.AnneeSortie = model.AnneeSortie;
                         _context.Update(filmToUpdate);
+                        // Do email Appropriation
+
                         await _context.SaveChangesAsync();
                     }
 
