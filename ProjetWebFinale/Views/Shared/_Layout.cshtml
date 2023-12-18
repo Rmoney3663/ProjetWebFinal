@@ -51,9 +51,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
                             </li>
-                        </ul>  
-                    }
-                        
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="AjoutUtilisateur" asp-action="Create">Ajouter un utilisateur</a>
+                                </li>
+                            </ul>
+                        }
+
                 </div>
             </div>
         </nav>

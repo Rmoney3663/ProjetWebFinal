@@ -3,7 +3,7 @@
 @inject UserManager<Utilisateurs> _userManager
 
 @{
-    ViewData["Title"] = "Liste des films";
+    ViewData["Title"] = "Liste des films en main";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -93,7 +93,10 @@
     <span class="fw-bold">Tri: </span>
     <div>
     <label for="radioUtilisateur"> Par titre de film </label>
-            <input type="radio" id="radioTitre" name="tri" onclick="tri('titre')" @if (tri == "titre") { <text>checked</text> }/>
+            <input type="radio" id="radioTitre" name="tri" onclick="tri('titre')" @if (tri == "titre")
+            {
+                <text>checked</text>
+            }/>
     </div>
 </div>
 </div>
