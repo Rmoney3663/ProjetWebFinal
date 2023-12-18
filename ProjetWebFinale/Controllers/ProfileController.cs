@@ -34,6 +34,8 @@ namespace ProjetWebFinale.Controllers
             else
             {
                 var user = await _context.Utilisateurs
+                .Include(f => f.UtilisateursPreferences)
+                .ThenInclude(fa => fa.Preferences)
                 .FirstOrDefaultAsync(m => m.Id == id);
                 return View(user);
             }
@@ -81,6 +83,13 @@ namespace ProjetWebFinale.Controllers
                 _context.SaveChanges();
 
             }
+            return RedirectToAction("Index", "Films");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ModifierPrefs()
+        {
+            Console.WriteLine("Ok");
             return RedirectToAction("Index", "Films");
         }
     }

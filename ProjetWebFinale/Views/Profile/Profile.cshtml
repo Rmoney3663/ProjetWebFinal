@@ -55,10 +55,38 @@
         </div>
         <button type="submit" id="submit" class="btn btn-primary">Modifier votre profile</button>
     </form>
+    <form asp-controller="Profile" asp-action="ModifierPrefs" method="post">
+        @{
+            foreach (var t in Model.UtilisateursPreferences)
+            {
+                <label for="@t.Preferences.Id"> @t.Preferences.Description </label>
+                if (t.NoPreference >= 3 && t.NoPreference < 6)
+                {
+                    //TODO FINISH
+                    if (t.Valeur == "oui")
+                    {
+                        <input type="checkbox" id="pref" name="scales" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="pref" name="scales" />
+                    }
+                    <label for="scales">@t.Preferences.Description</label> <br />
+
+                }
+                else if (t.NoPreference == 7)
+                {
+                    <input type="number" name="@t.Preferences.Id" min="10" max="99" value="@t.Valeur"> <br />
+                }
+
+            }
+        }
+        <button type="submit" id="submit" class="btn btn-primary">Modifier vos préférences</button>
+    </form>
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#frmModifierMotDePasse').validate({
             rules: {
                 motDePasseActuel: "required",
@@ -70,12 +98,12 @@
             }
         })
 
-        $('#submit').on('click', function () {
+        $('#submit').on('click', function() {
             console.log("ok")
             $('#frmModifierMotDePasse').valid()
-            
+
         })
 
-       
+
     });
 </script>

@@ -8,11 +8,13 @@ namespace ProjetWebFinale.Controllers
     {
         private readonly UserManager<Utilisateurs> userManager;
         private readonly SignInManager<Utilisateurs> signInManager;
-        
-        public AccountController(UserManager<Utilisateurs> userManager, SignInManager<Utilisateurs> signInManager)
+        private readonly FilmDbContext context;
+
+        public AccountController(FilmDbContext context, UserManager<Utilisateurs> userManager, SignInManager<Utilisateurs> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.context = context;
         }
         
         [HttpGet]
@@ -36,23 +38,18 @@ namespace ProjetWebFinale.Controllers
                     TypeUtilisateur = 3,
                     EmailConfirmed = true
                 };
-
-                
-
                 // Store user data in AspNetUsers database table
                 var result = await userManager.CreateAsync(user, model.MotDePasse);
                 // If user is successfully created, sign-in the user using. SignInManager and redirect to index action of HomeController
                 if (result.Succeeded)
                 {
-                    //Set default preferences of  the user
+                    //Sets default preferences on first login
                     var pref1 = new UtilisateursPreferences
                     {
                         NoUtilisateur = user.Id,
                         NoPreference = 3,
                         Valeur = "oui"
                     };
-
-                    user.UtilisateursPreferences­.Add(pref1);
 
                     var pref2 = new UtilisateursPreferences
                     {
@@ -61,8 +58,6 @@ namespace ProjetWebFinale.Controllers
                         Valeur = "oui"
                     };
 
-                    user.UtilisateursPreferences­.Add(pref2);
-
                     var pref3 = new UtilisateursPreferences
                     {
                         NoUtilisateur = user.Id,
@@ -70,16 +65,17 @@ namespace ProjetWebFinale.Controllers
                         Valeur = "oui"
                     };
 
-                    user.UtilisateursPreferences­.Add(pref3);
-
                     var pref4 = new UtilisateursPreferences
                     {
                         NoUtilisateur = user.Id,
                         NoPreference = 7,
                         Valeur = "12"
                     };
-
-                    user.UtilisateursPreferences­.Add(pref4);
+                    context.UtilisateursPreferences.Add(pref1);
+                    context.UtilisateursPreferences.Add(pref2);
+                    context.UtilisateursPreferences.Add(pref3);
+                    context.UtilisateursPreferences.Add(pref4);
+                    await context.SaveChangesAsync();
 
 
                     await signInManager.SignInAsync(user, isPersistent: false);
