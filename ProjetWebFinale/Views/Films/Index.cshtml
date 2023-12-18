@@ -1,3 +1,5 @@
+﻿
+
 ﻿﻿@using Microsoft.AspNetCore.Identity
 @model IEnumerable<ProjetWebFinale.Models.Films>
 @inject UserManager<Utilisateurs> _userManager
@@ -5,6 +7,7 @@
 @{
     ViewData["Title"] = "Liste des films";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await _userManager.GetUserAsync(User);
 }
 
 <h1 class="text-center">Liste des films</h1>
@@ -31,11 +34,13 @@
         string searchString = Context.Request.Query["SearchString"];
     }
 </div>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
-</p>
-<div class="sTriEtAffichage">
+ @if (user != null && user.TypeUtilisateur != 1 )
+ {
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Ajouter un DVD</a>
+    </p>
+ } 
+ <div class="sTriEtAffichage">
 <div class ="sSection">
 
         <span class="fw-bold">Nombre de films par page: </span>
@@ -174,8 +179,7 @@
             sortedModel = Model.OrderByDescending(film => film.TitreFrancais).OrderByDescending(film => film.UtilisateurProprietaire.NomUtilisateur);
         }
         var index = 0;
-        var user = await _userManager.GetUserAsync(User);
-    }
+		 }
 
     @foreach (var item in sortedModel.Skip((noPage - 1) * nbFilms).Take(nbFilms))
     {
@@ -194,7 +198,7 @@
                     <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
                 </p>
                 <div>
-                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1 || user.TypeUtilisateur == 2)
+                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1)
                     {
                         <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a> 
                         <a> | </a>
@@ -204,9 +208,22 @@
                     }
                     else
                     {
-                        <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a> | </a>
-                        <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Appropriation</a>
+					if (user.TypeUtilisateur == 2)
+                        {
+                            <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a>
+                            <a> | </a>
+                            <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details </a>
+                            <a> | </a>
+                            <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                            <a> | </a>
+                            <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Appropriation</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a> | </a>
+                            <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Appropriation</a>
+                        }
                     }                   
                 </div>
             </div>
@@ -251,3 +268,4 @@
         location.href = '?noPage=' + noPage + '&nbFilms=' + valeurNbFilms + '&tri=' + tri;
     }
 </script>
+ 

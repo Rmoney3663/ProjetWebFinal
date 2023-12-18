@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿﻿@using Microsoft.AspNetCore.Identity
 @model IEnumerable<ProjetWebFinale.Models.Films>
 @inject UserManager<Utilisateurs> _userManager
 
@@ -108,7 +108,7 @@
                 <text>checked</text>
             }/>
     </div>
-</div>
+	</div>
 </div>
 <br />
 <form asp-controller="Films" asp-action="Index" method="get">

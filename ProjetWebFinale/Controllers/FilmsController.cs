@@ -93,10 +93,13 @@ namespace ProjetWebFinale.Controllers
                 }, "Value", "Text");
             }
             else
-            { 
-                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur");
-            }  
-           
+            {
+                List<Utilisateurs> utilisateurList = _context.Utilisateurs.ToList();
+                List<Utilisateurs> filteredUtilisateurs = utilisateurList.Where(u => u.TypeUtilisateur != 1).ToList();
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(filteredUtilisateurs, "Id", "NomUtilisateur");
+
+            }
+
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description");
             ViewData["NoProducteur"] = new SelectList(_context.Producteurs, "Id", "Nom");
             ViewData["NoRealisateur"] = new SelectList(_context.Realisateurs, "Id", "Nom");
@@ -106,8 +109,9 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
-
+            //ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
+            var availableActeurs = _context.Acteurs.ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
             return View();
         }
 
@@ -117,8 +121,12 @@ namespace ProjetWebFinale.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AnneeSortie,Categorie,Format,NoUtilisateurMAJ,Resume,DureeMinutes,FilmOriginal,NbDisques,TitreFrancais,TitreOriginal,VersionEtendue,NoRealisateur,NoProducteur,Xtra,NoUtilisateurProprietaire")] Films films,
-            IFormFile file, List<int> selectedLangues, List<int> selectedSousTitres, List<int> selectedSupplements, List<int> selectedActeurs)
+            IFormFile? file, List<int> selectedLangues, List<int> selectedSousTitres, List<int> selectedSupplements, List<int> selectedActeurs)
         {
+            var filmsEntry = _context.Entry(films);
+            await filmsEntry.ReloadAsync();
+
+
             var user = await _userManager.GetUserAsync(User);
             films.NoUtilisateurMAJ = user.Id;
             films.DateMAJ = DateTime.Now;
@@ -252,7 +260,9 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Langues = new SelectList(_context.FilmsLangues.Include(fl => fl.Langues).Select(fl => fl.Langues).Distinct().ToList(), "Id", "Langue");
             ViewBag.SousTitres = new SelectList(_context.FilmsSousTitres.Include(fl => fl.SousTitres).Select(fl => fl.SousTitres).Distinct().ToList(), "Id", "LangueSousTitre");
             ViewBag.Supplements = new SelectList(_context.FilmsSupplements.Include(fl => fl.Supplements).Select(fl => fl.Supplements).Distinct().ToList(), "Id", "Description");
-            ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
+            var availableActeurs = _context.Acteurs.ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
+            // ViewBag.Acteurs = new SelectList(_context.FilmsActeurs.Include(fl => fl.Acteurs).Select(fl => fl.Acteurs).Distinct().ToList(), "Id", "Nom");
             return View(films);
         }
 
@@ -288,7 +298,9 @@ namespace ProjetWebFinale.Controllers
             }
             else
             {
-                ViewData["NoUtilisateurProprietaire"] = new SelectList(_context.Utilisateurs, "Id", "NomUtilisateur", films.NoUtilisateurProprietaire);
+                List<Utilisateurs> utilisateurList = _context.Utilisateurs.ToList();
+                List<Utilisateurs> filteredUtilisateurs = utilisateurList.Where(u => u.TypeUtilisateur != 1).ToList();
+                ViewData["NoUtilisateurProprietaire"] = new SelectList(filteredUtilisateurs, "Id", "NomUtilisateur");
             }
 
             ViewData["Format"] = new SelectList(_context.Formats, "Id", "Description", films.Format);
@@ -558,6 +570,7 @@ namespace ProjetWebFinale.Controllers
 
                 if (films != null)
                 {
+                    //Do Email for Delete
                     var associatedLanguages = _context.FilmsLangues.Where(fl => fl.NoFilm == id).ToList();
                     _context.FilmsLangues.RemoveRange(associatedLanguages);
 
@@ -566,6 +579,9 @@ namespace ProjetWebFinale.Controllers
 
                     var associatedSupplement = _context.FilmsSupplements.Where(fl => fl.NoFilm == id).ToList();
                     _context.FilmsSupplements.RemoveRange(associatedSupplement);
+
+                    var associatedActeur = _context.FilmsActeurs.Where(fl => fl.NoFilm == id).ToList();
+                    _context.FilmsActeurs.RemoveRange(associatedActeur);
 
                     _context.Films.Remove(films);
                     await _context.SaveChangesAsync();
@@ -662,6 +678,14 @@ namespace ProjetWebFinale.Controllers
             ViewBag.Supplements = new SelectList(availableSupplements, "Id", "Description");
             ViewBag.selectedSupplements = selectedSupplementsIds;
 
+            var availableActeurs = _context.Acteurs.ToList();
+            var selectedActeursIds = _context.FilmsActeurs
+                .Where(fl => fl.NoFilm == id)
+                .Select(fl => fl.NoActeur)
+                .ToList();
+            ViewBag.Acteurs = new SelectList(availableActeurs, "Id", "Nom");
+            ViewBag.selectedActeurs = selectedActeursIds;
+
             return View(films);
         }
 
@@ -683,6 +707,8 @@ namespace ProjetWebFinale.Controllers
                         filmToUpdate.DateMAJ = DateTime.Now;
                         filmToUpdate.AnneeSortie = model.AnneeSortie;
                         _context.Update(filmToUpdate);
+                        // Do email Appropriation
+
                         await _context.SaveChangesAsync();
                     }
 
@@ -696,7 +722,31 @@ namespace ProjetWebFinale.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddActor(string nom, char sexe)
+        {
+            // Perform validation and add actor to the database
+            if (ModelState.IsValid)
+            {
+                // Add actor to the database
+                var newActor = new Acteurs
+                {
+                    Nom = nom,
+                    Sexe = sexe
+                };
 
+                _context.Acteurs.Add(newActor);
+                await _context.SaveChangesAsync();
+
+                var newActorId = newActor.Id;
+
+                return Json(new { success = true, message = "Acteurs ajouté avec succès", actorId = newActorId });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Validation échouée" });
+            }
+        }
 
     }
 }

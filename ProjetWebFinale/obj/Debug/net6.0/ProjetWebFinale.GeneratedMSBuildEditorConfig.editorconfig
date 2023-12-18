@@ -28,6 +28,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWpvdXRVdGlsaXNhdGV1clxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/Email/Email.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcRW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/FilmsMain/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmlsbXNNYWluXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -120,28 +124,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcRXJyb3IuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/MesFilms/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVzRmlsbXNcSW5kZXguY3NodG1s
+[C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/Profile/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/14383/OneDrive - Cegep Gerald-Godin/session 5/Prog web/ProjetWebFinal/ProjetWebFinale/Views/Shared/Error.cshtml]

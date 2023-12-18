@@ -1,0 +1,75 @@
+﻿@model ProjetWebFinale.Models.Courriel
+@inject UserManager<Utilisateurs> _userManager
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "Contacter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string sender = Context.Request.Query["sender"];
+    string receiver = Context.Request.Query["receiver"];
+    var user = await _userManager.GetUserAsync(User);
+
+    /*
+    * Navigation bar layout is weird because the plugin to multiselect within a 
+    * dropdown list only supports bootstrap 3 and under while the project uses bootstrap 5.
+    */
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/1.1.2/js/bootstrap-multiselect.js"></script>
+</head>
+
+<h1>Contacter un ou plusieurs utilisateurs</h1>
+
+<form asp-controller="Email" asp-action="Email" method="post">
+    <div>
+        <hr/>
+        <dl class="row">
+            <dt>
+                Expéditeur:
+            </dt>
+            <dd>
+                <input type="text" name="sender" readonly value="@user.Courriel" />
+            </dd>
+            <dt>
+                Récipient(s):
+            </dt>
+            @if (!String.IsNullOrEmpty(receiver))
+            {
+                <dd>
+                    <input type="text" name="receiver" readonly value="@receiver" />
+                </dd>
+            }
+            else
+            {
+                <dd>
+                    @Html.ListBoxFor(m => m.Receivers, new MultiSelectList(Model.Emails, "Value", "Text"), new {size = 10, multiple = "multiple", id = "Emails_dropdown", name = "receiver" })
+                </dd>
+            }
+            <dt>
+                Message:
+            </dt>
+            <dd>
+                <textarea name="message" rows="7" cols="50" placeholder="Message pour le ou les utilisateurs sélectionnés..." style="resize:none"></textarea>
+            </dd>
+            <dd>
+                <input type="submit" class="btn btn-primary" value="Contacter" />
+            </dd>
+        </dl>
+    </div>
+
+</form>
+
+
+<script>
+    $(document).ready(function () {
+        $('#Emails_dropdown').multiselect({
+            nonSelectedText: 'Choisir une ou plusieurs adresses',
+            includeSelectAllOption: true,
+        });
+    });
+</script>

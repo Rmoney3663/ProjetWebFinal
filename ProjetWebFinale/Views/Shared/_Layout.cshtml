@@ -1,6 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Utilisateurs> SignInManager
 @inject UserManager<Utilisateurs> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +14,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjetWebFinale.styles.css" asp-append-version="true" />
-   
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -19,39 +23,27 @@
 
     <!-- jQuery Validation Unobtrusive -->
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.unobtrusive.min.js"></script>
-   
+
+
+
 </head>
 <body>
-    @{
-    var user = await UserManager.GetUserAsync(User);
-    }
     @if (SignInManager.IsSignedIn(User))
-    {        
+    {
         <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <form method="post" asp-controller="account" asp-action="logout" class="navbar-right">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <button type="submit" class="btn btn-link navbar-btn nav-link ">
-                                Déconnexion
-                            </button>                   
-                        </li>                
-                    </ul>
-                </form>
-                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Liste des Films</a>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @if (user != null && user.TypeUtilisateur != 1)
-                    {
-                        <ul class="navbar-nav flex-grow-1">    
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en Main</a>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <form method="post" asp-controller="account" asp-action="logout" class="navbar-right">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <button type="submit" class="btn btn-link navbar-btn nav-link ">
+                                    Se déconnecter
+                                </button>
                             </li>
-                            </ul>
                         }
                         else
                         {
@@ -62,35 +54,59 @@
                             </ul>
                         }
 
+                        </ul>
+                    </form>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
+                            </li>
+                            @if(user.TypeUtilisateur != 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en main</a>
+                                </li>
+                            }
+                            
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Utilisateurs" asp-action="Index">Liste des utilisateurs</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-light" asp-area="" asp-controller="Email" asp-action="Email">Contacter</a>
+                            </li>
+                            <li>
+                                <a class="nav-link text-light" href="/Profile/Profile?id=@user.Id">Profile</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-        
+            </nav>
+        </header>
+
     }
     else
     {
-         <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Projet Web Finale</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Projet Web Finale</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>               
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                     <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <a class="nav-link text-light"  asp-controller="account" asp-action="register"> Register </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light"  asp-controller="account" asp-action="login"> Login </a>
-                        </li>
-                    </ul>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="account" asp-action="register"> S'enregistrer </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="account" asp-action="login"> Se connecter </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>  
+            </nav>
+        </header>
     }
 
     <div class="container">

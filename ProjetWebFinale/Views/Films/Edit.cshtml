@@ -177,16 +177,19 @@
             </div>
             <br>
 
-            @{
-                var maxActeurs = 3;
-            }
+                @{
+                    var maxActeurs = 3;
+                }
 
             <script>
-                function validateActeursSelection() {
-                    var selectedActeurs = document.querySelectorAll('input[name="selectedActeurs"]:checked');
-                    var errorMessage = document.getElementById('acteursValidationError');
 
-                    if (selectedActeurs.length > @maxActeurs) {
+                function validateActeursSelection() {
+                    var checkboxes = document.querySelectorAll('input[name="selectedActeurs"]:checked');
+                    var checkedValues = Array.from(checkboxes).map(function (checkbox) {
+                        return checkbox.value;
+                    });
+                    var errorMessage = document.getElementById('acteursValidationError');
+                    if (checkedValues.length > @maxActeurs) {
                         errorMessage.textContent = 'Un maximum de @maxActeurs acteurs peut être sélectionné.';
                         return false;
                     } else {
@@ -194,35 +197,113 @@
                         return true;
                     }
                 }
+
+                function addNewActeur() {
+                    var newActeurInput = document.getElementById('newActeur');
+                    var newActeurGenderInput = document.getElementById('newActeurGender');
+                    var newActeur = newActeurInput.value.trim();
+                    var newActeurGender = newActeurGenderInput.value;
+
+                    // Validate inputs
+                    if (!newActeur || !newActeurGender) {
+                        alert('Veuillez fournir un nom et sélectionner un genre.');
+                        return;
+                    }
+
+                    // Call the controller action using AJAX
+                    $.ajax({
+                        url: '/Films/AddActor',
+                        type: 'POST',
+                        data: { nom: newActeur, sexe: newActeurGender },
+                        success: function (result) {
+                            if (result.success) {
+                                // Handle success, update UI, etc.
+                                alert(result.message);
+
+                                // Access the actor ID from the response
+                                var newActorId = result.actorId;
+
+                                // Add the new actor as a checkbox with the correct value (ID)
+                                var newActeurCheckbox = document.createElement('div');
+                                newActeurCheckbox.className = 'col-md-3';
+                                newActeurCheckbox.innerHTML = `
+                                                <div class="form-check">
+                                                    <input type="checkbox" name="selectedActeurs" value="${newActorId}" class="form-check-input"
+                                                     onclick="validateActeursSelection(); return validateActeursSelection();" />
+                                                    <label class="form-check-label">${newActeur}</label>
+                                                </div>
+                                            `;
+                                document.getElementById('acteursContainer').appendChild(newActeurCheckbox);
+
+                                // Manually trigger the toggle function to handle the selection
+                                toggleActeurSelection(newActorId);
+
+                                // Clear the input
+                                newActeurInput.value = '';
+                                newActeurGenderInput.value = '';
+
+                                // Validate the selection
+                                validateActeursSelection();
+                            } else {
+                                // Handle validation error or other errors
+                                alert(result.message);
+                            }
+                        },
+                        error: function () {
+                            // Handle AJAX error
+                            alert('An error occurred while adding the actor.');
+                        }
+                    });
+                }
             </script>
 
             <div class="form-group">
                 <label class="control-label">Acteurs : </label>
-                @if (ViewBag.Acteurs != null)
-                {
-                    var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
-                    if (acteursList.Any())
-                    {
-                        <div class="row">
-                            @foreach (var acteurs in acteursList)
+                <div id="acteursContainer" class="row">
+                        @if (ViewBag.Acteurs != null)
+                        {
+                            var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
+                            if (acteursList.Any())
                             {
+                                @foreach (var acteurs in acteursList)
+                                {
                                 <div class="col-md-3">
                                     <div class="form-check">
-                                        <input type="checkbox" name="selectedActeursIds" value="@acteurs.Value" class="form-check-input" onclick="return validateActeursSelection();"
-                                         @(ViewBag.selectedActeurs.Contains(Convert.ToInt32(acteurs.Value)) ? "checked" : "") />
+                                        <input type="checkbox" name="selectedActeurs" value="@acteurs.Value" class="form-check-input"
+                                               onclick="validateActeursSelection(); return validateActeursSelection();" />
                                         <label class="form-check-label">@acteurs.Text</label>
                                     </div>
                                 </div>
+                                }
                             }
-                        </div>
-                    }
-                    else
-                    {
+                            else
+                            {
+                            <p>Aucune acteurs disponible</p>
+                            }
+                        }
+                        else
+                        {
                         <p>Aucune acteurs disponible</p>
-                    }
-                }
+                        }
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-10">
+                        <input type="text" id="newActeur" class="form-control" placeholder="Ajouter un nouvel acteur" />
+                    </div>
+                    <div class="col-md-10">
+                        <select id="newActeurGender" class="form-control">
+                            <option value="">Sélectionnez le genre</option>
+                            <option value="H">Homme</option>
+                            <option value="F">Femme</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" onclick="addNewActeur()" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </div>
                 <span id="acteursValidationError" class="text-danger"></span>
-            </div>          
+            </div>
             <br>
 
             <div class="form-group">
@@ -235,6 +316,7 @@
     <div>
         <a asp-action="Index">Retour au liste</a>
     </div>
+</div>
 
 @section Scripts {
     @{
