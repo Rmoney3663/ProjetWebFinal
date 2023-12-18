@@ -130,6 +130,7 @@ namespace ProjetWebFinale.Controllers
                 .Include(f => f.EmpruntsFilms).ThenInclude(f => f.Utilisateurs)
                 .Include(f => f.FilmsActeurs).ThenInclude(f => f.Acteurs)
                 .FirstOrDefaultAsync(m => m.Id == id);
+            films.EmpruntsFilms
             if (films == null)
             {
                 return NotFound();

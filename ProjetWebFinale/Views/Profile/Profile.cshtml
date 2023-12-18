@@ -1,6 +1,6 @@
-﻿@inject UserManager<Utilisateurs> _userManager
-﻿@using Microsoft.AspNetCore.Identity
-@model ModifierMotDePasse
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model ProjetWebFinale.Models.Utilisateurs
+@inject UserManager<Utilisateurs> _userManager
 
 @{
     ViewData["Title"] = "Profile";
@@ -11,24 +11,71 @@
 <h1>Modifier votre profil</h1>
 
 <div>
-    <form asp-controller="Profile" asp-action="Profile" method="post">
-        <h4>Changer votre mot de passe</h4>
-        <div asp-validation-summary="All" class="text-danger"></div>
+    <h4>Modifier votre mot de passe</h4>
+    @Html.ValidationSummary(true)
+    <form asp-controller="Profile" id="frmModifierMotDePasse" asp-action="Profile" method="post">
+        @if (user.TypeUtilisateur == 3)
+        {
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" id="nom" name="nom" value="@Model.NomUtilisateur" />
+            </div>
+
+            <div class="form-group">
+                <label>Courriel</label>
+                <input type="text" class="form-control" id="courriel" name="courriel" value="@Model.Courriel" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" readonly id="nom" name="nom" value="@Model.NomUtilisateur" />
+            </div>
+
+            <div class="form-group">
+                <label>Courriel</label>
+                <input type="text" class="form-control" readonly id="courriel" name="courriel" value="@Model.Courriel" />
+            </div>
+        }
         <div class="form-group">
-            <label asp-for="ancienMotDePasse"></label>
-            <input asp-for="ancienMotDePasse" class="form-control" />
-            <span asp-validation-for="ancienMotDePasse" class="text-danger"></span>
+            <input type="hidden" class="form-control" name="id" value="@Model.Id" />
         </div>
         <div class="form-group">
-            <label asp-for="nouveauMotDePasse"></label>
-            <input asp-for="nouveauMotDePasse" class="form-control" />
-            <span asp-validation-for="nouveauMotDePasse" class="text-danger"></span>
+            <label>Mot de passe actuel</label>
+            <input type="password" class="form-control" id="motDePasseActuel" name="motDePasseActuel" value="" />
         </div>
         <div class="form-group">
-            <label asp-for="confirmerMotDePasse"></label>
-            <input asp-for="confirmerMotDePasse" class="form-control" />
-            <span asp-validation-for="confirmerMotDePasse" class="text-danger"></span>
+            <label>Nouveau mot de passe</label>
+            <input type="password" class="form-control" id="nouveauMotDePasse" name="nouveauMotDePasse" value="" />
         </div>
-        <button type="submit" class="btn btn-primary">Modifier votre mot de passe</button>
+        <div class="form-group">
+            <label>Confirmer nouveau mot de passe</label>
+            <input type="password" class="form-control" id="confirmerMotDePasse" name="confirmerMotDePasse" value="" />
+        </div>
+        <button type="submit" id="submit" class="btn btn-primary">Modifier votre profile</button>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#frmModifierMotDePasse').validate({
+            rules: {
+                motDePasseActuel: "required",
+                nom: "required",
+                courriel: "required",
+                confirmerMotDePasse: {
+                    equalTo: "#nouveauMotDePasse"
+                }
+            }
+        })
+
+        $('#submit').on('click', function () {
+            console.log("ok")
+            $('#frmModifierMotDePasse').valid()
+            
+        })
+
+       
+    });
+</script>

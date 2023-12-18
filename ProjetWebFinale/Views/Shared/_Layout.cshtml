@@ -1,6 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Utilisateurs> SignInManager
 @inject UserManager<Utilisateurs> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +61,7 @@
                                 <a class="nav-link text-light" asp-area="" asp-controller="Email" asp-action="Email">Contacter</a>
                             </li>
                             <li>
-                                <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Profile">Profile</a>
+                                <a class="nav-link text-light" href="/Profile/Profile?id=@user.Id">Profile</a>
                             </li>
                         </ul>
                     </div>
