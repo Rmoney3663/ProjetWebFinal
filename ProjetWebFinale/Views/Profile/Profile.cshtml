@@ -1,0 +1,109 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model ProjetWebFinale.Models.Utilisateurs
+@inject UserManager<Utilisateurs> _userManager
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await _userManager.GetUserAsync(User);
+}
+
+<h1>Modifier votre profil</h1>
+
+<div>
+    <h4>Modifier votre mot de passe</h4>
+    @Html.ValidationSummary(true)
+    <form asp-controller="Profile" id="frmModifierMotDePasse" asp-action="Profile" method="post">
+        @if (user.TypeUtilisateur == 3)
+        {
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" id="nom" name="nom" value="@Model.NomUtilisateur" />
+            </div>
+
+            <div class="form-group">
+                <label>Courriel</label>
+                <input type="text" class="form-control" id="courriel" name="courriel" value="@Model.Courriel" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" readonly id="nom" name="nom" value="@Model.NomUtilisateur" />
+            </div>
+
+            <div class="form-group">
+                <label>Courriel</label>
+                <input type="text" class="form-control" readonly id="courriel" name="courriel" value="@Model.Courriel" />
+            </div>
+        }
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="id" value="@Model.Id" />
+        </div>
+        <div class="form-group">
+            <label>Mot de passe actuel</label>
+            <input type="password" class="form-control" id="motDePasseActuel" name="motDePasseActuel" value="" />
+        </div>
+        <div class="form-group">
+            <label>Nouveau mot de passe</label>
+            <input type="password" class="form-control" id="nouveauMotDePasse" name="nouveauMotDePasse" value="" />
+        </div>
+        <div class="form-group">
+            <label>Confirmer nouveau mot de passe</label>
+            <input type="password" class="form-control" id="confirmerMotDePasse" name="confirmerMotDePasse" value="" />
+        </div>
+        <button type="submit" id="submit" class="btn btn-primary">Modifier votre profile</button>
+    </form>
+    <form asp-controller="Profile" asp-action="ModifierPrefs" method="post">
+        @{
+            foreach (var t in Model.UtilisateursPreferences)
+            {
+                <label for="@t.Preferences.Id"> @t.Preferences.Description </label>
+                if (t.NoPreference >= 3 && t.NoPreference < 6)
+                {
+                    //TODO FINISH
+                    if (t.Valeur == "oui")
+                    {
+                        <input type="checkbox" id="pref" name="scales" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="pref" name="scales" />
+                    }
+                    <label for="scales">@t.Preferences.Description</label> <br />
+
+                }
+                else if (t.NoPreference == 7)
+                {
+                    <input type="number" name="@t.Preferences.Id" min="10" max="99" value="@t.Valeur"> <br />
+                }
+
+            }
+        }
+        <button type="submit" id="submit" class="btn btn-primary">Modifier vos préférences</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#frmModifierMotDePasse').validate({
+            rules: {
+                motDePasseActuel: "required",
+                nom: "required",
+                courriel: "required",
+                confirmerMotDePasse: {
+                    equalTo: "#nouveauMotDePasse"
+                }
+            }
+        })
+
+        $('#submit').on('click', function() {
+            console.log("ok")
+            $('#frmModifierMotDePasse').valid()
+
+        })
+
+
+    });
+</script>

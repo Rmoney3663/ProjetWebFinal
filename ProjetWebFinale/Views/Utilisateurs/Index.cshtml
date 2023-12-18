@@ -1,31 +1,49 @@
-﻿@model IEnumerable<ProjetWebFinale.Models.Utilisateurs>
-
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ProjetWebFinale.Models.Utilisateurs>
+@inject UserManager<Utilisateurs> _userManager;
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = await _userManager.GetUserAsync(User);
+    /*
+    * TODO: Add search for a user
+    */
+
 }
 
-<h1>Liste de tout les utilisateurs</h1>
+<h1>Liste des utilisateurs</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Nom
+                Nom de l'utilisateur
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
+            var nomUtilisateur = Char.ToUpper(item.NomUtilisateur[0]) + item.NomUtilisateur.Substring(1);
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NomUtilisateur)
+                    @nomUtilisateur
                 </td>
                 <td>
                     <a href="/FilmsUtilisateurs/Index?name=@item.NomUtilisateur" class="btn btn-success">Voir tout les DVDs appartenant à cet utilisateur</a>
                 </td>
+                <td>
+                    <a href="/Email/Email?receiver=@item.Courriel" class="btn btn-success">Contacter cet utilisateur</a>
+                </td>
+                @if (user.TypeUtilisateur == 3)
+                {
+                    //TODO 3 (User) -> 1 (Admin)
+                <td>
+                    <a href="/Profile/Profile?id=@item.Id" class="btn btn-success">Modifier le profile de cet utilisateur</a>
+                </td>
+                }
             </tr>
+
         }
     </tbody>
 </table>

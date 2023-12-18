@@ -11,12 +11,15 @@ namespace ProjetWebFinale.Models
         [Required]
         [DataType(DataType.Text)]
         public string Nom { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string MotDePasse { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("MotDePasse", ErrorMessage = "Password and confirmation password do not match.")]
+        [Display(Name = "Confirmer votre mot de passe.")]
+        [Compare("MotDePasse", ErrorMessage = "Votre nouveau mot de passe et sa confirmation ne sont pas équivalents.")]
         public string ConfirmerMotDePasse { get; set; }
     }
 }

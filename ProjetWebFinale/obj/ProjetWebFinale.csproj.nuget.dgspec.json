@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "S:\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
   },
   "projects": {
@@ -12,12 +13,29 @@
         "projectPath": "S:\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
         "packagesPath": "C:\\Users\\Razvan Pruteanu\\.nuget\\packages\\",
         "outputPath": "S:\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
+=======
+    "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "projectName": "ProjetWebFinale",
+        "projectPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+        "packagesPath": "C:\\Users\\j.labrosse\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
+>>>>>>> JeromeFinal
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "G:\\Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+<<<<<<< HEAD
           "C:\\Users\\Razvan Pruteanu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+          "C:\\Users\\j.labrosse\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> JeromeFinal
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

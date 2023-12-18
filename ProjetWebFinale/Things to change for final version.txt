@@ -1,0 +1,18 @@
+contacter: mettre sur autre page (OK)
+si aucun film: afficher message (OK)
+liste des utilisateurs:
+	exclure admin
+	liste déroulante
+	
+Boutons de retour aux endroits appropriés
+
+nb pages: dropdown list
+4, 8, 12, 20, 50
+pagination en bas de la page
+
+personnalisation de l'environnement
+acteurs
+finir serveur mail
+
+Delete extra views if needed
+Put on server
