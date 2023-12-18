@@ -26,7 +26,7 @@ namespace ProjetWebFinale.Controllers
             var userToModify = await _userManager.FindByIdAsync(id.ToString());
             var currentUser = await _userManager.GetUserAsync(User);
 
-            if (currentUser.TypeUtilisateur != 3 && userToModify.Id != currentUser.Id)
+            if (currentUser.TypeUtilisateur == 3 && userToModify.Id != currentUser.Id)
             {
                 //Shouldn't be here. Redirect to home.
                 return RedirectToAction("Index", "Films");
@@ -64,33 +64,63 @@ namespace ProjetWebFinale.Controllers
                     }
                 }
 
-                if (userToModify.NomUtilisateur != nom)
+                if (_context.Utilisateurs.Any(u => u.NomUtilisateur == nom && u.Id != userToModify.Id))
                 {
-                    //Admin wants to change name of user
+                    ModelState.AddModelError("NomUtilisateur", "Le nom d'utilisateur existe déjà.");
+                }
+                else
+                {
                     userToModify.NomUtilisateur = nom;
                     userToModify.UserName = nom;
                     userToModify.NormalizedUserName = nom.ToUpper();
                 }
 
-                if (userToModify.Courriel != courriel)
+                if (_context.Utilisateurs.Any(u => u.Courriel == courriel && u.Id != userToModify.Id))
                 {
-                    //Admin wants to change email of user
+                    ModelState.AddModelError("Courriel", "L'adresse e-mail existe déjà.");
+                }
+                else
+                {
                     userToModify.Courriel = courriel;
                     userToModify.Email = courriel;
                     userToModify.NormalizedEmail = courriel.ToUpper();
                 }
-                _context.Update(userToModify);
-                _context.SaveChanges();
+
+                if (ModelState.IsValid)
+                {
+                    _context.Update(userToModify);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    var user = await _context.Utilisateurs
+                    .Include(f => f.UtilisateursPreferences)
+                    .ThenInclude(fa => fa.Preferences)
+                    .FirstOrDefaultAsync(m => m.Id == int.Parse(id));
+                        return View(user);
+                }
 
             }
             return RedirectToAction("Index", "Films");
         }
 
         [HttpPost]
-        public async Task<IActionResult> ModifierPrefs()
+        public async Task<JsonResult> CheckIfExists(string nom, string courriel, int id)
         {
-            Console.WriteLine("Ok");
-            return RedirectToAction("Index", "Films");
+            var userExists = _context.Utilisateurs
+                 .Where(u => u.Id != id)
+                .Any(u => u.NomUtilisateur == nom || u.Courriel == courriel);
+
+            if (userExists)
+            {
+                return Json(new { success = false, message = "Nom ou Courriel exist déjà" });
+            }
+            else
+            {
+                return Json(new { success = true, message = "Validation confirmer" });
+            }
         }
+
+
     }
 }
