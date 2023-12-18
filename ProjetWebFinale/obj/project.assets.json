@@ -11179,39 +11179,23 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\j.labrosse\\.nuget\\packages\\": {},
-=======
     "C:\\Users\\r.pruteanu\\.nuget\\packages\\": {},
->>>>>>> Razvan
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
-      "projectName": "ProjetWebFinale",
-      "projectPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
-      "packagesPath": "C:\\Users\\j.labrosse\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\j.labrosse\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
-=======
       "projectUniqueName": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
       "projectName": "ProjetWebFinale",
       "projectPath": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
       "packagesPath": "C:\\Users\\r.pruteanu\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\r.pruteanu\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
->>>>>>> Razvan
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-<<<<<<< HEAD
-        "C:\\Users\\j.labrosse\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
         "C:\\Users\\r.pruteanu\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> Razvan
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
