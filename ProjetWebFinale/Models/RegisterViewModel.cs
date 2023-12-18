@@ -21,5 +21,7 @@ namespace ProjetWebFinale.Models
         [Display(Name = "Confirmer votre mot de passe.")]
         [Compare("MotDePasse", ErrorMessage = "Votre nouveau mot de passe et sa confirmation ne sont pas équivalents.")]
         public string ConfirmerMotDePasse { get; set; }
+
+        public char TypeUtilisateur { get; set; }
     }
 }
