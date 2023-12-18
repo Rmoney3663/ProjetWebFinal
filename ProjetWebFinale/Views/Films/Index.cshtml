@@ -94,16 +94,46 @@
         }
     <span class="fw-bold">Tri: </span>
     <div>
-    <label for="radioUtilisateur"> Par nom d'utilisateur </label>
+    <label for="radioUtilisateur"> Par nom d'utilisateur: </label>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z" />
+            </svg>
     <input type="radio" id="radioUtilisateur" name="tri" onclick="tri('nom')" @if (tri == "nom") { <text>checked</text> }/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z" />
+            </svg>
+    <input type="radio" id="radioUtilisateurD" name="tri" onclick="tri('nomD')" @if (tri == "nomD")
+    {
+        <text>checked</text>
+    }/>
     </div>
     <div>
     <label for="radioUtilisateur"> Par titre de film </label>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z" />
+            </svg>
             <input type="radio" id="radioTitre" name="tri" onclick="tri('titre')" @if (tri == "titre") { <text>checked</text> }/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z" />
+            </svg>
+            <input type="radio" id="radioTitreD" name="tri" onclick="tri('titreD')" @if (tri == "titreD")
+            {
+                <text>checked</text>
+            }/>
     </div>
     <div>
     <label for="radioUtilisateur"> Par nom d'utilisateur et titre de film </label>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z" />
+            </svg>
             <input type="radio" id="radioEnsemble" name="tri" onclick="tri('ensemble')" @if (tri == "ensemble") { <text>checked</text> }/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z" />
+            </svg>
+            <input type="radio" id="radioEnsembleD" name="tri" onclick="tri('ensembleD')" @if (tri == "ensembleD")
+            {
+                <text>checked</text>
+            }/>
     </div>
 </div>
 </div>
@@ -128,13 +158,25 @@
         {
             sortedModel = Model.OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
         }
+        else if (tri == "nomD")
+        {
+            sortedModel = Model.OrderByDescending(film => film.UtilisateurProprietaire.NomUtilisateur);
+        }
         else if (tri == "titre")
         {
             sortedModel = Model.OrderBy(film => film.TitreFrancais);
         }
+        else if (tri == "titreD")
+        {
+            sortedModel = Model.OrderByDescending(film => film.TitreFrancais);
+        }
         else if (tri == "ensemble")
         {
             sortedModel = Model.OrderBy(film => film.TitreFrancais).OrderBy(film => film.UtilisateurProprietaire.NomUtilisateur);
+        }
+        else if (tri == "ensembleD")
+        {
+            sortedModel = Model.OrderByDescending(film => film.TitreFrancais).OrderByDescending(film => film.UtilisateurProprietaire.NomUtilisateur);
         }
         var index = 0;
 		 }

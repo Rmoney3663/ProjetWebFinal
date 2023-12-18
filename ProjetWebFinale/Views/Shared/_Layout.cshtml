@@ -44,6 +44,8 @@
                                     Se déconnecter
                                 </button>
                             </li>
+                        }
+
                         </ul>
                     </form>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -56,6 +58,14 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-light" asp-area="" asp-controller="FilmsMain" asp-action="Index">Films en main</a>
                                 </li>
+                            }
+                            else
+                            {
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-area="" asp-controller="AjoutUtilisateur" asp-action="Create">Ajouter un utilisateur</a>
+                                    </li>
+                                </ul>
                             }
                             
                             <li>
