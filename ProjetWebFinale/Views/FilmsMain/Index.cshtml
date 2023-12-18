@@ -111,7 +111,7 @@
 	</div>
 </div>
 <br />
-<form asp-controller="Films" asp-action="Index" method="get">
+<form asp-controller="FilmsMain" asp-action="Index" method="get">
     <p class ="text-center">
         <b class="text-primary">Recherche par titre:</b> <input type="text" placeholder="Titre du film" name="SearchString" />
         <input type="submit" class="btn btn-primary" value="Rechercher" />
@@ -125,7 +125,7 @@
 
 <div class="d-flex flex-wrap align-content-start bg-light" style="margin-bottom:50px">
     @{
-         IEnumerable<ProjetWebFinale.Models.Films> sortedModel = Model.Where(item => item.NoUtilisateurProprietaire == user.Id).ToList();
+        IEnumerable<ProjetWebFinale.Models.Films> sortedModel = Model.Where(item => item.NoUtilisateurProprietaire == user.Id).ToList();
 
         if (tri == "titre")
         {
@@ -137,34 +137,45 @@
         }
         var index = 0;
     }
-    @foreach (var item in sortedModel.Where(x => x.NoUtilisateurProprietaire == user.Id).Skip((noPage - 1) * nbFilms).Take(nbFilms))
+    @if (filteredModel.Count > 0)
     {
-        index++;        
-        <div class="card" style="width:300px; margin: 5px;">
-            <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" width="300" height="442" />
-            <div class="card-body">
-                <p class="card-text">
-                    <b>Titre :</b>
-                    @Html.DisplayFor(modelItem => item.TitreFrancais)
-                </p>
-                <p class="card-text">
-                    <b>Utilisateur qui possède l'article :</b> <br>
-                    <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
-                </p>
-                <div>
-                    @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1)
-                    {
-                        <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a>
-                        <a> | </a>
-                        <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details </a>
-                        <a> | </a>
-                        <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
-                    }
+        @foreach (var item in sortedModel.Where(x => x.NoUtilisateurProprietaire == user.Id).Skip((noPage - 1) * nbFilms).Take(nbFilms))
+        {
+            index++;
+            <div class="card" style="width:300px; margin: 5px;">
+                <img src="~/liste-vignettes/@(item.Id).jpg" alt="./liste-vignettes/@(item.Id).jpg" width="300" height="442" />
+                <div class="card-body">
+                    <p class="card-text">
+                        <b>Titre :</b>
+                        @Html.DisplayFor(modelItem => item.TitreFrancais)
+                    </p>
+                    <p class="card-text">
+                        <b>Utilisateur qui possède l'article :</b> <br>
+                        <a href="/FilmsUtilisateurs/Index?name=@item.UtilisateurProprietaire.NomUtilisateur">@Html.DisplayFor(modelItem => item.UtilisateurProprietaire.NomUtilisateur)</a>
+                    </p>
+                    <div>
+                        @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur == 1)
+                        {
+                            <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier </a>
+                            <a> | </a>
+                            <a class="btn btn-success btn-custom" asp-action="Details" asp-route-id="@item.Id">Details </a>
+                            <a> | </a>
+                            <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                        }
+                    </div>
                 </div>
             </div>
+        }
+
+    }
+    else
+    {
+        <div>
+            <p>
+                Aucun résultat
+            </p>
         </div>
     }
-
 </div>
 
 <div class="sSectionPages">
