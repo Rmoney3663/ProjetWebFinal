@@ -80,13 +80,11 @@
     </div>
 </div>
 <br />
-
 <form asp-controller="FilmsUtilisateurs" asp-action="Index" method="get">
-    <p class ="text-center">
+    <p>
         <input type="hidden" name="name" value="@name" />
-         <b class="text-primary">Recherche par titre:</b>
-         <input type="text" placeholder="Titre du film" name="SearchString" />
-        <input type="submit"  class="btn btn-primary" value="Rechercher" />
+        Recherche par titre: <input type="text" name="SearchString" />
+        <input type="submit" value="Rechercher" />
         @if (!String.IsNullOrEmpty(searchString))
         {
             <a href="/FilmsUtilisateurs?name=@name" class="btn btn-primary">Effacer la recherche</a>
@@ -127,11 +125,8 @@
                         </p>
                         <p class="card-text">
                             <b>Utilisateur qui possède l'article :</b> @strNomUtilisateur<br>
-                            <div>
-                                <a href="/FilmsUtilisateurs/Details?id=@item.Id" class="btn btn-primary">Voir les détails</a><br> | 
-                                <a href="/Email/Email?receiver=@item.UtilisateurProprietaire.Courriel" class="btn btn-success">Contacter @strNomUtilisateur</a>
-                            </div>
-                            
+                            <a href="/FilmsUtilisateurs/Details?id=@item.Id" class="btn btn-success">Voir les détails</a><br>
+                            <a href="/Email/Email?receiver=@item.UtilisateurProprietaire.Courriel" class="btn btn-success">Contacter @strNomUtilisateur</a>
                          
 
                             @if ((user != null && user.Id == item.NoUtilisateurProprietaire) || user.TypeUtilisateur < 3)
@@ -146,7 +141,7 @@
                                 }
                                 else if (user.TypeUtilisateur == 2)
                                 {
-                                    <a class="btn btn-success btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Assigner le DVD à un utilisateur</a>
+                                    <a class="btn btn-primary btn-custom" asp-action="Appropriation" asp-route-id="@item.Id">Assigner le DVD à un utilisateur</a>
                                     <a class="btn btn-primary btn-custom" asp-action="Edit" asp-route-id="@item.Id">Modifier le DVD</a>
                                     <a class="btn btn-danger btn-custom" asp-action="Delete" asp-route-id="@item.Id">Supprimer le DVD</a>
                                 }
