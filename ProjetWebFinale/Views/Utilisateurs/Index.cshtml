@@ -33,11 +33,10 @@
                     <a href="/FilmsUtilisateurs/Index?name=@item.NomUtilisateur" class="btn btn-success">Voir tout les DVDs appartenant à cet utilisateur</a>
                 </td>
                 <td>
-                    <a href="/Email/Email?receiver=@item.Courriel" class="btn btn-success">Contacter cet utilisateur</a>
+                    <a href="/Email/Email?receiver=@item.Courriel" class="btn btn-primary">Contacter cet utilisateur</a>
                 </td>
-                @if (user.TypeUtilisateur == 3)
+                @if (user.TypeUtilisateur == 1)
                 {
-                    //TODO 3 (User) -> 1 (Admin)
                 <td>
                     <a href="/Profile/Profile?id=@item.Id" class="btn btn-success">Modifier le profile de cet utilisateur</a>
                 </td>
