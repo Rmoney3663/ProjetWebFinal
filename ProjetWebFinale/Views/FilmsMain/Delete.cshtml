@@ -6,7 +6,7 @@
 
 <h1>Suppression de «@Model.TitreFrancais»</h1>
 
-<h3>Êtes-vous sûr de vouloir le supprimer ?</h3>
+<h3>Êtes-vous sûr de vouloir supprimer ce film?</h3>
 <div>
     <h4>Films</h4>
     <hr />
@@ -44,7 +44,7 @@
         else
         {
             <dd class="col-sm-10">
-                La categories n'est pas précisée
+                La catégorie n'est pas précisée
             </dd>
         }
 
@@ -72,7 +72,7 @@
         else
         {
             <dd class="col-sm-10">
-                Le resumé n'est pas précisée
+                Le résumé n'est pas précisée
             </dd>
         }
 
@@ -93,7 +93,7 @@
         }
 
         <dt class="col-sm-2">
-            Film Original?
+            Film original?
         </dt>
         @if (Model.FilmOriginal != null)
         {
@@ -113,7 +113,7 @@
         else
         {
             <dd class="col-sm-10">
-                L'originality du film n'est pas précisée
+                L'originalité du film n'est pas précisée
             </dd>
         }
 
@@ -129,7 +129,7 @@
         else
         {
             <dd class="col-sm-10">
-                Le nombre de disque n'est pas précisée
+                Le nombre de disques n'est pas précisée
             </dd>
         }
 
@@ -190,7 +190,6 @@
                 <dd class="col-sm-10">
                     <a href="@Model.Xtra" target="_blank">@Model.Xtra</a>
                 </dd>
-
             }
             else
             {
@@ -203,7 +202,7 @@
         else
         {
             <dd class="col-sm-10">
-                Aucune information supplémentaire n'est mentionnée
+                Aucune informations supplémentaires n'est mentionnées
             </dd>
         }
 
@@ -219,7 +218,7 @@
         else
         {
             <dd class="col-sm-10">
-                Le formats n'est pas précisée
+                Le format n'est pas précisée
             </dd>
         }
 
@@ -235,7 +234,7 @@
         else
         {
             <dd class="col-sm-10">
-                Le realisateurs n'est pas précisée
+                Le realisateur n'est pas précisée
             </dd>
         }
 
@@ -251,7 +250,7 @@
         else
         {
             <dd class="col-sm-10">
-                Le producteurs n'est pas précisée
+                Le producteur n'est pas précisée
             </dd>
         }
 
@@ -273,7 +272,7 @@
         else
         {
             <dd class="col-sm-10">
-                Personne n'emprunte actuellement le Films
+                Personne n'emprunte actuellement ce films
             </dd>
         }
         <dt class="col-sm-2">
@@ -320,12 +319,12 @@
         else
         {
             <dd class="col-sm-10">
-                Aucun sous titres pour ce film.
+                Aucun sous-titres pour ce film.
             </dd>
         }
 
         <dt class="col-sm-2">
-            Supplements:
+            Suppléments:
         </dt>
         @if (Model.FilmsSupplements != null && Model.FilmsSupplements.Any())
         {
@@ -336,7 +335,7 @@
         else
         {
             <dd class="col-sm-10">
-                Aucun supplements mentionné pour ce film.
+                Aucun suppléments mentionnés pour ce film.
             </dd>
         }
     </dl>
@@ -346,8 +345,6 @@
         <button type="submit" class="btn btn-danger" onclick="return confirm('Confirmer Suppression')">
             Supprimer
         </button> |
-
-
-        <a asp-action="Index">Retour au liste</a>
+        <a asp-action="Index">Retour à la liste</a>
     </form>
 </div>

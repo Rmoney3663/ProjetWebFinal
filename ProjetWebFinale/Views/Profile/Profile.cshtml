@@ -7,34 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await _userManager.GetUserAsync(User);
 }
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#submit').click(function () {
-            var nomValue = $('#nom').val();
-            var courrielValue = $('#courriel').val();
-            var idValue = $('#id').val();
-
-            $.ajax({
-                url: '/Profile/CheckIfExists', 
-                method: 'POST',
-                data: { nom: nomValue, courriel: courrielValue, id: idValue},
-                success: function (result) {
-                    if (result.success) {
-                        $('#frmModifierMotDePasse').submit();
-                    } else {
-                        alert(result.message);
-                    }
-                },
-                error: function () {
-                    alert('An error occurred while checking the information.');
-                }
-            });
-        });
-    });
-</script>
-
 
 <h1>Modifier le profil</h1>
 
@@ -54,6 +26,10 @@
                 <input type="text" class="form-control" id="courriel" name="courriel" value="@Model.Courriel" />
             </div>
 
+            <div class="form-group">
+                <input type="hidden" class="form-control" name="id" value="@Model.Id" />
+            </div>
+
             <div id="error-message" class="text-danger"></div>
         }
         else
@@ -67,22 +43,22 @@
                 <label>Courriel</label>
                 <input type="text" class="form-control" readonly id="courriel" name="courriel" value="@Model.Courriel" />
             </div>
+
+            
+            <div class="form-group">
+                <label>Mot de passe actuel</label>
+                <input type="password" class="form-control" id="motDePasseActuel" name="motDePasseActuel" value="" />
+            </div>
+            <div class="form-group">
+                <label>Nouveau mot de passe</label>
+                <input type="password" class="form-control" id="nouveauMotDePasse" name="nouveauMotDePasse" value="" />
+            </div>
+            <div class="form-group">
+                <label>Confirmer nouveau mot de passe</label>
+                <input type="password" class="form-control" id="confirmerMotDePasse" name="confirmerMotDePasse" value="" />
+            </div>
         }
-        <div class="form-group">
-            <input type="hidden" class="form-control" name="id" value="@Model.Id" />
-        </div>
-        <div class="form-group">
-            <label>Mot de passe actuel</label>
-            <input type="password" class="form-control" id="motDePasseActuel" name="motDePasseActuel" value="" />
-        </div>
-        <div class="form-group">
-            <label>Nouveau mot de passe</label>
-            <input type="password" class="form-control" id="nouveauMotDePasse" name="nouveauMotDePasse" value="" />
-        </div>
-        <div class="form-group">
-            <label>Confirmer nouveau mot de passe</label>
-            <input type="password" class="form-control" id="confirmerMotDePasse" name="confirmerMotDePasse" value="" />
-        </div>
+        
         <button type="submit" id="submit" class="btn btn-primary">Modifier votre profile</button>
     </form>    
 </div>

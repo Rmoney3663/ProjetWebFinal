@@ -15,8 +15,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-    <form asp-action="Appropriation" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Appropriation" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
         <dt class="col-sm-2">
             Image
@@ -26,8 +26,8 @@
         </dd>
         <br>
 
-       <div class="form-group">
-            <label asp-for="ImagePochette" class="control-label">Image de l'affiche de film :</label>
+        <div class="form-group">
+            <label asp-for="ImagePochette" class="control-label">Image de l'affiche du film :</label>
             <input asp-for="ImagePochette" class="form-control" type="file" id="file" name="file" accept="image/jpeg" readonly disabled />
             <span asp-validation-for="ImagePochette" class="text-danger"></span>
         </div>
@@ -39,14 +39,14 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="Categorie" class="control-label">Categorie:</label>
+            <label asp-for="Categorie" class="control-label">Catégorie:</label>
             <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie" disabled>
                 <option value=""></option>
             </select>
             <span asp-validation-for="Categorie" class="text-danger"></span>
         </div>
         <br>
-                
+
         <div class="form-group">
             <label asp-for="Format" class="control-label">Format:</label>
             <select asp-for="Format" class="form-control" asp-items="ViewBag.Format" disabled>
@@ -57,7 +57,7 @@
         <br>
 
         <div class="form-group">
-            <label asp-for="Resume" class="control-label">Resumé du film:</label>
+            <label asp-for="Resume" class="control-label">Résumé du film:</label>
             <textarea asp-for="Resume" class="form-control" readonly></textarea>
             <span asp-validation-for="Resume" class="text-danger"></span>
         </div>
@@ -65,14 +65,14 @@
 
 
         <div class="form-group">
-            <label asp-for="DureeMinutes" class="control-label">Durée en minute du film:</label>
+            <label asp-for="DureeMinutes" class="control-label">Durée du film (minutes):</label>
             <input asp-for="DureeMinutes" class="form-control" type="number" min="1" readonly />
             <span asp-validation-for="DureeMinutes" class="text-danger"></span>
         </div>
         <br>
 
         <div class="form-group">
-            <label asp-for="FilmOriginal" class="control-label">Film Original ?</label>
+            <label asp-for="FilmOriginal" class="control-label">Film original?</label>
             <select asp-for="FilmOriginal" class="form-control" disabled>
                 <option value=""></option>
                 <option value="true">True</option>
@@ -89,25 +89,25 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="TitreFrancais" class="control-label">Titre en Francais du film:</label>
+            <label asp-for="TitreFrancais" class="control-label">Titre en Francais:</label>
             <input asp-for="TitreFrancais" class="form-control" readonly />
             <span asp-validation-for="TitreFrancais" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="TitreOriginal" class="control-label">Titre Original du film:</label>
+            <label asp-for="TitreOriginal" class="control-label">Titre original:</label>
             <input asp-for="TitreOriginal" class="form-control" readonly />
             <span asp-validation-for="TitreOriginal" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="VersionEtendue" class="control-label">Version Etendue ?</label>
+            <label asp-for="VersionEtendue" class="control-label">Version étendue?</label>
             <input asp-for="VersionEtendue" class="form-control" readonly />
             <span asp-validation-for="VersionEtendue" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="NoRealisateur" class="control-label">Nom du realisateur:</label>
+            <label asp-for="NoRealisateur" class="control-label">Nom du réalisateur:</label>
             <select asp-for="NoRealisateur" class="form-control" asp-items="ViewBag.NoRealisateur" disabled></select>
             <span asp-validation-for="NoRealisateur" class="text-danger"></span>
         </div>
@@ -119,8 +119,8 @@
         </div>
 
         <div class="form-group">
-		
-		 <label asp-for="Xtra" class="control-label">Extra info:</label>     
+
+            <label asp-for="Xtra" class="control-label">Informations supplémentaires:</label>
                 @if (!string.IsNullOrEmpty(Model.Xtra))
                 {
                     if (Uri.IsWellFormedUriString(Model.Xtra, UriKind.Absolute))
@@ -136,55 +136,55 @@
                 }
             <span asp-validation-for="Xtra" class="text-danger"></span>
         </div>
-		
-		 @if (user != null && user.TypeUtilisateur == 2)
-        {
+
+            @if (user != null && user.TypeUtilisateur == 2)
+            {
             <div class="form-group">
-                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
-                <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" ></select>
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du propriétaire du film:</label>
+                <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire"></select>
                 <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
             </div>
-        }
-        else
-        {
+            }
+            else
+            {
             <div class="form-group">
-                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du propriétaire du film:</label>
                 <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire" disabled></select>
                 <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
             </div>
-        }
+            }
 
         <div class="form-group">
             <label class="control-label">Langues : </label>
-            @foreach (var langue in ViewBag.Langues)
-            {
-                <input type="checkbox" name="selectedLangueIds" value="@langue.Value" class="form-check-input" @(ViewBag.SelectedLangues.Contains(Convert.ToInt32(langue.Value)) ? "checked" : "") readonly  disabled />
+                @foreach (var langue in ViewBag.Langues)
+                {
+                <input type="checkbox" name="selectedLangueIds" value="@langue.Value" class="form-check-input" @(ViewBag.SelectedLangues.Contains(Convert.ToInt32(langue.Value)) ? "checked" : "") readonly disabled />
                 <label class="form-check-label">@langue.Text</label>
-            }
+                }
         </div>
 
         <div class="form-group">
-            <label class="control-label">Sous Titres : </label>
-            @foreach (var soustitre in ViewBag.SousTitres)
-            {
+            <label class="control-label">Sous-titres: </label>
+                @foreach (var soustitre in ViewBag.SousTitres)
+                {
                 <input type="checkbox" name="selectedSousTitresIds" value="@soustitre.Value" class="form-check-input" @(ViewBag.selectedSousTitres.Contains(Convert.ToInt32(soustitre.Value)) ? "checked" : "") readonly disabled />
                 <label class="form-check-label">@soustitre.Text</label>
-            }
+                }
         </div>
 
         <div class="form-group">
-            <label class="control-label">Supplements : </label>
-            @foreach (var supplements in ViewBag.Supplements)
-            {
+            <label class="control-label">Suppléments: </label>
+                @foreach (var supplements in ViewBag.Supplements)
+                {
                 <div class="form-check">
-                    <input type="checkbox" name="selectedSupplementsIds" value="@supplements.Value" class="form-check-input" @(ViewBag.selectedSupplements.Contains(Convert.ToInt32(supplements.Value)) ? "checked" : "") readonly disabled/>
-                    <label class="form-check-label">@supplements.Text</label> 
+                    <input type="checkbox" name="selectedSupplementsIds" value="@supplements.Value" class="form-check-input" @(ViewBag.selectedSupplements.Contains(Convert.ToInt32(supplements.Value)) ? "checked" : "") readonly disabled />
+                    <label class="form-check-label">@supplements.Text</label>
                 </div>
-            }
+                }
         </div>
 
         <div class="form-group">
-            <label class="control-label">Acteurs : </label>
+            <label class="control-label">Acteurs: </label>
                 @if (ViewBag.Acteurs != null)
                 {
                     var acteursList = ((IEnumerable<SelectListItem>)ViewBag.Acteurs).ToList();
@@ -196,7 +196,7 @@
                             <div class="col-md-3">
                                 <div class="form-check">
                                     <input type="checkbox" name="selectedActeursIds" value="@acteurs.Value" class="form-check-input"
-                                        @(ViewBag.selectedActeurs.Contains(Convert.ToInt32(acteurs.Value)) ? "checked" : "") readonly disabled />
+                               @(ViewBag.selectedActeurs.Contains(Convert.ToInt32(acteurs.Value)) ? "checked" : "") readonly disabled />
                                     <label class="form-check-label">@acteurs.Text</label>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                     }
                     else
                     {
-                    <p>Aucune acteurs disponible</p>
+                    <p>Aucun acteurs disponibles</p>
                     }
                 }
             <span id="acteursValidationError" class="text-danger"></span>
@@ -220,11 +220,12 @@
 </div>
 
 <div>
-    <a asp-action="Index">Retour au liste</a>
+    <a asp-action="Index">Retour à la liste</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
 
-		

@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using Org.BouncyCastle.Crypto.Macs;
 using ProjetWebFinale.Models;
 
 namespace ProjetWebFinale.Controllers
@@ -246,8 +249,46 @@ namespace ProjetWebFinale.Controllers
                         films.FilmsActeurs.Add(new FilmsActeurs { NoFilm = films.Id, NoActeur = langId });
                     }
                 }
+
+                var listeCourriels = new List<MimeMessage>();
+
+                //Appropriation du DVD
+                var courrielsUtilisateurs = (from p in _context.UtilisateursPreferences where p.NoPreference == 3 select p.Utilisateurs.Courriel).ToList();
+
+                foreach (var adresse in courrielsUtilisateurs)
+                {
+                    var email = new MimeMessage();
+                    email.From.Add(new MailboxAddress("w56projet3equipe4@gmail.com", "w56projet3equipe4@gmail.com"));
+
+                    //Email adress in DB might be used -> Temporary email
+                    email.To.Add(new MailboxAddress(adresse, adresse));
+
+                    email.Subject = "Avis d'ajout";
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    {
+                        Text = "Un DVD a été ajouté."
+                    };
+
+                    listeCourriels.Add(email);
+                }
+
+                using (var smtp = new SmtpClient())
+                {
+                    smtp.Connect("smtp.gmail.com", 465, true);
+                    smtp.Authenticate("w56projet3equipe4@gmail.com", "gxlb tpuz batz zuun ");
+
+                    //Envoie un email à chaque utilisateur
+                    foreach (MimeMessage email in listeCourriels)
+                    {
+                        smtp.Send(email);
+                    }
+
+                    smtp.Disconnect(true);
+                }
+
                 await _context.SaveChangesAsync();
 
+                //Email here too 
 
                 return RedirectToAction(nameof(Index));
             }
@@ -584,6 +625,43 @@ namespace ProjetWebFinale.Controllers
                     _context.FilmsActeurs.RemoveRange(associatedActeur);
 
                     _context.Films.Remove(films);
+
+                    var listeCourriels = new List<MimeMessage>();
+
+                    //Appropriation du DVD
+                    var courrielsUtilisateurs = (from p in _context.UtilisateursPreferences where p.NoPreference == 5 select p.Utilisateurs.Courriel).ToList();
+
+                    foreach (var adresse in courrielsUtilisateurs)
+                    {
+                        var email = new MimeMessage();
+                        email.From.Add(new MailboxAddress("w56projet3equipe4@gmail.com", "w56projet3equipe4@gmail.com"));
+
+                        //Email adress in DB might be used -> Temporary email
+                        email.To.Add(new MailboxAddress(adresse, adresse));
+
+                        email.Subject = "Avis de suppression";
+                        email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                        {
+                            Text = "Un DVD à été retiré."
+                        };
+
+                        listeCourriels.Add(email);
+                    }
+
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Connect("smtp.gmail.com", 465, true);
+                        smtp.Authenticate("w56projet3equipe4@gmail.com", "gxlb tpuz batz zuun ");
+
+                        //Envoie un email à chaque utilisateur
+                        foreach (MimeMessage email in listeCourriels)
+                        {
+                            smtp.Send(email);
+                        }
+
+                        smtp.Disconnect(true);
+                    }
+
                     await _context.SaveChangesAsync();
 
                     var filePath = Path.Combine("wwwroot/liste-vignettes", id + ".jpg");
@@ -707,8 +785,42 @@ namespace ProjetWebFinale.Controllers
                         filmToUpdate.DateMAJ = DateTime.Now;
                         filmToUpdate.AnneeSortie = model.AnneeSortie;
                         _context.Update(filmToUpdate);
-                        // Do email Appropriation
 
+                        var listeCourriels = new List<MimeMessage>();
+
+                        //Appropriation du DVD
+                        var courrielsUtilisateurs = (from p in _context.UtilisateursPreferences where p.NoPreference == 4 select p.Utilisateurs.Courriel).ToList();
+
+                        foreach (var adresse in courrielsUtilisateurs)
+                        {
+                            var email = new MimeMessage();
+                            email.From.Add(new MailboxAddress("w56projet3equipe4@gmail.com", "w56projet3equipe4@gmail.com"));
+
+                            //Email adress in DB might be used -> Temporary email
+                            email.To.Add(new MailboxAddress(adresse, adresse));
+
+                            email.Subject = "Avis d'appropriation";
+                            email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                            {
+                                Text = "Un utilisateur désire s'approprier ce DVD."
+                            };
+
+                            listeCourriels.Add(email);
+                        }
+
+                        using (var smtp = new SmtpClient())
+                        {
+                            smtp.Connect("smtp.gmail.com", 465, true);
+                            smtp.Authenticate("w56projet3equipe4@gmail.com", "gxlb tpuz batz zuun ");
+
+                            //Envoie un email à chaque utilisateur
+                            foreach (MimeMessage email in listeCourriels)
+                            {
+                                smtp.Send(email);
+                            }
+
+                            smtp.Disconnect(true);
+                        }
                         await _context.SaveChangesAsync();
                     }
 

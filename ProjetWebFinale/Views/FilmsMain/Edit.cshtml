@@ -22,7 +22,7 @@
         <br>
 
         <div class="form-group">
-            <label asp-for="ImagePochette" class="control-label">Image de l'affiche de film :</label>
+            <label asp-for="ImagePochette" class="control-label">Image de l'affiche du film :</label>
             <input type="file" id="file" name="file" accept="image/jpeg" class="form-control" />
             <span asp-validation-for="ImagePochette" class="text-danger"></span>
         </div>
@@ -40,7 +40,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Categorie" class="control-label">Categorie:</label>
+                <label asp-for="Categorie" class="control-label">Catégorie:</label>
                 <select asp-for="Categorie" class="form-control" asp-items="ViewBag.Categorie">
                     <option value=""></option>
                 </select>
@@ -58,7 +58,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Resume" class="control-label">Resumé du film:</label>
+                <label asp-for="Resume" class="control-label">Résumé du film:</label>
                 <textarea asp-for="Resume" class="form-control"></textarea>
                 <span asp-validation-for="Resume" class="text-danger"></span>
             </div>
@@ -72,7 +72,7 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="FilmOriginal" class="control-label">Film Original ?</label>
+                <label asp-for="FilmOriginal" class="control-label">Film original?</label>
                 <select asp-for="FilmOriginal" class="form-control">
                     <option value=""></option>
                     <option value="true">True</option>
@@ -90,28 +90,28 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="TitreFrancais" class="control-label">Titre en Francais du film:</label>
+                <label asp-for="TitreFrancais" class="control-label">Titre en Francais:</label>
                 <input asp-for="TitreFrancais" class="form-control" />
                 <span asp-validation-for="TitreFrancais" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="TitreOriginal" class="control-label">Titre Original du film:</label>
+                <label asp-for="TitreOriginal" class="control-label">Titre original:</label>
                 <input asp-for="TitreOriginal" class="form-control" />
                 <span asp-validation-for="TitreOriginal" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="VersionEtendue" class="control-label">Version Etendue ?</label>
+                <label asp-for="VersionEtendue" class="control-label">Version étendue?</label>
                 <input asp-for="VersionEtendue" class="form-control" />
                 <span asp-validation-for="VersionEtendue" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="NoRealisateur" class="control-label">Nom du realisateur:</label>
+                <label asp-for="NoRealisateur" class="control-label">Nom du réalisateur:</label>
                 <select asp-for="NoRealisateur" class="form-control" asp-items="ViewBag.NoRealisateur"></select>
                 <span asp-validation-for="NoRealisateur" class="text-danger"></span>
             </div>
@@ -125,14 +125,14 @@
             <br>
 
             <div class="form-group">
-                <label asp-for="Xtra" class="control-label">Extra info:</label>
+                <label asp-for="Xtra" class="control-label">Informations supplémentaires</label>
                 <input asp-for="Xtra" class="form-control" />
                 <span asp-validation-for="Xtra" class="text-danger"></span>
             </div>
             <br>
 
             <div class="form-group">
-                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du proprietaire du film:</label>
+                <label asp-for="NoUtilisateurProprietaire" class="control-label">Nom du propriétaire du film:</label>
                 <select asp-for="NoUtilisateurProprietaire" class="form-control" asp-items="ViewBag.NoUtilisateurProprietaire"></select>
                 <span asp-validation-for="NoUtilisateurProprietaire" class="text-danger"></span>
             </div>
@@ -150,7 +150,7 @@
             <br>
 
             <div class="form-group">
-                <label class="control-label">Sous Titres : </label>
+                <label class="control-label">Sous-titres : </label>
                     @foreach (var soustitre in ViewBag.SousTitres)
                     {
                     <input type="checkbox" name="selectedSousTitresIds" value="@soustitre.Value" class="form-check-input"
@@ -161,7 +161,7 @@
             <br>
 
             <div class="form-group">
-                <label class="control-label">Supplements : </label>
+                <label class="control-label">Suppléments : </label>
                     @foreach (var supplements in ViewBag.Supplements)
                     {
                     <div class="form-check">
@@ -254,7 +254,7 @@
             </script>
 
             <div class="form-group">
-                <label class="control-label">Acteurs : </label>
+                <label class="control-label">Acteurs: </label>
                 <div id="acteursContainer" class="row">
                         @if (ViewBag.Acteurs != null)
                         {
@@ -274,12 +274,12 @@
                             }
                             else
                             {
-                            <p>Aucune acteurs disponible</p>
+                            <p>Aucun acteurs disponibles</p>
                             }
                         }
                         else
                         {
-                        <p>Aucune acteurs disponible</p>
+                        <p>Aucun acteurs disponibles</p>
                         }
                 </div>
                 <br>
@@ -310,7 +310,7 @@
     </div>
 
     <div>
-        <a asp-action="Index">Retour au liste</a>
+        <a asp-action="Index">Retour à la liste</a>
     </div>
 
 @section Scripts {
