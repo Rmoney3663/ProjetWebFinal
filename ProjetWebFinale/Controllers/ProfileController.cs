@@ -63,7 +63,7 @@ namespace ProjetWebFinale.Controllers
                         return View(userToModify);
                     }
                 }
-
+                /*
                 if (_context.Utilisateurs.Any(u => u.NomUtilisateur == nom && u.Id != userToModify.Id))
                 {
                     ModelState.AddModelError("NomUtilisateur", "Le nom d'utilisateur existe déjà.");
@@ -93,17 +93,29 @@ namespace ProjetWebFinale.Controllers
                 }
                 else
                 {
-                    var user = await _context.Utilisateurs
-                    .Include(f => f.UtilisateursPreferences)
-                    .ThenInclude(fa => fa.Preferences)
-                    .FirstOrDefaultAsync(m => m.Id == int.Parse(id));
-                        return View(user);
+                    return View(userToModify);
+                }*/
+
+                if (userToModify.NomUtilisateur != nom)
+                {
+                    userToModify.NomUtilisateur = nom;
+                    userToModify.UserName = nom;
+                    userToModify.NormalizedUserName = nom.ToUpper();
                 }
+
+                if (userToModify.Courriel != courriel)
+                {
+                    userToModify.Courriel = courriel;
+                    userToModify.Email = courriel;
+                    userToModify.NormalizedEmail = courriel.ToUpper();
+                }
+                _context.Update(userToModify);
+                _context.SaveChanges();
 
             }
             return RedirectToAction("Index", "Films");
         }
-
+        /*
         [HttpPost]
         public async Task<JsonResult> CheckIfExists(string nom, string courriel, int id)
         {
@@ -120,7 +132,7 @@ namespace ProjetWebFinale.Controllers
                 return Json(new { success = true, message = "Validation confirmer" });
             }
         }
-
+        */
 
     }
 }
