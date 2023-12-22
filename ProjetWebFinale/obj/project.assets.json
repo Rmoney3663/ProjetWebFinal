@@ -11601,19 +11601,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jerla\\.nuget\\packages\\": {}
+    "C:\\Users\\Razvan Pruteanu\\.nuget\\packages\\": {},
+    "G:\\Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+      "projectUniqueName": "S:\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
       "projectName": "ProjetWebFinale",
-      "projectPath": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
-      "packagesPath": "C:\\Users\\jerla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jerla\\Documents\\Github\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
+      "projectPath": "S:\\ProjetWebFinal\\ProjetWebFinale\\ProjetWebFinale.csproj",
+      "packagesPath": "C:\\Users\\Razvan Pruteanu\\.nuget\\packages\\",
+      "outputPath": "S:\\ProjetWebFinal\\ProjetWebFinale\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "G:\\Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\jerla\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Razvan Pruteanu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11621,6 +11626,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11693,7 +11699,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
